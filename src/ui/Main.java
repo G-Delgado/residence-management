@@ -12,8 +12,10 @@ public class Main {
      ResidenceManagement rm=new ResidenceManagement(null,4,10,4);
      rm.getAdmin();
 
-     rm.importDataResidents("Test");
-   
+    // rm.importDataResidents();
+     //rm.exportResident();
+     rm.importDataCars();
+        rm.exportCars();
 
     }
         

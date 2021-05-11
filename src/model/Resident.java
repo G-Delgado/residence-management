@@ -7,6 +7,11 @@ public class Resident extends Person {
         
     }
 
+
+    public String toCSV(String separate){
+        return getFirstName()+separate+getLastName()+separate+getPhoneNumber()+separate+getId();
+    }
+
     
     
 }

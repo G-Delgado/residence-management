@@ -9,142 +9,145 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class ResidenceManagement {
-	
+
 	private final static String APARTMENT_FILE = "./data/apartments.rm";
-	private final static String	PET_FILE = "./data/pets.rm";
+	private final static String PET_FILE = "./data/pets.rm";
 	private final static String DOORMAN_FILE = "./data/doormans.rm";
 	private final static String OWNER_FILE = "./data/owners.rm";
 	private final static String ADMIN_FILE = "./data/admins.rm";
 	private final static String SERVICESTAFF_FILE = "./data/servicestaff.rm";
+	private final static String RESIDENTS_FILE = "data/residents.csv";
+	private final static String CARS_FILE = "data/cars.csv";
 
-    private List<Resident> residents;
-    private List<Pet> pets;
-    private List<Doorman> doormen;
-    private List<ServiceStaff> serviceStaff;
-    private List<Owner> owners;
-    private List<Apartament> apartaments;
+	private final static String SEPARATE = ",";
+
+	private List<Resident> residents;
+	private List<Pet> pets;
+	private List<Doorman> doormen;
+	private List<ServiceStaff> serviceStaff;
+	private List<Owner> owners;
+	private List<Apartament> apartaments;
 	private List<Car> cars;
-    private Admin admin;
-    private int towers;
-    private int floors;
-    private int apartamentsPerFloor;
+	private Admin admin;
+	private int towers;
+	private int floors;
+	private int apartamentsPerFloor;
 
-
-    public ResidenceManagement(Admin admin, int towers, int floors, int apartamentsPerFloor) {
-        this.residents = new ArrayList<Resident>();
-        this.pets = new ArrayList<Pet>();
-        this.doormen = new ArrayList<Doorman>();
-        this.owners = new ArrayList<Owner>();
-        this.apartaments = new ArrayList<Apartament>();
+	public ResidenceManagement(Admin admin, int towers, int floors, int apartamentsPerFloor) {
+		this.residents = new ArrayList<Resident>();
+		this.pets = new ArrayList<Pet>();
+		this.doormen = new ArrayList<Doorman>();
+		this.owners = new ArrayList<Owner>();
+		this.apartaments = new ArrayList<Apartament>();
 		this.cars = new ArrayList<Car>();
-        this.admin = admin;
-        this.towers = towers;
-        this.floors = floors;
-        this.apartamentsPerFloor = apartamentsPerFloor;
-        createApartaments(towers,floors,apartamentsPerFloor);
+		this.admin = admin;
+		this.towers = towers;
+		this.floors = floors;
+		this.apartamentsPerFloor = apartamentsPerFloor;
+		createApartaments(towers, floors, apartamentsPerFloor);
 
-    }
+	}
 
-    private void createApartaments(int towers, int floors, int apartamentsPerFloor) {
+	private void createApartaments(int towers, int floors, int apartamentsPerFloor) {
 
-        for (int i = 1; i <= towers; i++) {
-            for (int j = 1; j <= floors; j++) {
-                for (int k = 1; k <= apartamentsPerFloor; k++) {
-                    apartaments.add(new Apartament(i + "", j + "0" + k, null, null, null, null));
+		for (int i = 1; i <= towers; i++) {
+			for (int j = 1; j <= floors; j++) {
+				for (int k = 1; k <= apartamentsPerFloor; k++) {
+					apartaments.add(new Apartament(i + "", j + "0" + k, null, null, null, null));
 
-                }
-            }
-        }
+				}
+			}
+		}
 
-        System.out.println(apartaments);
-    }
-    
-    @SuppressWarnings("unchecked")
+		System.out.println(apartaments);
+	}
+
+	@SuppressWarnings("unchecked")
 	public void loadData() throws FileNotFoundException, IOException, ClassNotFoundException {
-    	ObjectInputStream ois = null;
-    	File f = new File(APARTMENT_FILE);
-    	if (f.exists()) {
-    		ois = new ObjectInputStream(new FileInputStream(f));
-    		apartaments = (ArrayList<Apartament>) ois.readObject();
-    		ois.close();
-    	}
-    	
-    	
-    	f = new File(PET_FILE);
-    	if (f.exists()) {
-    		ois = new ObjectInputStream(new FileInputStream(f));
-    		pets = (ArrayList<Pet>) ois.readObject();
-    		ois.close();
-    	}
-    	
-    	f = new File(DOORMAN_FILE);
-    	if (f.exists()) {
-    		ois = new ObjectInputStream(new FileInputStream(f));
-    		doormen = (ArrayList<Doorman>) ois.readObject();
-    		ois.close();
-    	}
-    	
-    	f = new File(OWNER_FILE);
-    	if (f.exists()) {
-    		ois = new ObjectInputStream(new FileInputStream(f));
-    		owners = (ArrayList<Owner>) ois.readObject();
-    		ois.close();
-    	}
-    	
-    	f = new File(ADMIN_FILE);
-    	if (f.exists()) {
-    		ois = new ObjectInputStream(new FileInputStream(f));
-    		admin = (Admin) ois.readObject();
-    		ois.close();
-    	}
-    	
-    	f = new File(SERVICESTAFF_FILE);
-    	if (f.exists()) {
-    		ois = new ObjectInputStream(new FileInputStream(f));
-    		serviceStaff = (ArrayList<ServiceStaff>) ois.readObject();
-    		ois.close();
-    	}
-    }
-    
-    public void saveApartments() throws FileNotFoundException, IOException {
-    	ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(APARTMENT_FILE));
-    	oos.writeObject(apartaments);
-    	oos.close();
-    }
-    
+		ObjectInputStream ois = null;
+		File f = new File(APARTMENT_FILE);
+		if (f.exists()) {
+			ois = new ObjectInputStream(new FileInputStream(f));
+			apartaments = (ArrayList<Apartament>) ois.readObject();
+			ois.close();
+		}
+
+		f = new File(PET_FILE);
+		if (f.exists()) {
+			ois = new ObjectInputStream(new FileInputStream(f));
+			pets = (ArrayList<Pet>) ois.readObject();
+			ois.close();
+		}
+
+		f = new File(DOORMAN_FILE);
+		if (f.exists()) {
+			ois = new ObjectInputStream(new FileInputStream(f));
+			doormen = (ArrayList<Doorman>) ois.readObject();
+			ois.close();
+		}
+
+		f = new File(OWNER_FILE);
+		if (f.exists()) {
+			ois = new ObjectInputStream(new FileInputStream(f));
+			owners = (ArrayList<Owner>) ois.readObject();
+			ois.close();
+		}
+
+		f = new File(ADMIN_FILE);
+		if (f.exists()) {
+			ois = new ObjectInputStream(new FileInputStream(f));
+			admin = (Admin) ois.readObject();
+			ois.close();
+		}
+
+		f = new File(SERVICESTAFF_FILE);
+		if (f.exists()) {
+			ois = new ObjectInputStream(new FileInputStream(f));
+			serviceStaff = (ArrayList<ServiceStaff>) ois.readObject();
+			ois.close();
+		}
+	}
+
+	public void saveApartments() throws FileNotFoundException, IOException {
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(APARTMENT_FILE));
+		oos.writeObject(apartaments);
+		oos.close();
+	}
+
 	public void savePets() throws FileNotFoundException, IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(PET_FILE));
-    	oos.writeObject(pets);
-    	oos.close();	
+		oos.writeObject(pets);
+		oos.close();
 	}
-	
+
 	public void saveDoormans() throws FileNotFoundException, IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DOORMAN_FILE));
-    	oos.writeObject(doormen);
-    	oos.close();
+		oos.writeObject(doormen);
+		oos.close();
 	}
-	
+
 	public void saveOwners() throws FileNotFoundException, IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(OWNER_FILE));
-    	oos.writeObject(owners);
-    	oos.close();
+		oos.writeObject(owners);
+		oos.close();
 	}
-	
+
 	public void saveAdmins() throws FileNotFoundException, IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ADMIN_FILE));
-    	oos.writeObject(admin);
-    	oos.close();
+		oos.writeObject(admin);
+		oos.close();
 	}
-	
+
 	public void saveServiceStaff() throws FileNotFoundException, IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SERVICESTAFF_FILE));
-    	oos.writeObject(serviceStaff);
-    	oos.close();
+		oos.writeObject(serviceStaff);
+		oos.close();
 	}
 
 	public List<Resident> getResidents() {
@@ -226,42 +229,71 @@ public class ResidenceManagement {
 	public void setApartamentsPerFloor(int apartamentsPerFloor) {
 		this.apartamentsPerFloor = apartamentsPerFloor;
 	}
-    
-    	//IMPORT AND EXPORT RESIDENT-CARS
-	public void importDataResidents(String fileDirectory) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader("data/MOCK_DATA (1).csv"));
+
+	// IMPORT AND EXPORT RESIDENT-CARS
+	public void importDataResidents() throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(RESIDENTS_FILE));
 		br.readLine();
-        String line = br.readLine();
+		String line = br.readLine();
 
-        while (line != null) {
-            String[] parts = line.split(",");
-            String firstName = parts[0];
-            String lastName = parts[1];
-            int phone = Integer.parseInt(parts[2]);
-			String id=parts[3];
+		while (line != null) {
+			String[] parts = line.split(SEPARATE);
+			String firstName = parts[0];
+			String lastName = parts[1];
+			int phone = Integer.parseInt(parts[2]);
+			String id = parts[3];
 
-            residents.add(new Resident(firstName,lastName,phone,id));
-            line = br.readLine();
-        }
-        br.close();
+			residents.add(new Resident(firstName, lastName, phone, id));
+			line = br.readLine();
+		}
+		br.close();
 		System.out.println(residents.toString());
-    }
+	}
 
-
-	public void importDataCars(String fileDirectory) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader("data/MOCK_DATA (1).csv"));
+	public void importDataCars() throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(CARS_FILE));
 		br.readLine();
-        String line = br.readLine();
+		String line = br.readLine();
 
-        while (line != null) {
-            String[] parts = line.split(",");
-            String license = parts[0];
-            cars.add(new Car(license));
-            line = br.readLine();
-        }
-        br.close();
+		while (line != null) {
+			String[] parts = line.split(SEPARATE);
+			String license = parts[0];
+			cars.add(new Car(license));
+			line = br.readLine();
+		}
+		br.close();
 		System.out.println(cars.toString());
-    }
+	}
+
+	public void exportResident() throws FileNotFoundException {
+		//residents.add(new Resident("Juan","Garcia",34323,"10033"));
+		PrintWriter pw = new PrintWriter(RESIDENTS_FILE);
+
+		String report = "first_name" + SEPARATE + "last_name" + SEPARATE + "phone" + SEPARATE + "id";
+
+		for (Resident resident : residents) {
+			report += "\n"+resident.toCSV(SEPARATE) ;
+		}
+
+		pw.println(report);
+		pw.close();
+
+	}
+
+	public void exportCars() throws FileNotFoundException {
+	cars.add(new Car("TXT123"));
+		PrintWriter pw = new PrintWriter(CARS_FILE);
+
+		String report = "licensePlate";
+
+		for (Car car : cars) {
+			report += "\n"+car.toCSV() ;
+		}
+
+		pw.println(report);
+		pw.close();
+
+	}
 
 
 

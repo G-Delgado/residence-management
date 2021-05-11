@@ -18,4 +18,19 @@ public class Car {
         this.licensePlate = licensePlate;
     }
     
+
+
+    @Override
+    public String toString() {
+        return "{" +
+            " licensePlate='" + getLicensePlate() + "'" +
+            "}";
+    }
+
+    public String toCSV(){
+        return this.licensePlate;
+    }
+
+
+    
 }
