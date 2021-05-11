@@ -1,9 +1,11 @@
 package model;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -26,6 +28,7 @@ public class ResidenceManagement {
     private List<ServiceStaff> serviceStaff;
     private List<Owner> owners;
     private List<Apartament> apartaments;
+	private List<Car> cars;
     private Admin admin;
     private int towers;
     private int floors;
@@ -38,6 +41,7 @@ public class ResidenceManagement {
         this.doormen = new ArrayList<Doorman>();
         this.owners = new ArrayList<Owner>();
         this.apartaments = new ArrayList<Apartament>();
+		this.cars = new ArrayList<Car>();
         this.admin = admin;
         this.towers = towers;
         this.floors = floors;
@@ -223,6 +227,43 @@ public class ResidenceManagement {
 		this.apartamentsPerFloor = apartamentsPerFloor;
 	}
     
-    
+    	//IMPORT AND EXPORT RESIDENT-CARS
+	public void importDataResidents(String fileDirectory) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader("data/MOCK_DATA (1).csv"));
+		br.readLine();
+        String line = br.readLine();
+
+        while (line != null) {
+            String[] parts = line.split(",");
+            String firstName = parts[0];
+            String lastName = parts[1];
+            int phone = Integer.parseInt(parts[2]);
+			String id=parts[3];
+
+            residents.add(new Resident(firstName,lastName,phone,id));
+            line = br.readLine();
+        }
+        br.close();
+		System.out.println(residents.toString());
+    }
+
+
+	public void importDataCars(String fileDirectory) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader("data/MOCK_DATA (1).csv"));
+		br.readLine();
+        String line = br.readLine();
+
+        while (line != null) {
+            String[] parts = line.split(",");
+            String license = parts[0];
+            cars.add(new Car(license));
+            line = br.readLine();
+        }
+        br.close();
+		System.out.println(cars.toString());
+    }
+
+
+
 
 }
