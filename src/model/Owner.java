@@ -1,8 +1,14 @@
 package model;
 
-public class Owner extends Person{
+import java.io.Serializable;
 
-    private String mail;
+public class Owner extends Person implements Serializable{
+
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1;
+	private String mail;
 
 
     public Owner(String firstName, String lastName, int phoneNumber, String id,String mail) {

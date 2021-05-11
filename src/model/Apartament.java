@@ -1,10 +1,17 @@
 package model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Apartament {
+public class Apartament implements Serializable{
 
-    private String tower;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1;
+	
+	
+	private String tower;
     private String number;
     private Owner owner;
     private List<Resident> residents;

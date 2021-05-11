@@ -1,8 +1,15 @@
 package model;
 
-public class Admin extends Person{
+import java.io.Serializable;
 
-    private String user;
+public class Admin extends Person implements Serializable{
+
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1;
+	
+	private String user;
     private String password;
 
     public Admin(String firstName, String lastName, int phoneNumber, String id) {

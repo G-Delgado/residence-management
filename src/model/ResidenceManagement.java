@@ -1,10 +1,24 @@
 package model;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class ResidenceManagement {
+	
+	private final static String APARTMENT_FILE = "./data/apartments.rm";
+	private final static String	PET_FILE = "./data/pets.rm";
+	private final static String DOORMAN_FILE = "./data/doormans.rm";
+	private final static String OWNER_FILE = "./data/owners.rm";
+	private final static String ADMIN_FILE = "./data/admins.rm";
+	private final static String SERVICESTAFF_FILE = "./data/servicestaff.rm";
 
     private List<Resident> residents;
     private List<Pet> pets;
@@ -45,6 +59,89 @@ public class ResidenceManagement {
 
         System.out.println(apartaments);
     }
+    
+    @SuppressWarnings("unchecked")
+	public void loadData() throws FileNotFoundException, IOException, ClassNotFoundException {
+    	ObjectInputStream ois = null;
+    	File f = new File(APARTMENT_FILE);
+    	if (f.exists()) {
+    		ois = new ObjectInputStream(new FileInputStream(f));
+    		apartaments = (ArrayList<Apartament>) ois.readObject();
+    		ois.close();
+    	}
+    	
+    	
+    	f = new File(PET_FILE);
+    	if (f.exists()) {
+    		ois = new ObjectInputStream(new FileInputStream(f));
+    		pets = (ArrayList<Pet>) ois.readObject();
+    		ois.close();
+    	}
+    	
+    	f = new File(DOORMAN_FILE);
+    	if (f.exists()) {
+    		ois = new ObjectInputStream(new FileInputStream(f));
+    		doormen = (ArrayList<Doorman>) ois.readObject();
+    		ois.close();
+    	}
+    	
+    	f = new File(OWNER_FILE);
+    	if (f.exists()) {
+    		ois = new ObjectInputStream(new FileInputStream(f));
+    		owners = (ArrayList<Owner>) ois.readObject();
+    		ois.close();
+    	}
+    	
+    	f = new File(ADMIN_FILE);
+    	if (f.exists()) {
+    		ois = new ObjectInputStream(new FileInputStream(f));
+    		admin = (Admin) ois.readObject();
+    		ois.close();
+    	}
+    	
+    	f = new File(SERVICESTAFF_FILE);
+    	if (f.exists()) {
+    		ois = new ObjectInputStream(new FileInputStream(f));
+    		serviceStaff = (ArrayList<ServiceStaff>) ois.readObject();
+    		ois.close();
+    	}
+    }
+    
+    public void saveApartments() throws FileNotFoundException, IOException {
+    	ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(APARTMENT_FILE));
+    	oos.writeObject(apartaments);
+    	oos.close();
+    }
+    
+	public void savePets() throws FileNotFoundException, IOException {
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(PET_FILE));
+    	oos.writeObject(pets);
+    	oos.close();	
+	}
+	
+	public void saveDoormans() throws FileNotFoundException, IOException {
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DOORMAN_FILE));
+    	oos.writeObject(doormen);
+    	oos.close();
+	}
+	
+	public void saveOwners() throws FileNotFoundException, IOException {
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(OWNER_FILE));
+    	oos.writeObject(owners);
+    	oos.close();
+	}
+	
+	public void saveAdmins() throws FileNotFoundException, IOException {
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ADMIN_FILE));
+    	oos.writeObject(admin);
+    	oos.close();
+	}
+	
+	public void saveServiceStaff() throws FileNotFoundException, IOException {
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SERVICESTAFF_FILE));
+    	oos.writeObject(serviceStaff);
+    	oos.close();
+	}
 
 	public List<Resident> getResidents() {
 		return residents;
