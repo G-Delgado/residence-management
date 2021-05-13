@@ -8,7 +8,7 @@ Residence Management is a desktop application for the management and administrat
 
 
 
-  ### [Link to first assigment](https://github.com/Jacobo0312/CLI-SnakesAndLadders/blob/main/docs/T2.pdf "PDF")
+  ### [Link to first assigment](https://github.com/G-Delgado/residence-management/blob/main/docs/Delgado%2C%20Garcia.pdf "PDF")
 
 ## Made by
 + [Gabriel Delgado](https://github.com/G-Delgado "Gabriel Delgado")
