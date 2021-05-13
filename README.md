@@ -1,14 +1,19 @@
-## Getting Started
+# Resident Management
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+![LOGO](resources/icon-background-blue.png?raw=true)
 
-## Folder Structure
 
-The workspace contains two folders by default, where:
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+Residence Management is a desktop application for the management and administration of residential complexes, it has modules for the management, communication and administration of properties, it has tools for generating reports, statistics, sending invoices, receiving claims and space reservations.
 
-## Dependency Management
 
-The `JAVA DEPENDENCIES` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-pack/blob/master/release-notes/v0.9.0.md#work-with-jar-files-directly).
+
+  ### [Link to first assigment](https://github.com/Jacobo0312/CLI-SnakesAndLadders/blob/main/docs/T2.pdf "PDF")
+
+## Made by
++ [Gabriel Delgado](https://github.com/G-Delgado "Gabriel Delgado")
++ [Juan Jacobo Garcia](https://github.com/Jacobo0312 "Juan Jacobo Garcia")
+
+
+
+  [![forthebadge](https://forthebadge.com/images/badges/made-with-java.svg)](https://forthebadge.com)
