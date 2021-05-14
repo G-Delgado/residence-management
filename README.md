@@ -6,7 +6,13 @@
 
 Residence Management is a desktop application for the management and administration of residential complexes, it has modules for the management, communication and administration of properties, it has tools for generating reports, statistics, sending invoices, receiving claims and space reservations.
 
+#### Technologies and Software Used
+- Java
+- Windows 10
+- Eclipse
+- Visual Studio Code
 
+### Assignments
 
   ### [Link to first assigment](https://github.com/G-Delgado/residence-management/blob/main/docs/Delgado%2C%20Garcia.pdf "PDF")
 
