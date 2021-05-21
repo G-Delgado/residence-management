@@ -11,6 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import exceptions.*;
 import java.util.List;
 
 
@@ -65,7 +66,7 @@ public class ResidenceManagement {
 			}
 		}
 
-		System.out.println(apartaments);
+		//System.out.println(apartaments);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -266,13 +267,13 @@ public class ResidenceManagement {
 	}
 
 	public void exportResident() throws FileNotFoundException {
-		//residents.add(new Resident("Juan","Garcia",34323,"10033"));
+		// residents.add(new Resident("Juan","Garcia",34323,"10033"));
 		PrintWriter pw = new PrintWriter(RESIDENTS_FILE);
 
 		String report = "first_name" + SEPARATE + "last_name" + SEPARATE + "phone" + SEPARATE + "id";
 
 		for (Resident resident : residents) {
-			report += "\n"+resident.toCSV(SEPARATE) ;
+			report += "\n" + resident.toCSV(SEPARATE);
 		}
 
 		pw.println(report);
@@ -281,13 +282,13 @@ public class ResidenceManagement {
 	}
 
 	public void exportCars() throws FileNotFoundException {
-	cars.add(new Car("TXT123"));
+		cars.add(new Car("TXT123"));
 		PrintWriter pw = new PrintWriter(CARS_FILE);
 
 		String report = "licensePlate";
 
 		for (Car car : cars) {
-			report += "\n"+car.toCSV() ;
+			report += "\n" + car.toCSV();
 		}
 
 		pw.println(report);
@@ -295,7 +296,60 @@ public class ResidenceManagement {
 
 	}
 
+	// Login
+	public Boolean loginAdmin(String username, String password) {
+		Admin loginAdmin = new Admin(username, password);
+		if (loginAdmin.equals(admin))
+			return true;
+		else
+			return false;
+	}
+
+	public Boolean loginApartament(String username,String password) throws UsernameInvalidException,PasswordInvalidException{
+		Boolean login=false;
+
+		String number="1";
+		String tower="1";
+
+		if (username.contains("_")){
+		 number=username.split("_")[0];
+		 tower=username.split("_")[1];
+		}
+		Apartament apto=new Apartament(tower, number, username,password);
+		int search=binarySearchApartament(apartaments, apto);
+		if (search>=0){
+			if (apto.equals(apartaments.get(search))){
+				login=true;
+			}else{
+				throw new PasswordInvalidException();
+			}
+		}else{
+			throw new UsernameInvalidException();
+		}
+		
+		return login;
+
+	}
 
 
+	private int binarySearchApartament(List<Apartament> apartaments,Apartament key){
+		//FUNCIONA PERO REVISAR ESTO
+		int low = 0;
+        int high = apartaments.size()-1;
+
+        while (low <= high) {
+            int mid = (low + high) >>> 1;
+            Comparable<Apartament> midVal = apartaments.get(mid);
+            int cmp = midVal.compareTo(key);
+
+            if (cmp < 0)
+                low = mid + 1;
+            else if (cmp > 0)
+                high = mid - 1;
+            else
+                return mid;
+        }
+        return -(low + 1); 
+	}
 
 }
