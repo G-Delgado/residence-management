@@ -11,6 +11,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
+
 import exceptions.*;
 import java.util.List;
 
@@ -39,19 +41,21 @@ public class ResidenceManagement {
 	private int towers;
 	private int floors;
 	private int apartamentsPerFloor;
+	private double administrationFee;
 
-	public ResidenceManagement(Admin admin, int towers, int floors, int apartamentsPerFloor) {
+	public ResidenceManagement(int towers, int floors, int apartamentsPerFloor,double administrationFee) {
 		this.residents = new ArrayList<Resident>();
 		this.pets = new ArrayList<Pet>();
 		this.doormen = new ArrayList<Doorman>();
 		this.owners = new ArrayList<Owner>();
 		this.apartaments = new ArrayList<Apartament>();
 		this.cars = new ArrayList<Car>();
-		this.admin = admin;
+		this.admin = null;
 		this.towers = towers;
 		this.floors = floors;
 		this.apartamentsPerFloor = apartamentsPerFloor;
 		createApartaments(towers, floors, apartamentsPerFloor);
+		this.administrationFee=administrationFee;
 
 	}
 
@@ -60,7 +64,7 @@ public class ResidenceManagement {
 		for (int i = 1; i <= towers; i++) {
 			for (int j = 1; j <= floors; j++) {
 				for (int k = 1; k <= apartamentsPerFloor; k++) {
-					apartaments.add(new Apartament(i + "", j + "0" + k, null, null, null, null));
+					apartaments.add(new Apartament(i + "", j + "0" + k));
 
 				}
 			}
@@ -350,6 +354,26 @@ public class ResidenceManagement {
                 return mid;
         }
         return -(low + 1); 
+	}
+
+
+	//Generate invoices
+
+	public void generateAdministrationDebt(Date date){
+		String description="Cuota de administracion";
+
+		for (Apartament apartament : apartaments) {
+			generateDebt(description, date, administrationFee,apartament);
+		}
+		
+
+	}
+
+
+	public void generateDebt(String description,Date date,double price,Apartament apartament){	
+
+		apartament.getDebt().add(new Debt( description,  price,  date));
+
 	}
 
 }

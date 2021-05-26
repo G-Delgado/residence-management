@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Apartament implements Serializable, Comparable<Apartament> {
@@ -18,17 +19,18 @@ public class Apartament implements Serializable, Comparable<Apartament> {
     private List<Car> cars;
     private String username;
     private String password;
+    private List<Debt> debt;
 
-    public Apartament(String tower, String number, Owner owner, List<Resident> residents, List<Pet> pets,
-            List<Car> cars) {
+    public Apartament(String tower, String number) {
         this.tower = tower;
         this.number = Integer.parseInt(number);
-        this.owner = owner;
-        this.residents = residents;
-        this.pets = pets;
-        this.cars = cars;
+        this.owner = null;
+        this.residents = new ArrayList<Resident>();
+        this.pets = new ArrayList<Pet>();
+        this.cars = new ArrayList<Car>();
         this.username = number + "_" + tower;
         this.password = "1234";
+        this.debt=new ArrayList<Debt>();
     }
 
     public Apartament(String tower, String number, String username, String password) {
@@ -101,6 +103,17 @@ public class Apartament implements Serializable, Comparable<Apartament> {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
+
+    public List<Debt> getDebt() {
+        return this.debt;
+    }
+
+    public void setDebt(List<Debt> debt) {
+        this.debt = debt;
+    }
+    
 
     @Override
     public String toString() {
