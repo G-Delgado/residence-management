@@ -1,11 +1,13 @@
 package model;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -71,6 +73,19 @@ public class ResidenceManagement {
 		}
 
 		//System.out.println(apartaments);
+	}
+	
+	public void generateResidentsCsv() {
+		try {
+			PrintWriter pw = new PrintWriter("./data/residents.csv");
+			for (Apartament ap : apartaments) {
+					pw.println(ap.toString() + "," + ap.residentsToString());
+			}
+			
+			pw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@SuppressWarnings("unchecked")

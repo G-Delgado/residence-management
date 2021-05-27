@@ -114,6 +114,19 @@ public class Apartament implements Serializable, Comparable<Apartament> {
         this.debt = debt;
     }
     
+    public String residentsToString() {
+    	String result = "";
+    	for (int i = 0; i < residents.size(); i++) {
+    		if (i == residents.size() - 1) {
+    			result += residents.get(i).toString();
+    		} else {
+    			result += residents.get(i).toString() + ",";
+    		}
+    	}
+    	
+    	return result;
+    }
+    
 
     @Override
     public String toString() {
