@@ -67,7 +67,7 @@
          <children>
             <Pane layoutX="76.0" layoutY="106.0">
                <children>
-                  <Button mnemonicParsing="false" opacity="0.7" prefHeight="190.0" prefWidth="168.0" styleClass="button2" stylesheets="@../css/fullpackstyling.css" />
+                  <Button mnemonicParsing="false" onAction="#test" opacity="0.7" prefHeight="190.0" prefWidth="168.0" styleClass="button2" stylesheets="@../css/fullpackstyling.css" />
                   <Circle fill="#3d52d5" layoutX="84.0" layoutY="87.0" radius="50.0" stroke="WHITE" strokeType="INSIDE" />
                   <ImageView fitHeight="49.0" fitWidth="37.0" layoutX="66.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -82,7 +82,7 @@
             </Pane>
             <Pane layoutX="316.0" layoutY="106.0" prefHeight="202.0" prefWidth="179.0">
                <children>
-                  <Button mnemonicParsing="false" opacity="0.7" prefHeight="190.0" prefWidth="168.0" styleClass="button2" stylesheets="@../css/fullpackstyling.css" />
+                  <Button mnemonicParsing="false" onAction="#test" opacity="0.7" prefHeight="190.0" prefWidth="168.0" styleClass="button2" stylesheets="@../css/fullpackstyling.css" />
                   <Circle fill="#3d52d5" layoutX="84.0" layoutY="87.0" radius="50.0" stroke="WHITE" strokeType="INSIDE" />
                   <ImageView fitHeight="49.0" fitWidth="37.0" layoutX="66.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -97,7 +97,7 @@
             </Pane>
             <Pane layoutX="71.0" layoutY="354.0" prefHeight="202.0" prefWidth="179.0">
                <children>
-                  <Button mnemonicParsing="false" opacity="0.7" prefHeight="190.0" prefWidth="168.0" styleClass="button2" stylesheets="@../css/fullpackstyling.css" />
+                  <Button mnemonicParsing="false" onAction="#test" opacity="0.7" prefHeight="190.0" prefWidth="168.0" styleClass="button2" stylesheets="@../css/fullpackstyling.css" />
                   <Circle fill="#3d52d5" layoutX="84.0" layoutY="87.0" radius="50.0" stroke="WHITE" strokeType="INSIDE" />
                   <ImageView fitHeight="49.0" fitWidth="37.0" layoutX="66.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -112,7 +112,7 @@
             </Pane>
             <Pane layoutX="316.0" layoutY="354.0" prefHeight="202.0" prefWidth="179.0">
                <children>
-                  <Button mnemonicParsing="false" opacity="0.7" prefHeight="190.0" prefWidth="168.0" styleClass="button2" stylesheets="@../css/fullpackstyling.css" />
+                  <Button mnemonicParsing="false" onAction="#test" opacity="0.7" prefHeight="190.0" prefWidth="168.0" styleClass="button2" stylesheets="@../css/fullpackstyling.css" />
                   <Circle fill="#3d52d5" layoutX="84.0" layoutY="87.0" radius="50.0" stroke="WHITE" strokeType="INSIDE" />
                   <ImageView fitHeight="49.0" fitWidth="37.0" layoutX="66.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -127,7 +127,7 @@
             </Pane>
             <Pane layoutX="559.0" layoutY="354.0" prefHeight="202.0" prefWidth="179.0">
                <children>
-                  <Button mnemonicParsing="false" opacity="0.7" prefHeight="190.0" prefWidth="168.0" styleClass="button2" stylesheets="@../css/fullpackstyling.css" />
+                  <Button mnemonicParsing="false" onAction="#test" opacity="0.7" prefHeight="190.0" prefWidth="168.0" styleClass="button2" stylesheets="@../css/fullpackstyling.css" />
                   <Circle fill="#3d52d5" layoutX="84.0" layoutY="87.0" radius="50.0" stroke="WHITE" strokeType="INSIDE" />
                   <ImageView fitHeight="49.0" fitWidth="37.0" layoutX="66.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
                      <image>
