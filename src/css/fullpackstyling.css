@@ -172,3 +172,17 @@
 {
     -fx-background-color: linear-gradient(to bottom left, #A868A0, #2D75E8);
 }
+
+
+.choice-box {
+   -fx-background-color: #3D52D5;
+   -fx-focus-color: #3D52D5;
+   -fx-faint-focus-color: #B4C5E4;
+   -fx-control-inner-background:  #B4C5E4;
+   -fx-selection-bar: #3D52D5;
+-fx-selection-bar-text-fill: "white";
+-fx-mark-color: white; 
+-fx-background-radius :  20;
+}
+
+.choice-box > .label { -fx-text-fill: white; }

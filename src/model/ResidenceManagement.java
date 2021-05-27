@@ -52,7 +52,7 @@ public class ResidenceManagement {
 		this.owners = new ArrayList<Owner>();
 		this.apartaments = new ArrayList<Apartament>();
 		this.cars = new ArrayList<Car>();
-		this.admin = null;
+		this.admin = new Admin("root", "1234");
 		this.towers = towers;
 		this.floors = floors;
 		this.apartamentsPerFloor = apartamentsPerFloor;

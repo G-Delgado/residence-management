@@ -28,7 +28,7 @@
             </VBox>
             <Pane layoutY="86.0" prefHeight="59.0" prefWidth="262.0" style="-fx-background-color: #3D52D5; -fx-background-radius: 5;">
                <children>
-                  <Label layoutX="25.0" layoutY="17.0" text="Administrador" textFill="WHITE">
+                  <Label fx:id="labelAdmin" layoutX="25.0" layoutY="17.0" text="Administrador" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
