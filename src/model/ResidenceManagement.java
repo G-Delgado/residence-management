@@ -1,13 +1,11 @@
 package model;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -193,6 +191,14 @@ public class ResidenceManagement {
 	public void setDoormen(List<Doorman> doormen) {
 		this.doormen = doormen;
 	}
+	
+	public void setAdministrationFee(double fee) {
+		administrationFee = fee;
+	}
+	
+	public double getAdministrationFee() {
+		return administrationFee;
+	}
 
 	public List<ServiceStaff> getServiceStaff() {
 		return serviceStaff;
@@ -351,7 +357,7 @@ public class ResidenceManagement {
 	}
 
 
-	private int binarySearchApartament(List<Apartament> apartaments,Apartament key){
+	public int binarySearchApartament(List<Apartament> apartaments,Apartament key){
 		//FUNCIONA PERO REVISAR ESTO
 		int low = 0;
         int high = apartaments.size()-1;
