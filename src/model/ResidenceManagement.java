@@ -19,14 +19,14 @@ import java.util.List;
 
 public class ResidenceManagement {
 
-	private final static String APARTMENT_FILE = "./data/apartments.rm";
-	private final static String PET_FILE = "./data/pets.rm";
-	private final static String DOORMAN_FILE = "./data/doormans.rm";
-	private final static String OWNER_FILE = "./data/owners.rm";
-	private final static String ADMIN_FILE = "./data/admins.rm";
-	private final static String SERVICESTAFF_FILE = "./data/servicestaff.rm";
-	private final static String RESIDENTS_FILE = "data/residents.csv";
-	private final static String CARS_FILE = "data/cars.csv";
+	public final static String APARTMENT_FILE = "./data/apartments.rm";
+	public final static String PET_FILE = "./data/pets.rm";
+	public final static String DOORMAN_FILE = "./data/doormans.rm";
+	public final static String OWNER_FILE = "./data/owners.rm";
+	public final static String ADMIN_FILE = "./data/admins.rm";
+	public final static String SERVICESTAFF_FILE = "./data/servicestaff.rm";
+	public final static String RESIDENTS_FILE = "data/residents.csv";
+	public final static String CARS_FILE = "data/cars.csv";
 
 	private final static String SEPARATE = ",";
 
@@ -322,7 +322,7 @@ public class ResidenceManagement {
 	}
 
 	// Login
-	public Boolean loginAdmin(String username, String password) {
+	public boolean loginAdmin(String username, String password) {
 		Admin loginAdmin = new Admin(username, password);
 		if (loginAdmin.equals(admin))
 			return true;
@@ -330,8 +330,8 @@ public class ResidenceManagement {
 			return false;
 	}
 
-	public Boolean loginApartament(String username,String password) throws UsernameInvalidException,PasswordInvalidException{
-		Boolean login=false;
+	public boolean loginApartament(String username,String password) throws UsernameInvalidException,PasswordInvalidException{
+		boolean login=false;
 
 		String number="1";
 		String tower="1";

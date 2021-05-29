@@ -13,22 +13,21 @@ public class ResidenceManagementTest {
 	
 	private ResidenceManagement rm;
 	
-	public void scenaryOne( ) {
+	public void scenaryOne() {
 		rm = new ResidenceManagement(2, 2, 4,450);
 	}
 	
-	public void scenaryTwo( ) {
+	public void scenaryTwo() {
 		rm = new ResidenceManagement(2,2, 4, 450);
 		rm.setAdmin(new Admin("Gabriel", "Sape", 354211211, "2454353"));
 	}
 	
-	public void scenaryThree( ) {
+	public void scenaryThree() {
 		// Generates 1 tower with 3 floors and 2 apartments per floor
 		rm = new ResidenceManagement(1, 3, 2, 450);
 		
 	}
 
-	
 	@Test
 	public void testCreateApartments() {
 		scenaryOne();
@@ -43,11 +42,21 @@ public class ResidenceManagementTest {
 	public void testLoginAdmin() {
 		scenaryTwo();
 		
-		boolean test = rm.loginAdmin("Root", "1234");
+		String username = "Root";
+		String password = "1234";
+		boolean test = rm.loginAdmin(username, password);
 		assertTrue(test);
 		
-		boolean test2 = rm.loginAdmin("Admin", "5451234");
+		String usernameFail = "Admin";
+		String passwordFail = "5451234";
+		boolean test2 = rm.loginAdmin(usernameFail, passwordFail);
 		assertTrue(!test2);
+		
+		boolean test3 = rm.loginAdmin(username, passwordFail);
+		assertTrue(!test3);
+		
+		boolean test4 = rm.loginAdmin(usernameFail, password);
+		assertTrue(!test4);
 	}
 	
 	@Test
@@ -77,8 +86,10 @@ public class ResidenceManagementTest {
 	@Test
 	public void testBinarySearchApartment() {
 		scenaryThree();
-		
-		Apartament apto = new Apartament(rm.getTowers() + "", "201", "201_1", "1234");
+		String number = "201";
+		String username = "201_1";
+		String password = "1234";
+		Apartament apto = new Apartament(rm.getTowers() + "", number, username, password);
 		
 		int index = rm.binarySearchApartament(rm.getApartaments(), apto);
 		
@@ -100,10 +111,11 @@ public class ResidenceManagementTest {
 		rm.generateAdministrationDebt(date);
 		
 		double fee = rm.getAdministrationFee();
-		double apFee = rm.getApartaments().get(2).getDebt().get(0).getPrice();
-		
-		assertEquals(fee, apFee);
-		assertTrue(!rm.getApartaments().get(1).getDebt().isEmpty());
+		for (int i = 0; i < rm.getApartaments().size(); i++) {			
+			double apFee = rm.getApartaments().get(i).getDebt().get(0).getPrice();
+			assertEquals(fee, apFee);
+			assertTrue(!rm.getApartaments().get(i).getDebt().isEmpty());
+		}
 	}
 	
 	@Test

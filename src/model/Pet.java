@@ -13,9 +13,9 @@ public class Pet implements Serializable{
 
 
 
-    public Pet(String name, TypePet type) {
+    public Pet(String name, String type) {
         this.name = name;
-        this.type = type;
+        this.type = TypePet.valueOf(type);
     }
 
 

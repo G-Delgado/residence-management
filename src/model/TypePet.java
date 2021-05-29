@@ -1,5 +1,6 @@
 package model;
 
 public enum TypePet {
-    CAT,DOG;
+    CAT,
+    DOG
 }
