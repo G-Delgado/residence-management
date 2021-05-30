@@ -118,9 +118,9 @@ public class Apartament implements Serializable, Comparable<Apartament> {
     	String result = "";
     	for (int i = 0; i < residents.size(); i++) {
     		if (i == residents.size() - 1) {
-    			result += residents.get(i).toString();
+    			result += residents.get(i).toCSV(",");
     		} else {
-    			result += residents.get(i).toString() + ",";
+    			result += residents.get(i).toCSV(",") + ",";
     		}
     	}
     	
