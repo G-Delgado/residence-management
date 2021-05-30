@@ -1,6 +1,8 @@
 package ui;
 
+import java.io.File;
 import java.io.IOException;
+
 
 import exceptions.PasswordInvalidException;
 import exceptions.UsernameInvalidException;
@@ -18,12 +20,19 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Duration;
+import model.Apartament;
 import model.ResidenceManagement;
 
 public class ResidentManagementGUI {
 
     private ResidenceManagement residentManagement;
+
+    @FXML
+    private Pane paneAdministration;
 
     @FXML
     private AnchorPane mainPane;
@@ -43,6 +52,13 @@ public class ResidentManagementGUI {
 
     @FXML
     private Label labelAdmin;
+
+
+    //Export
+
+
+    @FXML
+    private ChoiceBox<String> choiceboxExportApto;
 
     public ResidentManagementGUI(ResidenceManagement residentManagement) {
         this.residentManagement = residentManagement;
@@ -144,5 +160,49 @@ public class ResidentManagementGUI {
 
         alert.showAndWait();
     }
+
+    @FXML
+    public void export(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Export.fxml"));
+        fxmlLoader.setController(this);
+        Parent pane = fxmlLoader.load();
+        paneAdministration.getChildren().clear();
+        paneAdministration.getChildren().addAll(pane);
+
+        
+        for (Apartament apartament : residentManagement.getApartaments()){
+            choiceboxExportApto.getItems().add(apartament.getUsername());
+            
+        }
+        
+
+    }
+
+
+    @FXML
+    public void exportApartamentsCSV(ActionEvent event) {
+
+
+        try {
+            FileChooser fc = new FileChooser();
+            String apartament=choiceboxExportApto.getValue();
+            
+            fc.setInitialFileName(apartament+"_export");
+            
+            fc.getExtensionFilters().add(new ExtensionFilter("CSV", "*.csv"));
+            File file = fc.showSaveDialog(mainPane.getScene().getWindow());
+            residentManagement.exportResidentsPerApartaments(apartament, file);
+            
+            
+        } catch (Exception e) {
+            alert("Invalid");
+        }
+
+      
+
+    }
+
+
+
 
 }

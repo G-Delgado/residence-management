@@ -56,6 +56,11 @@ public class ResidenceManagement {
 		this.apartamentsPerFloor = apartamentsPerFloor;
 		createApartaments(towers, floors, apartamentsPerFloor);
 		this.administrationFee=administrationFee;
+		try {
+			importDataResidents();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -273,7 +278,6 @@ public class ResidenceManagement {
 			line = br.readLine();
 		}
 		br.close();
-		System.out.println(residents.toString());
 	}
 
 	public void importDataCars() throws IOException {
@@ -397,4 +401,26 @@ public class ResidenceManagement {
 
 	}
 
+	public void exportResidentsPerApartaments(String apto,File file) throws FileNotFoundException{
+		
+			String number=apto.split("_")[0];
+			String tower=apto.split("_")[1];
+			Apartament apartament=new Apartament(tower, number, apto,"");
+			int index=binarySearchApartament(apartaments, apartament);
+
+		   apartament=apartaments.get(index);
+		   
+
+		PrintWriter pw = new PrintWriter(file);
+
+		String export="FIRST NAME, LAST NAME, PHONE NUMBER, ID";
+
+		apartament.setResidents(residents);
+
+		for (Resident resident : apartament.getResidents()) {
+			export+="\n"+resident.toCSV(SEPARATE);
+		}
+		pw.print(export);
+		pw.close();
+	}
 }

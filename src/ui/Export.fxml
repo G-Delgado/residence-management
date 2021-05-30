@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane prefHeight="649.0" prefWidth="631.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="450.0" layoutY="57.0" prefHeight="94.0" prefWidth="111.0" />
+      <Label alignment="CENTER" layoutX="57.0" layoutY="66.0" prefHeight="17.0" prefWidth="492.0" text="Seleccione un apartamento y presione el boton para exportar los residentes">
+         <font>
+            <Font name="Arial Bold" size="13.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="choiceboxExportApto" layoutX="111.0" layoutY="91.0" prefWidth="150.0" stylesheets="@../css/fullpackstyling.css" />
+      <Button layoutX="277.0" layoutY="86.0" mnemonicParsing="false" onAction="#exportApartamentsCSV" opacity="0.7" prefHeight="45.0" prefWidth="47.0" styleClass="button2" stylesheets="@../css/fullpackstyling.css" />
+      <Circle fill="#3d52d5" layoutX="301.0" layoutY="109.0" radius="17.0" stroke="WHITE" strokeType="INSIDE" />
+      <ImageView fitHeight="25.0" fitWidth="22.0" layoutX="290.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/iconmonstr-upload-21-64.png" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>
