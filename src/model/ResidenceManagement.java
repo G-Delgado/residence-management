@@ -63,8 +63,21 @@ public class ResidenceManagement {
 		}
 
 	}
+	
+	// For tests
+	public ResidenceManagement(int apartamentsPerFloor, double administrationFee) {
+		this.residents = new ArrayList<Resident>();
+		this.pets = new ArrayList<Pet>();
+		this.doormen = new ArrayList<Doorman>();
+		this.owners = new ArrayList<Owner>();
+		this.apartaments = new ArrayList<Apartament>();
+		this.cars = new ArrayList<Car>();
+		this.admin = new Admin("root", "1234");
+		this.apartamentsPerFloor = apartamentsPerFloor;
+		this.administrationFee=administrationFee;
+	}
 
-	private void createApartaments(int towers, int floors, int apartamentsPerFloor) {
+	public void createApartaments(int towers, int floors, int apartamentsPerFloor) {
 
 		for (int i = 1; i <= towers; i++) {
 			for (int j = 1; j <= floors; j++) {

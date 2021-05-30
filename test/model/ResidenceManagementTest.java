@@ -14,7 +14,7 @@ public class ResidenceManagementTest {
 	private ResidenceManagement rm;
 	
 	public void scenaryOne() {
-		rm = new ResidenceManagement(2, 2, 4,450);
+		rm = new ResidenceManagement(4,450);
 	}
 	
 	public void scenaryTwo() {
@@ -31,6 +31,13 @@ public class ResidenceManagementTest {
 	@Test
 	public void testCreateApartments() {
 		scenaryOne();
+		int towers = 2;
+		int floors = 2;
+		
+		rm.setTowers(towers);
+		rm.setFloors(floors);
+		
+		rm.createApartaments(towers, floors, rm.getApartamentsPerFloor());
 		
 		assertEquals(16, rm.getApartaments().size());
 		for (int i = 0; i < rm.getApartaments().size(); i++) {
