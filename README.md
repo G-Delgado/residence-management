@@ -1,6 +1,6 @@
 # Resident Management
 
-![LOGO](resources/icon-background-blue.png?raw=true)
+![LOGO](src/resources/icon-background-blue.png?raw=true)
 
 
 
