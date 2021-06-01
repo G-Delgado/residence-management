@@ -58,6 +58,7 @@ public class ResidenceManagement {
 		this.administrationFee=administrationFee;
 		try {
 			importDataResidents();
+			importDataCars();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -273,6 +274,17 @@ public class ResidenceManagement {
 	public void setApartamentsPerFloor(int apartamentsPerFloor) {
 		this.apartamentsPerFloor = apartamentsPerFloor;
 	}
+
+
+	public List<Car> getCars() {
+		return this.cars;
+	}
+
+	public void setCars(List<Car> cars) {
+		this.cars = cars;
+	}
+
+
 
 	// IMPORT AND EXPORT RESIDENT-CARS
 	public void importDataResidents() throws IOException {

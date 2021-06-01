@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="649.0" prefWidth="826.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="56.0" prefWidth="826.0" style="-fx-background-color: #3C3744;">
+         <children>
+            <ButtonBar layoutX="75.0" layoutY="8.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="677.0" stylesheets="@../css/fullpackstyling.css">
+              <buttons>
+                <Button mnemonicParsing="false" onAction="#tableResidents" styleClass="button4" stylesheets="@../css/fullpackstyling.css" text="RESIDENTS" />
+                  <Button mnemonicParsing="false" onAction="#tableApartaments" styleClass="button4" stylesheets="@../css/fullpackstyling.css" text="APARTAMENTS" />
+                  <Button mnemonicParsing="false" onAction="#tableCars" styleClass="button4" stylesheets="@../css/fullpackstyling.css" text="CAR" />
+                  <Button mnemonicParsing="false" onAction="#tableDoormen" styleClass="button4" stylesheets="@../css/fullpackstyling.css" text="DOORMEN" />
+                  <Button mnemonicParsing="false" onAction="#tablePets" styleClass="button4" stylesheets="@../css/fullpackstyling.css" text="PETS" />
+                  <Button mnemonicParsing="false" onAction="#tableServiceStaff" styleClass="button4" stylesheets="@../css/fullpackstyling.css" text="SERVICE STAFF" />
+              </buttons>
+            </ButtonBar>
+         </children>
+      </Pane>
+      <Pane fx:id="paneTables" layoutX="22.0" layoutY="74.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="559.0" prefWidth="785.0" />
+   </children>
+</Pane>
