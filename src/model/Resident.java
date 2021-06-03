@@ -1,6 +1,6 @@
 package model;
 
-public class Resident extends Person {
+public class Resident extends Person implements Comparable<Resident>{
 
     public Resident(String firstName, String lastName, int phoneNumber, String id) {
         super( firstName, lastName, phoneNumber, id);
@@ -13,5 +13,13 @@ public class Resident extends Person {
     }
 
     
-    
+    @Override
+	public int compareTo(Resident o) {
+		int result = getLastName().compareTo(o.getLastName());
+		if (result == 0) {
+			result = getPhoneNumber() - o.getPhoneNumber() ;
+		}
+		return result;
+	}
+
 }

@@ -16,6 +16,8 @@ import java.util.Date;
 import exceptions.*;
 import java.util.List;
 
+import javax.sql.rowset.serial.SerialArray;
+
 
 public class ResidenceManagement {
 
@@ -418,8 +420,10 @@ public class ResidenceManagement {
 		
 
 	}
+
+	//Sorts
 	
-	public void sortDoormen() {
+	public void bubbleSortDoormen() {
 		// Sort Doormen!
 		for (int i = 0; i < doormen.size(); i++) {
 			for (int j = 0; j < doormen.size(); j++) {
@@ -431,9 +435,41 @@ public class ResidenceManagement {
 			}
 		}
 	}
+
+
+	public void insertionSortResidents(){
+		 int n = residents.size();
+        for (int i = 1; i < n; ++i) {
+            Resident key = residents.get(i);
+            int j = i - 1;
+            while (j >= 0 && residents.get(j).compareTo(key) <0) {
+                residents.set(j+1,residents.get(j));
+                j = j - 1;
+            }
+			residents.set(j+1,key);
+        }
+	}
+
+
+	public void selectionSortServiceStaff(){
+		int n = serviceStaff.size();
+
+        for (int i = 0; i < n-1; i++)
+        {
+            int min_idx = i;
+            for (int j = i+1; j < n; j++)
+                if (serviceStaff.get(j).compareTo(serviceStaff.get(min_idx)) < 0){
+                    min_idx = j;
+				}
+            ServiceStaff temp = serviceStaff.get(min_idx);
+			serviceStaff.set(min_idx, serviceStaff.get(i));
+			serviceStaff.set(i,temp);
+        }
+	}
+
+
 	
 	public void binarySearchPets(String petName) {
-		// 
 		Pet found = null;
 		int i = 0;
 		int j = pets.size();
@@ -448,7 +484,6 @@ public class ResidenceManagement {
 				i = m + 1;
 			}
 		}
-		
 		System.out.println(found);
 	}
 

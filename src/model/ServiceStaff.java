@@ -2,7 +2,7 @@ package model;
 
 import java.io.Serializable;
 
-public class ServiceStaff extends Person implements Serializable{
+public class ServiceStaff extends Person implements Serializable,Comparable<ServiceStaff>{
 
     /**
 	 * 
@@ -13,6 +13,13 @@ public class ServiceStaff extends Person implements Serializable{
         super(firstName, lastName, phoneNumber, id);
     }
 
-    
+	@Override
+	public int compareTo(ServiceStaff o) {
+		int result = getId().compareTo(o.getId());
+		if (result == 0) {
+			result = getLastName().compareTo(o.getLastName());
+		}
+		return result;
+	}
     
 }
