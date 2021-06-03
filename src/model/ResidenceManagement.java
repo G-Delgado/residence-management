@@ -418,12 +418,43 @@ public class ResidenceManagement {
 		
 
 	}
+	
+	public void sortDoormen() {
+		// Sort Doormen!
+		for (int i = 0; i < doormen.size(); i++) {
+			for (int j = 0; j < doormen.size(); j++) {
+				if (doormen.get(i).compareTo(doormen.get(j)) < 0) {
+					Doorman alt = doormen.get(i);
+					doormen.set(i, doormen.get(j));
+					doormen.set(j, alt);
+				}
+			}
+		}
+	}
+	
+	public void binarySearchPets(String petName) {
+		// 
+		Pet found = null;
+		int i = 0;
+		int j = pets.size();
+		int m = 0;
+		while (i <= j) {
+			m = (j + i)/2;
+			if (pets.get(m).getName().equals(petName)) {
+				found = pets.get(m);
+			} else if (pets.get(m).getName().compareTo(petName) < 0) {
+				j = m - 1;
+			} else {
+				i = m + 1;
+			}
+		}
+		
+		System.out.println(found);
+	}
 
 
 	public void generateDebt(String description,Date date,double price,Apartament apartament){	
-
 		apartament.getDebt().add(new Debt( description,  price,  date));
-
 	}
 
 	public void exportResidentsPerApartaments(String apto,File file) throws FileNotFoundException{
