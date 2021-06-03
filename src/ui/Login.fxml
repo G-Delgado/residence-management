@@ -61,6 +61,16 @@
                   <Font name="Arial" size="20.0" />
                </font>
             </Label>
+            <Label fx:id="time" layoutX="199.0" layoutY="14.0" prefHeight="28.0" prefWidth="150.0" text="TIME" textFill="WHITE">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="date" layoutX="26.0" layoutY="14.0" prefHeight="28.0" prefWidth="150.0" text="DATE" textFill="WHITE">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="12.0" />
+               </font>
+            </Label>
          </children></AnchorPane>
       <Button layoutX="754.0" layoutY="427.0" mnemonicParsing="false" onAction="#signIn" opacity="0.7" prefHeight="49.0" prefWidth="168.0" styleClass="button2" stylesheets="@../css/fullpackstyling.css" text="Sign in" textFill="WHITE">
          <font>

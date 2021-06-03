@@ -62,6 +62,16 @@
                   </Label>
                </children>
             </Pane>
+            <Label fx:id="date" alignment="CENTER_RIGHT" layoutX="99.0" layoutY="14.0" prefHeight="28.0" prefWidth="150.0" text="DATE" textFill="WHITE">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="time" alignment="CENTER_RIGHT" layoutX="99.0" layoutY="49.0" prefHeight="28.0" prefWidth="150.0" text="TIME" textFill="WHITE">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="12.0" />
+               </font>
+            </Label>
          </children></AnchorPane>
       <Pane fx:id="paneAdministration" layoutX="262.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="649.0" prefWidth="826.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="262.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
          <children>
