@@ -493,6 +493,7 @@ public class ResidenceManagement {
 
 	public void generateDebt(String description,Date date,double price,Apartament apartament){	
 		apartament.getDebt().add(new Debt( description,  price,  date));
+		apartament.calculateTotalDebt();
 	}
 
 	public void exportResidentsPerApartaments(String apto,File file) throws FileNotFoundException{

@@ -20,6 +20,12 @@ public class Apartament implements Serializable, Comparable<Apartament> {
     private String username;
     private String password;
     private List<Debt> debt;
+    private double totalDebt;
+    
+    // Binary Tree relations
+    private Apartament left;
+    private Apartament right;
+    private Apartament parent;
 
     public Apartament(String tower, String number) {
         this.tower = tower;
@@ -31,6 +37,9 @@ public class Apartament implements Serializable, Comparable<Apartament> {
         this.username = number + "_" + tower;
         this.password = "1234";
         this.debt=new ArrayList<Debt>();
+        left = null;
+        right = null;
+        parent = null;
     }
 
     public Apartament(String tower, String number, String username, String password) {
@@ -125,6 +134,43 @@ public class Apartament implements Serializable, Comparable<Apartament> {
     	}
     	
     	return result;
+    }
+    
+    public double getTotalDebt() {
+    	return totalDebt;
+    }
+    
+    public void calculateTotalDebt() {
+    	double total = 0;
+    	for (Debt d : debt) {
+    		total += d.getPrice();
+    	}
+    	
+    	totalDebt = total;
+    }
+    
+    public void setLeft(Apartament ap) {
+    	left = ap;
+    }
+    
+    public Apartament getLeft() {
+    	return left;
+    }
+    
+    public void setRight(Apartament ap) {
+    	left = ap;
+    }
+    
+    public Apartament getRight() {
+    	return right;
+    }
+    
+    public void setParent(Apartament ap) {
+    	left = ap;
+    }
+    
+    public Apartament getParent() {
+    	return parent;
     }
     
 
