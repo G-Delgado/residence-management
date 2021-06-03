@@ -30,7 +30,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Duration;
 import model.Apartament;
-import model.Car;
+import model.Vehicle;
 import model.Doorman;
 import model.Pet;
 import model.ResidenceManagement;
@@ -385,12 +385,13 @@ public class ResidentManagementGUI {
 
     @FXML
     public void tableCars(ActionEvent event) throws IOException {
-        TableView<Car> table=new TableView<Car>();
+        TableView<Vehicle> table=new TableView<Vehicle>();
 
-        TableColumn<Car,String> licenseCol = new TableColumn<Car,String>("License Plate");
+        TableColumn<Vehicle,String> licenseCol = new TableColumn<Vehicle,String>("License Plate");
+        TableColumn<Vehicle,String> typeCol = new TableColumn<Vehicle,String>("Type");
 
 
-        table.getColumns().addAll(licenseCol);
+        table.getColumns().addAll(licenseCol,typeCol);
 
         table.setPrefSize(paneTables.getWidth(),paneTables.getHeight() );
         table.getStylesheets().setAll("/css/fullpackstyling.css");
@@ -400,11 +401,12 @@ public class ResidentManagementGUI {
         paneTables.getChildren().addAll(table);
 
 
-        ObservableList<Car> observableList;
-        observableList = FXCollections.observableArrayList(residentManagement.getCars());
+        ObservableList<Vehicle> observableList;
+        observableList = FXCollections.observableArrayList(residentManagement.getVehicles());
         table.setItems(observableList);
 
-        licenseCol.setCellValueFactory(new PropertyValueFactory<Car, String>("licensePlate"));
+        licenseCol.setCellValueFactory(new PropertyValueFactory<Vehicle, String>("licensePlate"));
+        typeCol.setCellValueFactory(new PropertyValueFactory<Vehicle, String>("type"));
         
          
     }

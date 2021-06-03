@@ -1,36 +1,9 @@
 package model;
 
-public class Car {
-
-    private String licensePlate;
-
-
+public class Car extends Vehicle{
 
     public Car(String licensePlate) {
-        this.licensePlate = licensePlate;
+        super(licensePlate,"CAR");
     }
-
-    public String getLicensePlate() {
-        return this.licensePlate;
-    }
-
-    public void setLicensePlate(String licensePlate) {
-        this.licensePlate = licensePlate;
-    }
-    
-
-
-    @Override
-    public String toString() {
-        return "{" +
-            " licensePlate='" + getLicensePlate() + "'" +
-            "}";
-    }
-
-    public String toCSV(){
-        return this.licensePlate;
-    }
-
-
     
 }

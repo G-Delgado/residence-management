@@ -16,8 +16,6 @@ import java.util.Date;
 import exceptions.*;
 import java.util.List;
 
-import javax.sql.rowset.serial.SerialArray;
-
 
 public class ResidenceManagement {
 
@@ -28,7 +26,7 @@ public class ResidenceManagement {
 	public final static String ADMIN_FILE = "./data/admins.rm";
 	public final static String SERVICESTAFF_FILE = "./data/servicestaff.rm";
 	public final static String RESIDENTS_FILE = "data/residents.csv";
-	public final static String CARS_FILE = "data/cars.csv";
+	public final static String CARS_FILE = "data/vehicles.csv";
 
 	private final static String SEPARATE = ",";
 
@@ -38,7 +36,7 @@ public class ResidenceManagement {
 	private List<ServiceStaff> serviceStaff;
 	private List<Owner> owners;
 	private List<Apartament> apartaments;
-	private List<Car> cars;
+	private List<Vehicle> vehicles;
 	private Admin admin;
 	private int towers;
 	private int floors;
@@ -51,7 +49,7 @@ public class ResidenceManagement {
 		this.doormen = new ArrayList<Doorman>();
 		this.owners = new ArrayList<Owner>();
 		this.apartaments = new ArrayList<Apartament>();
-		this.cars = new ArrayList<Car>();
+		this.vehicles = new ArrayList<Vehicle>();
 		this.admin = new Admin("root", "1234");
 		this.towers = towers;
 		this.floors = floors;
@@ -74,7 +72,7 @@ public class ResidenceManagement {
 		this.doormen = new ArrayList<Doorman>();
 		this.owners = new ArrayList<Owner>();
 		this.apartaments = new ArrayList<Apartament>();
-		this.cars = new ArrayList<Car>();
+		this.vehicles = new ArrayList<Vehicle>();
 		this.admin = new Admin("root", "1234");
 		this.apartamentsPerFloor = apartamentsPerFloor;
 		this.administrationFee=administrationFee;
@@ -278,12 +276,12 @@ public class ResidenceManagement {
 	}
 
 
-	public List<Car> getCars() {
-		return this.cars;
+	public List<Vehicle> getVehicles() {
+		return this.vehicles;
 	}
 
-	public void setCars(List<Car> cars) {
-		this.cars = cars;
+	public void setVehicles(List<Vehicle> vehicles) {
+		this.vehicles = vehicles;
 	}
 
 
@@ -315,11 +313,16 @@ public class ResidenceManagement {
 		while (line != null) {
 			String[] parts = line.split(SEPARATE);
 			String license = parts[0];
-			cars.add(new Car(license));
+			String type = parts[1];
+			if (type.equals("CAR")){
+				vehicles.add(new Car(license));
+			}else{
+				vehicles.add(new Motorcycle(license));
+			}
 			line = br.readLine();
 		}
 		br.close();
-		System.out.println(cars.toString());
+		System.out.println(vehicles.toString());
 	}
 
 	public void exportResident() throws FileNotFoundException {
@@ -338,12 +341,12 @@ public class ResidenceManagement {
 	}
 
 	public void exportCars() throws FileNotFoundException {
-		cars.add(new Car("TXT123"));
+		//vehicles.add(new Vehicle("TXT123"));
 		PrintWriter pw = new PrintWriter(CARS_FILE);
 
 		String report = "licensePlate";
 
-		for (Car car : cars) {
+		for (Vehicle car : vehicles) {
 			report += "\n" + car.toCSV();
 		}
 

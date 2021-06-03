@@ -16,7 +16,7 @@ public class Apartament implements Serializable, Comparable<Apartament> {
     private Owner owner;
     private List<Resident> residents;
     private List<Pet> pets;
-    private List<Car> cars;
+    private List<Vehicle> cars;
     private String username;
     private String password;
     private List<Debt> debt;
@@ -27,7 +27,7 @@ public class Apartament implements Serializable, Comparable<Apartament> {
         this.owner = null;
         this.residents = new ArrayList<Resident>();
         this.pets = new ArrayList<Pet>();
-        this.cars = new ArrayList<Car>();
+        this.cars = new ArrayList<Vehicle>();
         this.username = number + "_" + tower;
         this.password = "1234";
         this.debt=new ArrayList<Debt>();
@@ -80,11 +80,11 @@ public class Apartament implements Serializable, Comparable<Apartament> {
         this.pets = pets;
     }
 
-    public List<Car> getCars() {
+    public List<Vehicle> getCars() {
         return this.cars;
     }
 
-    public void setCars(List<Car> cars) {
+    public void setCars(List<Vehicle> cars) {
         this.cars = cars;
     }
 

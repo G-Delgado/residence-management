@@ -12,7 +12,7 @@
               <buttons>
                 <Button mnemonicParsing="false" onAction="#tableResidents" styleClass="button4" stylesheets="@../css/fullpackstyling.css" text="RESIDENTS" />
                   <Button mnemonicParsing="false" onAction="#tableApartaments" styleClass="button4" stylesheets="@../css/fullpackstyling.css" text="APARTAMENTS" />
-                  <Button mnemonicParsing="false" onAction="#tableCars" styleClass="button4" stylesheets="@../css/fullpackstyling.css" text="CAR" />
+                  <Button mnemonicParsing="false" onAction="#tableCars" styleClass="button4" stylesheets="@../css/fullpackstyling.css" text="VEHICLES" />
                   <Button mnemonicParsing="false" onAction="#tableDoormen" styleClass="button4" stylesheets="@../css/fullpackstyling.css" text="DOORMEN" />
                   <Button mnemonicParsing="false" onAction="#tablePets" styleClass="button4" stylesheets="@../css/fullpackstyling.css" text="PETS" />
                   <Button mnemonicParsing="false" onAction="#tableServiceStaff" styleClass="button4" stylesheets="@../css/fullpackstyling.css" text="SERVICE STAFF" />
