@@ -84,7 +84,7 @@
                         <Image url="@../resources/iconmonstr-tools-12-64.png" />
                      </image>
                   </ImageView>
-                  <Label alignment="CENTER" layoutX="-6.0" layoutY="146.0" prefHeight="17.0" prefWidth="174.0" text="General-Test Tables" textFill="WHITE">
+                  <Label alignment="CENTER" layoutX="-6.0" layoutY="146.0" prefHeight="17.0" prefWidth="174.0" text="General" textFill="WHITE">
                      <font>
                         <Font name="Arial Bold" size="13.0" />
                      </font></Label>
