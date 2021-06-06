@@ -10,12 +10,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
 import exceptions.*;
 import java.util.List;
-
 
 public class ResidenceManagement {
 
@@ -42,8 +42,10 @@ public class ResidenceManagement {
 	private int floors;
 	private int apartamentsPerFloor;
 	private double administrationFee;
+	private Claim rootClaim;
+	private Reservation rootReservation;
 
-	public ResidenceManagement(int towers, int floors, int apartamentsPerFloor,double administrationFee) {
+	public ResidenceManagement(int towers, int floors, int apartamentsPerFloor, double administrationFee) {
 		this.residents = new ArrayList<Resident>();
 		this.pets = new ArrayList<Pet>();
 		this.doormen = new ArrayList<Doorman>();
@@ -55,7 +57,7 @@ public class ResidenceManagement {
 		this.floors = floors;
 		this.apartamentsPerFloor = apartamentsPerFloor;
 		createApartaments(towers, floors, apartamentsPerFloor);
-		this.administrationFee=administrationFee;
+		this.administrationFee = administrationFee;
 		try {
 			importDataResidents();
 			importDataCars();
@@ -64,7 +66,7 @@ public class ResidenceManagement {
 		}
 
 	}
-	
+
 	// For tests
 	public ResidenceManagement(int apartamentsPerFloor, double administrationFee) {
 		this.residents = new ArrayList<Resident>();
@@ -75,7 +77,7 @@ public class ResidenceManagement {
 		this.vehicles = new ArrayList<Vehicle>();
 		this.admin = new Admin("root", "1234");
 		this.apartamentsPerFloor = apartamentsPerFloor;
-		this.administrationFee=administrationFee;
+		this.administrationFee = administrationFee;
 	}
 
 	public void createApartaments(int towers, int floors, int apartamentsPerFloor) {
@@ -89,16 +91,16 @@ public class ResidenceManagement {
 			}
 		}
 
-		//System.out.println(apartaments);
+		// System.out.println(apartaments);
 	}
-	
+
 	public void generateResidentsCsv() {
 		try {
 			PrintWriter pw = new PrintWriter("./data/residents.csv");
 			for (Apartament ap : apartaments) {
-					pw.println(ap.toString() + "," + ap.residentsToString());
+				pw.println(ap.toString() + "," + ap.residentsToString());
 			}
-			
+
 			pw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -210,11 +212,11 @@ public class ResidenceManagement {
 	public void setDoormen(List<Doorman> doormen) {
 		this.doormen = doormen;
 	}
-	
+
 	public void setAdministrationFee(double fee) {
 		administrationFee = fee;
 	}
-	
+
 	public double getAdministrationFee() {
 		return administrationFee;
 	}
@@ -275,7 +277,6 @@ public class ResidenceManagement {
 		this.apartamentsPerFloor = apartamentsPerFloor;
 	}
 
-
 	public List<Vehicle> getVehicles() {
 		return this.vehicles;
 	}
@@ -284,6 +285,22 @@ public class ResidenceManagement {
 		this.vehicles = vehicles;
 	}
 
+	public Reservation getRootReservation() {
+		return this.rootReservation;
+	}
+
+	public void setRootReservation(Reservation rootReservation) {
+		this.rootReservation = rootReservation;
+	}
+
+
+	public Claim getRootClaim() {
+		return this.rootClaim;
+	}
+
+	public void setRootClaim(Claim rootClaim) {
+		this.rootClaim = rootClaim;
+	}
 
 
 	// IMPORT AND EXPORT RESIDENT-CARS
@@ -314,9 +331,9 @@ public class ResidenceManagement {
 			String[] parts = line.split(SEPARATE);
 			String license = parts[0];
 			String type = parts[1];
-			if (type.equals("CAR")){
+			if (type.equals("CAR")) {
 				vehicles.add(new Car(license));
-			}else{
+			} else {
 				vehicles.add(new Motorcycle(license));
 			}
 			line = br.readLine();
@@ -341,7 +358,7 @@ public class ResidenceManagement {
 	}
 
 	public void exportCars() throws FileNotFoundException {
-		//vehicles.add(new Vehicle("TXT123"));
+		// vehicles.add(new Vehicle("TXT123"));
 		PrintWriter pw = new PrintWriter(CARS_FILE);
 
 		String report = "licensePlate";
@@ -364,68 +381,66 @@ public class ResidenceManagement {
 			return false;
 	}
 
-	public boolean loginApartament(String username,String password) throws UsernameInvalidException,PasswordInvalidException{
-		boolean login=false;
+	public boolean loginApartament(String username, String password)
+			throws UsernameInvalidException, PasswordInvalidException {
+		boolean login = false;
 
-		String number="1";
-		String tower="1";
+		String number = "1";
+		String tower = "1";
 
-		if (username.contains("_")){
-		 number=username.split("_")[0];
-		 tower=username.split("_")[1];
+		if (username.contains("_")) {
+			number = username.split("_")[0];
+			tower = username.split("_")[1];
 		}
-		Apartament apto=new Apartament(tower, number, username,password);
-		int search=binarySearchApartament(apartaments, apto);
-		if (search>=0){
-			if (apto.equals(apartaments.get(search))){
-				login=true;
-			}else{
+		Apartament apto = new Apartament(tower, number, username, password);
+		int search = binarySearchApartament(apartaments, apto);
+		if (search >= 0) {
+			if (apto.equals(apartaments.get(search))) {
+				login = true;
+			} else {
 				throw new PasswordInvalidException();
 			}
-		}else{
+		} else {
 			throw new UsernameInvalidException();
 		}
-		
+
 		return login;
 
 	}
 
-
-	public int binarySearchApartament(List<Apartament> apartaments,Apartament key){
-		//FUNCIONA PERO REVISAR ESTO
+	public int binarySearchApartament(List<Apartament> apartaments, Apartament key) {
+		// FUNCIONA PERO REVISAR ESTO
 		int low = 0;
-        int high = apartaments.size()-1;
+		int high = apartaments.size() - 1;
 
-        while (low <= high) {
-            int mid = (low + high) >>> 1;
-            Comparable<Apartament> midVal = apartaments.get(mid);
-            int cmp = midVal.compareTo(key);
+		while (low <= high) {
+			int mid = (low + high) >>> 1;
+			Comparable<Apartament> midVal = apartaments.get(mid);
+			int cmp = midVal.compareTo(key);
 
-            if (cmp < 0)
-                low = mid + 1;
-            else if (cmp > 0)
-                high = mid - 1;
-            else
-                return mid;
-        }
-        return -(low + 1); 
+			if (cmp < 0)
+				low = mid + 1;
+			else if (cmp > 0)
+				high = mid - 1;
+			else
+				return mid;
+		}
+		return -(low + 1);
 	}
 
+	// Generate invoices
 
-	//Generate invoices
-
-	public void generateAdministrationDebt(Date date){
-		String description="Cuota de administracion";
+	public void generateAdministrationDebt(Date date) {
+		String description = "Cuota de administracion";
 
 		for (Apartament apartament : apartaments) {
-			generateDebt(description, date, administrationFee,apartament);
+			generateDebt(description, date, administrationFee, apartament);
 		}
-		
 
 	}
 
-	//Sorts
-	
+	// Sorts
+
 	public void bubbleSortDoormen() {
 		// Sort Doormen!
 		for (int i = 0; i < doormen.size(); i++) {
@@ -439,46 +454,41 @@ public class ResidenceManagement {
 		}
 	}
 
-
-	public void insertionSortResidents(){
-		 int n = residents.size();
-        for (int i = 1; i < n; ++i) {
-            Resident key = residents.get(i);
-            int j = i - 1;
-            while (j >= 0 && residents.get(j).compareTo(key) <0) {
-                residents.set(j+1,residents.get(j));
-                j = j - 1;
-            }
-			residents.set(j+1,key);
-        }
+	public void insertionSortResidents() {
+		int n = residents.size();
+		for (int i = 1; i < n; ++i) {
+			Resident key = residents.get(i);
+			int j = i - 1;
+			while (j >= 0 && residents.get(j).compareTo(key) < 0) {
+				residents.set(j + 1, residents.get(j));
+				j = j - 1;
+			}
+			residents.set(j + 1, key);
+		}
 	}
 
-
-	public void selectionSortServiceStaff(){
+	public void selectionSortServiceStaff() {
 		int n = serviceStaff.size();
 
-        for (int i = 0; i < n-1; i++)
-        {
-            int min_idx = i;
-            for (int j = i+1; j < n; j++)
-                if (serviceStaff.get(j).compareTo(serviceStaff.get(min_idx)) < 0){
-                    min_idx = j;
+		for (int i = 0; i < n - 1; i++) {
+			int min_idx = i;
+			for (int j = i + 1; j < n; j++)
+				if (serviceStaff.get(j).compareTo(serviceStaff.get(min_idx)) < 0) {
+					min_idx = j;
 				}
-            ServiceStaff temp = serviceStaff.get(min_idx);
+			ServiceStaff temp = serviceStaff.get(min_idx);
 			serviceStaff.set(min_idx, serviceStaff.get(i));
-			serviceStaff.set(i,temp);
-        }
+			serviceStaff.set(i, temp);
+		}
 	}
 
-
-	
 	public void binarySearchPets(String petName) {
 		Pet found = null;
 		int i = 0;
 		int j = pets.size();
 		int m = 0;
 		while (i <= j) {
-			m = (j + i)/2;
+			m = (j + i) / 2;
 			if (pets.get(m).getName().equals(petName)) {
 				found = pets.get(m);
 			} else if (pets.get(m).getName().compareTo(petName) < 0) {
@@ -490,32 +500,75 @@ public class ResidenceManagement {
 		System.out.println(found);
 	}
 
-
-	public void generateDebt(String description,Date date,double price,Apartament apartament){	
-		apartament.getDebt().add(new Debt( description,  price,  date));
+	public void generateDebt(String description, Date date, double price, Apartament apartament) {
+		apartament.getDebt().add(new Debt(description, price, date));
 		apartament.calculateTotalDebt();
 	}
 
-	public void exportResidentsPerApartaments(String apto,File file) throws FileNotFoundException{
-		
-			String number=apto.split("_")[0];
-			String tower=apto.split("_")[1];
-			Apartament apartament=new Apartament(tower, number, apto,"");
-			int index=binarySearchApartament(apartaments, apartament);
+	public void exportResidentsPerApartaments(String apto, File file) throws FileNotFoundException {
 
-		   apartament=apartaments.get(index);
-		   
+		String number = apto.split("_")[0];
+		String tower = apto.split("_")[1];
+		Apartament apartament = new Apartament(tower, number, apto, "");
+		int index = binarySearchApartament(apartaments, apartament);
+
+		apartament = apartaments.get(index);
 
 		PrintWriter pw = new PrintWriter(file);
 
-		String export="FIRST NAME, LAST NAME, PHONE NUMBER, ID";
+		String export = "FIRST NAME, LAST NAME, PHONE NUMBER, ID";
 
 		apartament.setResidents(residents);
 
 		for (Resident resident : apartament.getResidents()) {
-			export+="\n"+resident.toCSV(SEPARATE);
+			export += "\n" + resident.toCSV(SEPARATE);
 		}
 		pw.print(export);
 		pw.close();
 	}
+
+	// Linked list Reservation
+
+	public void addReservation(CommonZones place, LocalDateTime init, LocalDateTime finish) {
+		Reservation reservation = new Reservation(place, init, finish);
+
+		if (rootReservation == null) {
+			rootReservation = reservation;
+		} else {
+			Reservation r = rootReservation;
+			while (r.getNext() != null) {
+				r = r.getNext();
+			}
+			r.setNext(reservation);
+		}
+	}
+
+	public String toStringReservation() {
+		String message = "";
+		Reservation r = rootReservation;
+		message += r.toString();
+		while (r.getNext() != null) {
+			r = r.getNext();
+			message += r.toString();
+		}
+		return message;
+	}
+
+	//Linked list Claims
+
+	public void addClaim(String subject, String description, Apartament sender) {
+		Claim claim = new Claim(subject, description, sender);
+
+		if (rootClaim == null) {
+			rootClaim = claim;
+		} else {
+			Claim r = rootClaim;
+			while (r.getNext() != null) {
+				r = r.getNext();
+			}
+			r.setNext(claim);
+		}
+	}
+
+
 }
