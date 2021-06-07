@@ -61,6 +61,7 @@ public class ResidenceManagement {
 		this.owners = new ArrayList<Owner>();
 		this.apartaments = new ArrayList<Apartament>();
 		this.vehicles = new ArrayList<Vehicle>();
+		this.serviceStaff = new ArrayList<ServiceStaff>();
 		this.admin = new Admin("root", "1234");
 		this.towers = towers;
 		this.floors = floors;
@@ -402,7 +403,7 @@ public class ResidenceManagement {
 			tower = username.split("_")[1];
 		}
 		Apartament apto = new Apartament(tower, number, username, password);
-		int search = binarySearchApartament(apartaments, apto);
+		int search = binarySearchApartament(apto);
 		if (search >= 0) {
 			if (apto.equals(apartaments.get(search))) {
 				login = true;
@@ -417,7 +418,7 @@ public class ResidenceManagement {
 
 	}
 
-	public int binarySearchApartament(List<Apartament> apartaments, Apartament key) {
+	public int binarySearchApartament(Apartament key) {
 		// FUNCIONA PERO REVISAR ESTO
 		int low = 0;
 		int high = apartaments.size() - 1;
@@ -447,6 +448,15 @@ public class ResidenceManagement {
 		}
 
 	}
+
+	public void generateInvoiceForAll(LocalDate date,String description,double price) {
+
+		for (Apartament apartament : apartaments) {
+			generateDebt(description, date, price, apartament);
+		}
+
+	}
+
 
 	// Sorts
 
@@ -519,7 +529,7 @@ public class ResidenceManagement {
 		String number = apto.split("_")[0];
 		String tower = apto.split("_")[1];
 		Apartament apartament = new Apartament(tower, number, apto, "");
-		int index = binarySearchApartament(apartaments, apartament);
+		int index = binarySearchApartament(apartament);
 
 		apartament = apartaments.get(index);
 

@@ -2,6 +2,8 @@ package ui;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+
 import exceptions.PasswordInvalidException;
 import exceptions.UsernameInvalidException;
 import javafx.animation.KeyFrame;
@@ -116,7 +118,7 @@ public class ResidentManagementGUI {
     private TextArea invoiceDescription;
 
     @FXML
-    private Pane listApartaments;
+    private ChoiceBox<String> choiceBoxApartaments;
 
     public ResidentManagementGUI(ResidenceManagement residentManagement) {
         this.residentManagement = residentManagement;
@@ -174,23 +176,10 @@ public class ResidentManagementGUI {
         administrationFee.setText(residentManagement.getAdministrationFee()+"");
 
 
-        //List Apartaments
-
-        ChoiceBox<String> list = new ChoiceBox<String>();
-
-
         for (Apartament apartament : residentManagement.getApartaments()) {
-            list.getItems().add(apartament.toString());
-
+            
+            choiceBoxApartaments.getItems().add(apartament.getUsername());
         }
-        
-        
-        //list.setPrefSize(listApartaments.getPrefHeight(),listApartaments.getPrefWidth());
-        list.getStylesheets().setAll("/css/fullpackstyling.css");
-        listApartaments.getChildren().clear();
-        listApartaments.getChildren().addAll(list);        
-
-
     }
 
     @FXML
@@ -357,7 +346,7 @@ public class ResidentManagementGUI {
 
         towerCol.setCellValueFactory(new PropertyValueFactory<Apartament, String>("tower"));
         numberCol.setCellValueFactory(new PropertyValueFactory<Apartament, String>("number"));
-        debtCol.setCellValueFactory(new PropertyValueFactory<Apartament, Double>("debt"));
+        debtCol.setCellValueFactory(new PropertyValueFactory<Apartament, Double>("totalDebt"));
         ownerCol.setCellValueFactory(new PropertyValueFactory<Apartament, String>("owner"));
 
     }
@@ -508,6 +497,48 @@ public class ResidentManagementGUI {
         		}
         	}
         }.start();
+    }
+
+
+
+    @FXML
+    public void generateAdministrationDebt(ActionEvent event) {
+        residentManagement.generateAdministrationDebt(LocalDate.now());
+        alert("Se genero el nuevo pago de administracion");
+
+    }
+
+
+    
+    @FXML
+    public void generateInvoices(ActionEvent event) {
+
+        String apto=choiceBoxApartaments.getValue();
+        
+        String number = apto.split("_")[0];
+		String tower = apto.split("_")[1];
+		Apartament apartament = new Apartament(tower, number, apto, "");
+		int index = residentManagement.binarySearchApartament(apartament);
+
+		apartament = residentManagement.getApartaments().get(index);
+
+
+        String description=invoiceDescription.getText();
+        double price=Double.parseDouble(invoiceTotal.getText());
+
+        residentManagement.generateDebt(description,LocalDate.now(), price,apartament);
+        alert("Se genero el nuevo pago de "+description);
+
+    }
+
+    @FXML
+    public void generateInvoicesForAll(ActionEvent event) {
+        String description=invoiceDescription.getText();
+        double price=Double.parseDouble(invoiceTotal.getText());
+
+        residentManagement.generateInvoiceForAll(LocalDate.now(), description, price);
+        alert("Se genero el nuevo pago de "+description);
+
     }
 
 }
