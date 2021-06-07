@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane prefHeight="649.0" prefWidth="826.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label alignment="CENTER" layoutX="45.0" layoutY="91.0" prefHeight="23.0" prefWidth="315.0" text="Generar cobro de administracion">
+         <font>
+            <Font name="Arial Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="administrationFee" layoutX="287.0" layoutY="128.0" prefHeight="41.0" prefWidth="147.0" text="administrationFee">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="45.0" layoutY="128.0" prefHeight="41.0" prefWidth="225.0" text="Cuota de administracion actual:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="45.0" layoutY="364.0" text="Descripcion">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="45.0" layoutY="285.0" prefHeight="23.0" prefWidth="253.0" text="Generar cobros diferentes">
+         <font>
+            <Font name="Arial Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="45.0" layoutY="491.0" text="Valor">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="invoiceTotal" layoutX="141.0" layoutY="486.0" styleClass="login" stylesheets="@../css/fullpackstyling.css" />
+      <Button layoutX="63.0" layoutY="573.0" mnemonicParsing="false" styleClass="button4" stylesheets="@../css/fullpackstyling.css" text="Generar cobro a todos los apartamentos" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font>
+      </Button>
+      <TextArea fx:id="invoiceDescription" layoutX="141.0" layoutY="364.0" prefHeight="89.0" prefWidth="260.0" styleClass="text-area" stylesheets="@../css/fullpackstyling.css" />
+      <Button layoutX="45.0" layoutY="209.0" mnemonicParsing="false" styleClass="button4" stylesheets="@../css/fullpackstyling.css" text="Generar cobro de administracion" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font>
+      </Button>
+      <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="56.0" prefWidth="826.0" style="-fx-background-color: #3C3744;">
+         <children>
+            <Label layoutX="332.0" prefHeight="56.0" prefWidth="162.0" text="Facturas" textFill="WHITE">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="37.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Label layoutX="508.0" layoutY="347.0" text="Seleccione los apartamentos:">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="14.0" />
+         </font>
+      </Label>
+      <Pane fx:id="listApartaments" layoutX="509.0" layoutY="374.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="23.0" prefWidth="202.0" />
+      <Button layoutX="509.0" layoutY="427.0" mnemonicParsing="false" styleClass="button4" stylesheets="@../css/fullpackstyling.css" text="Generar cobro a este apartamento" textFill="WHITE">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font>
+      </Button>
+      <Separator layoutX="30.0" layoutY="249.0" prefHeight="17.0" prefWidth="760.0" />
+   </children>
+</Pane>

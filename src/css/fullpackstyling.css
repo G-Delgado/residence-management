@@ -4,7 +4,22 @@
     -fx-border-width :  0 0 2 0;
 }
 
+.text-area{
+    -fx-background-color: transparent;
+    -fx-border-color: #3C3744;
+    -fx-border-width :  0 0 2 0;
+}
 
+.text-area .content {
+    -fx-background-color: #B4C5E4;
+}
+
+.text-area .scroll-bar:horizontal .thumb,
+.text-area .scroll-bar:vertical .thumb{
+	-fx-background-color:#3C3744;
+	-fx-background-radius: 2em;
+	-fx-border-radius:2em;
+}
 
 
 .button1

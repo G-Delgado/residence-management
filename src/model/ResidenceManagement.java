@@ -10,12 +10,21 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 
 import exceptions.*;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
+
 import java.util.List;
+
+import javax.swing.WindowConstants;
 
 public class ResidenceManagement {
 
@@ -430,7 +439,7 @@ public class ResidenceManagement {
 
 	// Generate invoices
 
-	public void generateAdministrationDebt(Date date) {
+	public void generateAdministrationDebt(LocalDate date) {
 		String description = "Cuota de administracion";
 
 		for (Apartament apartament : apartaments) {
@@ -500,7 +509,7 @@ public class ResidenceManagement {
 		System.out.println(found);
 	}
 
-	public void generateDebt(String description, Date date, double price, Apartament apartament) {
+	public void generateDebt(String description, LocalDate date, double price, Apartament apartament) {
 		apartament.getDebt().add(new Debt(description, price, date));
 		apartament.calculateTotalDebt();
 	}
@@ -569,6 +578,76 @@ public class ResidenceManagement {
 			r.setNext(claim);
 		}
 	}
+
+
+
+	//Edit person
+
+	//Podria ser private 
+
+	public void editPerson(Person person,String firstName, String lastName, int phoneNumber, String id){
+
+		person.setFirstName(firstName);
+		person.setLastName(lastName);
+		person.setPhoneNumber(phoneNumber);
+		person.setId(id);
+
+
+	}
+
+	//Delete person
+
+	public void deletePerson(Person person){
+
+	}
+
+
+
+	//Edit vehicle
+
+
+
+
+	//Delete vehicle
+
+
+
+	//Edit pet
+
+
+
+
+	//Delete pet
+
+
+
+	//Reports
+
+	public void testReport(){
+		try{
+            JasperReport report = JasperCompileManager.compileReport("src/reports/test14.jrxml");
+
+			LocalDate date=LocalDate.now();
+			//Poner el date en la descripcion
+			generateAdministrationDebt(date);
+			generateAdministrationDebt(date);
+
+			//Verificar si no hay deuda
+
+            JasperPrint jprint = JasperFillManager.fillReport(report, null, new Invoice(apartaments.get(3)));
+
+          
+            JasperViewer view = new JasperViewer(jprint, false);
+            view.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            view.setVisible(true);
+            
+            
+        }catch(JRException ex){
+            ex.getMessage();
+        }
+        
+	}
+
 
 
 }

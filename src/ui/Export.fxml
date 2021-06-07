@@ -9,8 +9,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-
-<Pane prefHeight="649.0" prefWidth="631.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane prefHeight="649.0" prefWidth="826.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane layoutX="450.0" layoutY="57.0" prefHeight="94.0" prefWidth="111.0" />
       <Label alignment="CENTER" layoutX="57.0" layoutY="66.0" prefHeight="17.0" prefWidth="492.0" text="Seleccione un apartamento y presione el boton para exportar los residentes">

@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -81,6 +82,20 @@ public class ResidentManagementGUI {
     @FXML
     private Pane paneTables;
 
+    // Invoices
+
+    @FXML
+    private Label administrationFee;
+
+    @FXML
+    private TextField invoiceTotal;
+
+    @FXML
+    private TextArea invoiceDescription;
+
+    @FXML
+    private Pane listApartaments;
+
     public ResidentManagementGUI(ResidenceManagement residentManagement) {
         this.residentManagement = residentManagement;
         Timeline count = new Timeline(new KeyFrame(Duration.seconds(1), action -> {
@@ -115,6 +130,37 @@ public class ResidentManagementGUI {
         Parent pane = fxmlLoader.load();
         mainPane.getChildren().clear();
         mainPane.getChildren().addAll(pane);
+    }
+
+    @FXML
+    public void invoices(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Invoice.fxml"));
+        fxmlLoader.setController(this);
+        Parent pane = fxmlLoader.load();
+        paneAdministration.getChildren().clear();
+        paneAdministration.getChildren().addAll(pane);
+
+
+        administrationFee.setText(residentManagement.getAdministrationFee()+"");
+
+
+        //List Apartaments
+
+        ChoiceBox<String> list = new ChoiceBox<String>();
+
+
+        for (Apartament apartament : residentManagement.getApartaments()) {
+            list.getItems().add(apartament.toString());
+
+        }
+        
+        
+        //list.setPrefSize(listApartaments.getPrefHeight(),listApartaments.getPrefWidth());
+        list.getStylesheets().setAll("/css/fullpackstyling.css");
+        listApartaments.getChildren().clear();
+        listApartaments.getChildren().addAll(list);        
+
+
     }
 
     @FXML
@@ -195,6 +241,7 @@ public class ResidentManagementGUI {
         }
 
     }
+
 
     @FXML
     public void exportApartamentsCSV(ActionEvent event) {
