@@ -2,8 +2,7 @@ package model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Date;
-
+import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
 import exceptions.PasswordInvalidException;
@@ -111,7 +110,7 @@ public class ResidenceManagementTest {
 	public void testGenerateAdministrationDebt() {
 		scenaryThree();
 		
-		Date date = new Date();
+		LocalDate date = LocalDate.now();
 		
 		// System.out.println(date);
 		
@@ -129,7 +128,7 @@ public class ResidenceManagementTest {
 	public void testGenerateDebt() {
 		scenaryThree();
 		
-		Date date = new Date();
+		LocalDate date = LocalDate.now();
 		String desc = "Cuota de administracion";
 		double fee = rm.getAdministrationFee();
 		

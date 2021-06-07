@@ -5,9 +5,11 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="649.0" prefWidth="1087.0" style="-fx-background-color: #B4C5E4;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="649.0" prefWidth="1087.0" style="-fx-background-color: #B4C5E4;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label fx:id="time" alignment="CENTER_RIGHT" prefHeight="28.0" prefWidth="150.0" text="TIME" textFill="WHITE">
          <font>
@@ -28,6 +30,9 @@
                         <Image url="@../resources/icon-background-blue.png" />
                      </image>
                   </ImageView>
+                  <Rectangle fx:id="rectangleContainer" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="52.0" layoutX="415.0" layoutY="283.0" stroke="BLACK" strokeType="INSIDE" width="280.0" />
+                  <Rectangle fx:id="rectangleFill" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="52.0" layoutX="415.0" layoutY="283.0" stroke="BLACK" strokeType="INSIDE" width="5.0" />
+                  <Line fx:id="line" endX="-34.0" layoutX="810.0" layoutY="309.0" startX="-100.0" />
                </children>
             </Pane>
          </children></AnchorPane>

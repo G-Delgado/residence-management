@@ -25,6 +25,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Duration;
@@ -33,6 +35,8 @@ import model.Vehicle;
 import threads.DateThread;
 import threads.TimeThread;
 import model.Doorman;
+import model.Filler;
+import model.Loader;
 import model.Pet;
 import model.ResidenceManagement;
 import model.Resident;
@@ -42,6 +46,24 @@ import model.TypePet;
 public class ResidentManagementGUI {
 
     private ResidenceManagement residentManagement;
+    
+
+    // Primitives (Shapes)
+      
+      private boolean loading;
+      
+     @FXML
+     private Line line;
+      
+     private Loader l;
+      
+     @FXML
+     private Rectangle rectangleContainer;
+      
+     @FXML
+     private Rectangle rectangleFill;
+      
+     private Filler f;
 
     // Threads
     @FXML
@@ -98,7 +120,7 @@ public class ResidentManagementGUI {
 
     public ResidentManagementGUI(ResidenceManagement residentManagement) {
         this.residentManagement = residentManagement;
-        Timeline count = new Timeline(new KeyFrame(Duration.seconds(1), action -> {
+        Timeline count = new Timeline(new KeyFrame(Duration.seconds(3), action -> {
             try {
                 login(null);
             } catch (IOException e) {
@@ -107,6 +129,14 @@ public class ResidentManagementGUI {
         }));
         count.play();
 
+    }
+    
+    public void updateLine(double x) {
+    	line.setRotate(x);
+    }
+    
+    public void updateRectangle(double w) {
+    	rectangleFill.setWidth(w);
     }
 
     @FXML
@@ -447,10 +477,37 @@ public class ResidentManagementGUI {
     // Threads
 
     public void initialize() {
+    	loading = true;
         TimeThread clock = new TimeThread(time);
         DateThread calendar = new DateThread(date);
         clock.start();
         calendar.start();
+        
+        l = new Loader(line.getRotate());
+        f = new Filler(rectangleFill.getWidth(), rectangleContainer.getWidth());
+        
+        new Thread() {
+        	public void run() {
+        		while (loading) {
+        			l.load();
+        			f.fill();
+        			
+        			Platform.runLater(new Thread() {
+        				public void run() {
+        					// Update figures
+        					updateLine(l.getDegrees());
+        					updateRectangle(f.getWidth());
+        				}
+        			});
+        			
+        			try {
+						Thread.sleep(1);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+        		}
+        	}
+        }.start();
     }
 
 }
