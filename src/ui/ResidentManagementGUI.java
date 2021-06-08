@@ -3,7 +3,6 @@ package ui;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-
 import exceptions.PasswordInvalidException;
 import exceptions.UsernameInvalidException;
 import javafx.animation.KeyFrame;
@@ -17,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
@@ -40,6 +40,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Duration;
 import model.Apartament;
+import model.CommonZones;
 import model.Debt;
 import model.Vehicle;
 import threads.DateThread;
@@ -48,6 +49,7 @@ import model.Doorman;
 import model.Filler;
 import model.Loader;
 import model.Pet;
+import model.Reservation;
 import model.ResidenceManagement;
 import model.Resident;
 import model.ServiceStaff;
@@ -56,53 +58,52 @@ import model.TypePet;
 public class ResidentManagementGUI {
 
     private ResidenceManagement residentManagement;
-    
+
     // Apartament
-    
+
     @FXML
     private Label apartamentId;
-    
+
     @FXML
     private TextField apartamentOwner;
-    
+
     @FXML
     private TextField apartamentPassword;
-    
+
     @FXML
     private TextField apartamentUsername;
-    
+
     @FXML
     private ListView<Resident> residentsList;
-    
+
     @FXML
     private ListView<Pet> petsList;
-    
+
     @FXML
     private ListView<Vehicle> vehiclesList;
-    
+
     @FXML
     private Label apartamentTotalDebt;
-    
+
     @FXML
     private Button addResidentBtn;
-    
 
     // Primitives (Shapes)
-      
-      private boolean loading;
-      
-     @FXML
-     private Line line;
-      
-     private Loader l;
-      
-     @FXML
-     private Rectangle rectangleContainer;
-      
-     @FXML
-     private Rectangle rectangleFill;
-      
-     private Filler f;
+
+    private boolean loading;
+
+    @FXML
+    private Line line;
+
+    private Loader l;
+
+    @FXML
+    private Rectangle rectangleContainer;
+
+    @FXML
+    private Rectangle rectangleFill;
+
+    private Filler f;
 
     // Threads
     @FXML
@@ -146,7 +147,7 @@ public class ResidentManagementGUI {
     @FXML
     private Pane paneTables;
 
-    //Debt
+    // Debt
 
     @FXML
     private Pane paneDebts;
@@ -165,6 +166,17 @@ public class ResidentManagementGUI {
     @FXML
     private ChoiceBox<String> choiceBoxApartaments;
 
+    // Reservations
+
+    @FXML
+    private ChoiceBox<String> choiceBoxReserves;
+
+    @FXML
+    private DatePicker initReserve;
+
+    @FXML
+    private ListView<String> listReservations;
+
     public ResidentManagementGUI(ResidenceManagement residentManagement) {
         this.residentManagement = residentManagement;
         Timeline count = new Timeline(new KeyFrame(Duration.seconds(3), action -> {
@@ -177,13 +189,13 @@ public class ResidentManagementGUI {
         count.play();
 
     }
-    
+
     public void updateLine(double x) {
-    	line.setRotate(x);
+        line.setRotate(x);
     }
-    
+
     public void updateRectangle(double w) {
-    	rectangleFill.setWidth(w);
+        rectangleFill.setWidth(w);
     }
 
     @FXML
@@ -217,12 +229,10 @@ public class ResidentManagementGUI {
         paneAdministration.getChildren().clear();
         paneAdministration.getChildren().addAll(pane);
 
-
-        administrationFee.setText(residentManagement.getAdministrationFee()+"");
-
+        administrationFee.setText(residentManagement.getAdministrationFee() + "");
 
         for (Apartament apartament : residentManagement.getApartaments()) {
-            
+
             choiceBoxApartaments.getItems().add(apartament.getUsername());
         }
     }
@@ -237,7 +247,7 @@ public class ResidentManagementGUI {
     }
 
     @SuppressWarnings("unchecked")
-	@FXML
+    @FXML
     public void debtApartament(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Debt.fxml"));
         fxmlLoader.setController(this);
@@ -245,42 +255,37 @@ public class ResidentManagementGUI {
         paneApartament.getChildren().clear();
         paneApartament.getChildren().addAll(pane);
 
-        
-        
         TableView<Debt> table = new TableView<Debt>();
 
         TableColumn<Debt, String> descriptionCol = new TableColumn<Debt, String>("Description");
         TableColumn<Debt, Double> priceCol = new TableColumn<Debt, Double>("Price");
         TableColumn<Debt, String> dateCol = new TableColumn<Debt, String>("Date");
 
-
         table.getColumns().addAll(descriptionCol, priceCol, dateCol);
 
-
-        table.setPrefSize(751,368);
+        table.setPrefSize(751, 368);
         table.getStylesheets().setAll("/css/fullpackstyling.css");
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         paneDebts.getChildren().clear();
         paneDebts.getChildren().addAll(table);
 
-        String apto=labelApto.getText();
-        
-        String number = apto.split("_")[0];
-		String tower = apto.split("_")[1];
-		Apartament apartament = new Apartament(tower, number, apto, "");
-		int index = residentManagement.binarySearchApartament(apartament);
+        String apto = labelApto.getText();
 
-        apartament=residentManagement.getApartaments().get(index);
+        String number = apto.split("_")[0];
+        String tower = apto.split("_")[1];
+        Apartament apartament = new Apartament(tower, number, apto, "");
+        int index = residentManagement.binarySearchApartament(apartament);
+
+        apartament = residentManagement.getApartaments().get(index);
 
         ObservableList<Debt> observableList;
         observableList = FXCollections.observableArrayList(apartament.getDebt());
         table.setItems(observableList);
 
         descriptionCol.setCellValueFactory(new PropertyValueFactory<Debt, String>("description"));
-        priceCol.setCellValueFactory(new PropertyValueFactory<Debt ,Double>("price"));
-        dateCol.setCellValueFactory(new PropertyValueFactory<Debt ,String>("date"));
-        
+        priceCol.setCellValueFactory(new PropertyValueFactory<Debt, Double>("price"));
+        dateCol.setCellValueFactory(new PropertyValueFactory<Debt, String>("date"));
 
     }
 
@@ -353,7 +358,6 @@ public class ResidentManagementGUI {
         }
 
     }
-
 
     @FXML
     public void exportApartamentsCSV(ActionEvent event) {
@@ -441,69 +445,69 @@ public class ResidentManagementGUI {
         numberCol.setCellValueFactory(new PropertyValueFactory<Apartament, String>("number"));
         debtCol.setCellValueFactory(new PropertyValueFactory<Apartament, Double>("totalDebt"));
         ownerCol.setCellValueFactory(new PropertyValueFactory<Apartament, String>("owner"));
-        
+
         table.setOnMouseClicked(otherEvent -> {
-        	if (otherEvent.getClickCount() == 2 && otherEvent.getButton().equals(MouseButton.PRIMARY)) {
-        		// Cagar nuevo FXML con los datos elegidos
-        		Apartament apt = table.getSelectionModel().getSelectedItem();
-        		loadApartament(apt);
-        	}
+            if (otherEvent.getClickCount() == 2 && otherEvent.getButton().equals(MouseButton.PRIMARY)) {
+                // Cagar nuevo FXML con los datos elegidos
+                Apartament apt = table.getSelectionModel().getSelectedItem();
+                loadApartament(apt);
+            }
         });
-        
+
     }
-    
+
     public void loadApartament(Apartament apto) {
-    	System.out.println(apto);
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Apartament.fxml"));
-    	fxmlLoader.setController(this);
-    	
-    	try {
-			Parent apartament = fxmlLoader.load();
-			paneAdministration.getChildren().clear();
-			paneAdministration.getChildren().addAll(apartament);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-    	apartamentId.setText(apto.getNumber() + "_" + apto.getTower());
-    	if (apto.getOwner() != null) {    		
-    		apartamentOwner.setText(apto.getOwner().toStringJavaFX());
-    	} else {
-    		apartamentOwner.setText("None");
-    	}
-    	apartamentUsername.setText(apto.getUsername());
-    	apartamentPassword.setText(apto.getPassword());
-    	apartamentTotalDebt.setText(apto.getTotalDebt() + "");
-    	ObservableList<Resident> residents = FXCollections.observableArrayList(apto.getResidents());
-    	ObservableList<Pet> pets = FXCollections.observableArrayList(apto.getPets());
-    	ObservableList<Vehicle> vehicles = FXCollections.observableArrayList(apto.getCars());
-    	
-    	residentsList.setItems(residents);
-    	petsList.setItems(pets);
-    	vehiclesList.setItems(vehicles);
-    	
-    	addResidentBtn.setOnAction(newEvent -> {
-    		/*TextInputDialog ti = new TextInputDialog();
-    		ti.setTitle("Add resident");
-    		ti.getDialogPane().setContentText("First name: ");
-    		
-    		Optional<String> result = ti.showAndWait();
-    		TextField input = ti.getEditor();
-    		
-    		System.out.println(input.getText().toString());*/
-    		Dialog<String> dialog = new Dialog<>();
-    		dialog.setHeaderText("Add resident");
-    		dialog.setContentText("Fill the parameters");
-    		DialogPane dialogPane = dialog.getDialogPane();
-    		dialogPane.getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-    		TextField tf = new TextField("Name");
-    		TextField tf2 = new TextField("LastName");
-    		TextField tf3 = new TextField("Phone number");
-    		TextField tf4 = new TextField("Id");
-    		
-    		dialogPane.setContent(new VBox(8, tf, tf2, tf3, tf4));
-    		
-    		dialog.showAndWait();
-    	});
+        System.out.println(apto);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Apartament.fxml"));
+        fxmlLoader.setController(this);
+
+        try {
+            Parent apartament = fxmlLoader.load();
+            paneAdministration.getChildren().clear();
+            paneAdministration.getChildren().addAll(apartament);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        apartamentId.setText(apto.getNumber() + "_" + apto.getTower());
+        if (apto.getOwner() != null) {
+            apartamentOwner.setText(apto.getOwner().toStringJavaFX());
+        } else {
+            apartamentOwner.setText("None");
+        }
+        apartamentUsername.setText(apto.getUsername());
+        apartamentPassword.setText(apto.getPassword());
+        apartamentTotalDebt.setText(apto.getTotalDebt() + "");
+        ObservableList<Resident> residents = FXCollections.observableArrayList(apto.getResidents());
+        ObservableList<Pet> pets = FXCollections.observableArrayList(apto.getPets());
+        ObservableList<Vehicle> vehicles = FXCollections.observableArrayList(apto.getCars());
+
+        residentsList.setItems(residents);
+        petsList.setItems(pets);
+        vehiclesList.setItems(vehicles);
+
+        addResidentBtn.setOnAction(newEvent -> {
+            /*
+             * TextInputDialog ti = new TextInputDialog(); ti.setTitle("Add resident");
+             * ti.getDialogPane().setContentText("First name: ");
+             * 
+             * Optional<String> result = ti.showAndWait(); TextField input = ti.getEditor();
+             * 
+             * System.out.println(input.getText().toString());
+             */
+            Dialog<String> dialog = new Dialog<>();
+            dialog.setHeaderText("Add resident");
+            dialog.setContentText("Fill the parameters");
+            DialogPane dialogPane = dialog.getDialogPane();
+            dialogPane.getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+            TextField tf = new TextField("Name");
+            TextField tf2 = new TextField("LastName");
+            TextField tf3 = new TextField("Phone number");
+            TextField tf4 = new TextField("Id");
+
+            dialogPane.setContent(new VBox(8, tf, tf2, tf3, tf4));
+
+            dialog.showAndWait();
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -590,20 +594,18 @@ public class ResidentManagementGUI {
         nameCol.setCellValueFactory(new PropertyValueFactory<Pet, String>("firstName"));
         typeCol.setCellValueFactory(new PropertyValueFactory<Pet, TypePet>("lastName"));
 
-       /* table.setOnMouseClicked(otherEvent -> {
-        	if (otherEvent.getClickCount() == 2 && otherEvent.getButton().equals(MouseButton.PRIMARY)) {
-        		// Cagar nuevo FXML con los datos elegidos
-        		Pet pet = table.getSelectionModel().getSelectedItem();
-        		loadPet(pet);
-        	}
-        });*/
+        /*
+         * table.setOnMouseClicked(otherEvent -> { if (otherEvent.getClickCount() == 2
+         * && otherEvent.getButton().equals(MouseButton.PRIMARY)) { // Cagar nuevo FXML
+         * con los datos elegidos Pet pet = table.getSelectionModel().getSelectedItem();
+         * loadPet(pet); } });
+         */
     }
-    
-    /*public void loadPet(Pet pet) {
-    	if (pet != null) {    		
-    		System.out.println(pet.toString());
-    	}
-    }*/
+
+    /*
+     * public void loadPet(Pet pet) { if (pet != null) {
+     * System.out.println(pet.toString()); } }
+     */
 
     @SuppressWarnings("unchecked")
     @FXML
@@ -634,40 +636,38 @@ public class ResidentManagementGUI {
     // Threads
 
     public void initialize() {
-    	loading = true;
+        loading = true;
         TimeThread clock = new TimeThread(time);
         DateThread calendar = new DateThread(date);
         clock.start();
         calendar.start();
-        
+
         l = new Loader(line.getRotate());
         f = new Filler(rectangleFill.getWidth(), rectangleContainer.getWidth());
-        
+
         new Thread() {
-        	public void run() {
-        		while (loading) {
-        			l.load();
-        			f.fill();
-        			
-        			Platform.runLater(new Thread() {
-        				public void run() {
-        					// Update figures
-        					updateLine(l.getDegrees());
-        					updateRectangle(f.getWidth());
-        				}
-        			});
-        			
-        			try {
-						Thread.sleep(1);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-        		}
-        	}
+            public void run() {
+                while (loading) {
+                    l.load();
+                    f.fill();
+
+                    Platform.runLater(new Thread() {
+                        public void run() {
+                            // Update figures
+                            updateLine(l.getDegrees());
+                            updateRectangle(f.getWidth());
+                        }
+                    });
+
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }.start();
     }
-
-
 
     @FXML
     public void generateAdministrationDebt(ActionEvent event) {
@@ -676,54 +676,95 @@ public class ResidentManagementGUI {
 
     }
 
-
-    
     @FXML
     public void generateInvoices(ActionEvent event) {
 
-        String apto=choiceBoxApartaments.getValue();
-        
+        String apto = choiceBoxApartaments.getValue();
+
         String number = apto.split("_")[0];
-		String tower = apto.split("_")[1];
-		Apartament apartament = new Apartament(tower, number, apto, "");
-		int index = residentManagement.binarySearchApartament(apartament);
+        String tower = apto.split("_")[1];
+        Apartament apartament = new Apartament(tower, number, apto, "");
+        int index = residentManagement.binarySearchApartament(apartament);
 
-		 apartament = residentManagement.getApartaments().get(index);
+        apartament = residentManagement.getApartaments().get(index);
 
+        String description = invoiceDescription.getText();
+        double price = Double.parseDouble(invoiceTotal.getText());
 
-        String description=invoiceDescription.getText();
-        double price=Double.parseDouble(invoiceTotal.getText());
-
-        residentManagement.generateDebt(description,LocalDate.now(), price,apartament);
-        alert("Se genero el nuevo pago de "+description);
+        residentManagement.generateDebt(description, LocalDate.now(), price, apartament);
+        alert("Se genero el nuevo pago de " + description);
 
     }
 
-    private Apartament getLoginApartament(){
-        String apto=labelApto.getText();
-        
+    private Apartament getLoginApartament() {
+        String apto = labelApto.getText();
+
         String number = apto.split("_")[0];
-		String tower = apto.split("_")[1];
-		Apartament apartament = new Apartament(tower, number, apto, "");
-		int index = residentManagement.binarySearchApartament(apartament);
+        String tower = apto.split("_")[1];
+        Apartament apartament = new Apartament(tower, number, apto, "");
+        int index = residentManagement.binarySearchApartament(apartament);
         return residentManagement.getApartaments().get(index);
     }
 
     @FXML
     public void generateInvoicesForAll(ActionEvent event) {
-        String description=invoiceDescription.getText();
-        double price=Double.parseDouble(invoiceTotal.getText());
+        String description = invoiceDescription.getText();
+        double price = Double.parseDouble(invoiceTotal.getText());
 
         residentManagement.generateInvoiceForAll(LocalDate.now(), description, price);
-        alert("Se genero el nuevo pago de "+description);
+        alert("Se genero el nuevo pago de " + description);
 
     }
-
 
     @FXML
     public void generateReport(ActionEvent event) {
         Apartament apartament = getLoginApartament();
         residentManagement.GenerateReport(apartament);
+    }
+
+    @FXML
+    public void reservations(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Reserve.fxml"));
+        fxmlLoader.setController(this);
+        Parent pane = fxmlLoader.load();
+        paneApartament.getChildren().clear();
+        paneApartament.getChildren().addAll(pane);
+
+        for (CommonZones zone : residentManagement.getCommonZones()) {
+            choiceBoxReserves.getItems().add(zone.toString());
+        }
+
+        try {
+
+            residentManagement.toStringReservation();
+            Reservation r = residentManagement.getRootReservation();
+            listReservations.getItems().add(r.toString());
+            while (r.getNext() != null) {
+                r = r.getNext();
+                listReservations.getItems().add(r.toString());
+            }
+
+        } catch (Exception e) {
+            alert("No hay reservas");
+        }
+
+    }
+
+    @FXML
+    public void generateReserve(ActionEvent event) throws IOException {
+
+        try {
+            LocalDate dateInit = initReserve.getValue();
+            CommonZones zone = residentManagement.searchCommonZone(choiceBoxReserves.getValue());
+
+            residentManagement.addReservation(zone, dateInit);
+            alert("Reserva realizada");
+        } catch (Exception e) {
+            alert("Error");
+        }
+
+        reservations(event);
+
     }
 
 }

@@ -41,10 +41,7 @@ public class CommonZones {
 
     @Override
     public String toString() {
-        return "{" +
-            " name='" + getName() + "'" +
-            ", capacity='" + getCapacity() + "'" +
-            "}";
+        return name;
     }
 
     

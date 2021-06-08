@@ -1,19 +1,17 @@
 package model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Reservation {
 
 
     private CommonZones place;
-    private LocalDateTime init;
-    private LocalDateTime finish;
+    private LocalDate init;
     private Reservation next;
 
-    public Reservation(CommonZones place, LocalDateTime init, LocalDateTime finish) {
+    public Reservation(CommonZones place, LocalDate init) {
         this.place = place;
         this.init = init;
-        this.finish = finish;
     }
 
 
@@ -25,21 +23,6 @@ public class Reservation {
         this.place = place;
     }
 
-    public LocalDateTime getInit() {
-        return this.init;
-    }
-
-    public void setInit(LocalDateTime init) {
-        this.init = init;
-    }
-
-    public LocalDateTime getFinish() {
-        return this.finish;
-    }
-
-    public void setFinish(LocalDateTime finish) {
-        this.finish = finish;
-    }
 
     public Reservation getNext() {
         return this.next;
@@ -53,8 +36,7 @@ public class Reservation {
 
     @Override
     public String toString() {
-        return "{" +
-            " place='" + getPlace() + "'";
+        return place + " " + init.toString();
     }
 
 

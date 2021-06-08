@@ -11,7 +11,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import exceptions.*;
@@ -46,6 +45,7 @@ public class ResidenceManagement {
 	private List<Owner> owners;
 	private List<Apartament> apartaments;
 	private List<Vehicle> vehicles;
+	private List<CommonZones> commonZones;
 	private Admin admin;
 	private int towers;
 	private int floors;
@@ -65,6 +65,7 @@ public class ResidenceManagement {
 		this.admin = new Admin("root", "1234");
 		this.towers = towers;
 		this.floors = floors;
+		this.commonZones=setupCommonZones();
 		this.apartamentsPerFloor = apartamentsPerFloor;
 		createApartaments(towers, floors, apartamentsPerFloor);
 		this.administrationFee = administrationFee;
@@ -75,6 +76,20 @@ public class ResidenceManagement {
 			e.printStackTrace();
 		}
 
+	}
+
+	private List<CommonZones> setupCommonZones() {
+		CommonZones littlePool=new Pool("Pool for childrens", 10);
+		CommonZones bigPool=new Pool("Pool", 20);
+		CommonZones kiosk=new Kiosk("Main Kiosk", 30);
+		CommonZones park=new Park("Park", 15);
+		List<CommonZones> list=new ArrayList<>();
+		list.add(littlePool);
+		list.add(bigPool);
+		list.add(kiosk);
+		list.add(kiosk);
+		list.add(park);
+		return list;
 	}
 
 	// For tests
@@ -311,6 +326,16 @@ public class ResidenceManagement {
 	public void setRootClaim(Claim rootClaim) {
 		this.rootClaim = rootClaim;
 	}
+
+
+	public List<CommonZones> getCommonZones() {
+		return this.commonZones;
+	}
+
+	public void setCommonZones(List<CommonZones> commonZones) {
+		this.commonZones = commonZones;
+	}
+
 
 	public void importDataDoorman(String directory) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(directory));
@@ -778,8 +803,22 @@ public class ResidenceManagement {
 
 	// Linked list Reservation
 
-	public void addReservation(CommonZones place, LocalDateTime init, LocalDateTime finish) {
-		Reservation reservation = new Reservation(place, init, finish);
+	public CommonZones searchCommonZone(String name){
+
+		for (CommonZones z : commonZones) {
+
+			if (z.getName().equals(name)){
+				return z;
+			}
+			
+		}
+
+		return null;
+
+	}
+
+	public void addReservation(CommonZones place, LocalDate init) {
+		Reservation reservation = new Reservation(place, init);
 
 		if (rootReservation == null) {
 			rootReservation = reservation;
@@ -792,7 +831,7 @@ public class ResidenceManagement {
 		}
 	}
 
-	public String toStringReservation() {
+	public void toStringReservation() {
 		String message = "";
 		Reservation r = rootReservation;
 		message += r.toString();
@@ -800,7 +839,7 @@ public class ResidenceManagement {
 			r = r.getNext();
 			message += r.toString();
 		}
-		return message;
+		System.out.println(message);
 	}
 
 	//Linked list Claims

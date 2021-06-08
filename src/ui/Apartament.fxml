@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="649.0" prefWidth="826.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<Pane prefHeight="649.0" prefWidth="826.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="45.0" layoutY="87.0" prefHeight="41.0" prefWidth="58.0" text="Owner:">
          <font>
@@ -55,9 +55,9 @@
             <Font name="Arial Rounded MT Bold" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="apartamentUsername" layoutX="141.0" layoutY="512.0" prefHeight="25.0" prefWidth="162.0" />
-      <TextField fx:id="apartamentPassword" layoutX="141.0" layoutY="553.0" prefHeight="25.0" prefWidth="162.0" />
-      <TextField fx:id="apartamentOwner" layoutX="127.0" layoutY="95.0" />
+      <TextField fx:id="apartamentUsername" layoutX="141.0" layoutY="512.0" prefHeight="25.0" prefWidth="162.0" styleClass="login" stylesheets="@../css/fullpackstyling.css" />
+      <TextField fx:id="apartamentPassword" layoutX="141.0" layoutY="553.0" prefHeight="25.0" prefWidth="162.0" styleClass="login" stylesheets="@../css/fullpackstyling.css" />
+      <TextField fx:id="apartamentOwner" layoutX="127.0" layoutY="95.0" styleClass="login" stylesheets="@../css/fullpackstyling.css" />
       <Button layoutX="290.0" layoutY="96.0" mnemonicParsing="false" styleClass="button4" stylesheets="@../css/fullpackstyling.css" text="Change" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
