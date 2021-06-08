@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="649.0" prefWidth="826.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane prefHeight="649.0" prefWidth="826.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="45.0" layoutY="87.0" prefHeight="41.0" prefWidth="58.0" text="Owner:">
          <font>
@@ -86,7 +86,7 @@
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </Button>
-      <Button layoutX="301.0" layoutY="415.0" mnemonicParsing="false" styleClass="button4" stylesheets="@../css/fullpackstyling.css" text="Add new" textFill="WHITE">
+      <Button fx:id="addPetBtn" layoutX="301.0" layoutY="415.0" mnemonicParsing="false" styleClass="button4" stylesheets="@../css/fullpackstyling.css" text="Add new" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
@@ -101,7 +101,7 @@
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </Button>
-      <Button layoutX="548.0" layoutY="415.0" mnemonicParsing="false" styleClass="button4" stylesheets="@../css/fullpackstyling.css" text="Add new" textFill="WHITE">
+      <Button fx:id="addVehicleBtn" layoutX="548.0" layoutY="415.0" mnemonicParsing="false" styleClass="button4" stylesheets="@../css/fullpackstyling.css" text="Add new" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>

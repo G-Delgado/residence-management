@@ -417,8 +417,8 @@ public class ResidenceManagement {
 		admin = null;
 	}
 	
-	public void addServiceStaff(String fn, String ln, int pn, String id, int type) {
-		if (type == 1) {
+	public void addServiceStaff(String fn, String ln, int pn, String id, String type) {
+		if (type.equals("SERVICE STAFF")) {
 			ServiceStaff ss = new ServiceStaff(fn,ln,pn,id);
 			serviceStaff.add(ss);
 			
@@ -501,8 +501,8 @@ public class ResidenceManagement {
 		}
 	}
 	
-	public void addVehicle(Apartament apto, String licensePlate, int type) {
-		if (type == 1) {
+	public void addVehicle(Apartament apto, String licensePlate, String type) {
+		if (type.equals("CAR")) {
 			Car c = new Car(licensePlate);
 			vehicles.add(c);
 			apto.getCars().add(c);

@@ -88,6 +88,12 @@ public class ResidentManagementGUI {
 
     @FXML
     private Button addResidentBtn;
+    
+    @FXML
+    private Button addPetBtn;
+    
+    @FXML
+    private Button addVehicleBtn;
 
     // Primitives (Shapes)
 
@@ -511,29 +517,87 @@ public class ResidentManagementGUI {
         vehiclesList.setItems(vehicles);
 
         addResidentBtn.setOnAction(newEvent -> {
-            /*
-             * TextInputDialog ti = new TextInputDialog(); ti.setTitle("Add resident");
-             * ti.getDialogPane().setContentText("First name: ");
-             * 
-             * Optional<String> result = ti.showAndWait(); TextField input = ti.getEditor();
-             * 
-             * System.out.println(input.getText().toString());
-             */
-            Dialog<String> dialog = new Dialog<>();
-            dialog.setHeaderText("Add resident");
-            dialog.setContentText("Fill the parameters");
-            DialogPane dialogPane = dialog.getDialogPane();
-            dialogPane.getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-            TextField tf = new TextField("Name");
-            TextField tf2 = new TextField("LastName");
-            TextField tf3 = new TextField("Phone number");
-            TextField tf4 = new TextField("Id");
-
-            dialogPane.setContent(new VBox(8, tf, tf2, tf3, tf4));
-
-            dialog.showAndWait();
+        	addResident(apto);
+           
+        });
+        
+        addPetBtn.setOnAction(newEvent -> {
+        	addPet(apto);
+        });
+        
+        addVehicleBtn.setOnAction(newEvent -> {
+        	addVehicle(apto);
         });
     }
+    
+    
+    public void addResident(Apartament apto) {
+    	 Dialog<String> dialog = new Dialog<>();
+         dialog.setHeaderText("Add resident");
+         dialog.setContentText("Fill the parameters");
+         DialogPane dialogPane = dialog.getDialogPane();
+         dialogPane.getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+         TextField tf = new TextField("Name");
+         TextField tf2 = new TextField("LastName");
+         TextField tf3 = new TextField("Phone number");
+         TextField tf4 = new TextField("Id");
+
+         dialogPane.setContent(new VBox(8, tf, tf2, tf3, tf4));
+
+         dialog.showAndWait();
+         int pn = 0;
+         try {
+         	pn = Integer.parseInt(tf3.getText());
+         	
+         } catch (NumberFormatException e) {
+         	pn = 0;
+         }
+         residentManagement.addResident(apto, tf.getText(), tf2.getText(), pn, tf4.getText());
+         ObservableList<Resident> newR = FXCollections.observableArrayList(apto.getResidents());
+         residentsList.setItems(newR);
+    }
+    
+    public void addPet(Apartament apto) {
+   	 Dialog<String> dialog = new Dialog<>();
+        dialog.setHeaderText("Add pet");
+        dialog.setContentText("Fill the parameters");
+        DialogPane dialogPane = dialog.getDialogPane();
+        dialogPane.getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        TextField tf = new TextField("Name");
+        ChoiceBox<String> tf2 = new ChoiceBox<String>();
+        ObservableList<String> options = FXCollections.observableArrayList();
+        options.add("CAT");
+        options.add("DOG");
+        tf2.setItems(options);
+
+        dialogPane.setContent(new VBox(8, tf, tf2));
+        dialog.showAndWait();
+        
+        residentManagement.addPet(apto, tf.getText(), tf2.getSelectionModel().getSelectedItem());
+        ObservableList<Pet> newP = FXCollections.observableArrayList(apto.getPets());
+        petsList.setItems(newP);
+   }
+    
+    public void addVehicle(Apartament apto) {
+    	Dialog<String> dialog = new Dialog<>();
+        dialog.setHeaderText("Add pet");
+        dialog.setContentText("Fill the parameters");
+        DialogPane dialogPane = dialog.getDialogPane();
+        dialogPane.getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        TextField tf = new TextField("License Plate");
+        ChoiceBox<String> tf2 = new ChoiceBox<String>();
+        ObservableList<String> options = FXCollections.observableArrayList();
+        options.add("MOTORCYCLE");
+        options.add("CAR");
+        tf2.setItems(options);
+
+        dialogPane.setContent(new VBox(8, tf, tf2));
+        dialog.showAndWait();
+        
+        residentManagement.addVehicle(apto, tf.getText(), tf2.getSelectionModel().getSelectedItem());
+        ObservableList<Vehicle> newP = FXCollections.observableArrayList(apto.getCars());
+        vehiclesList.setItems(newP);
+   }
 
     @SuppressWarnings("unchecked")
     @FXML

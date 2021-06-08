@@ -35,6 +35,11 @@ public class Pet implements Serializable{
     public void setType(TypePet type) {
         this.type = type;
     }
+    
+    @Override
+    public String toString() {
+    	return getName() + " - " + getType();
+    }
 
     
 }

@@ -24,9 +24,10 @@ public abstract class Vehicle {
 
     @Override
     public String toString() {
-        return "{" +
+        /*return "{" +
             " licensePlate='" + getLicensePlate() + "'" +
-            "}";
+            "}";*/
+    	return getLicensePlate() + " - " + getType();
     }
 
     public String toCSV(){

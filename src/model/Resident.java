@@ -11,6 +11,11 @@ public class Resident extends Person implements Comparable<Resident>{
     public String toCSV(String separate){
         return getFirstName()+separate+getLastName()+separate+getPhoneNumber()+separate+getId();
     }
+    
+    @Override
+    public String toString() {
+    	return getFirstName() + " " + getLastName();
+     }
 
     
     @Override
