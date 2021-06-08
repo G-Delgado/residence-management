@@ -94,6 +94,15 @@ public class ResidentManagementGUI {
     
     @FXML
     private Button addVehicleBtn;
+    
+    @FXML
+    private Button deleteResidentBtn;
+    
+    @FXML
+    private Button deletePetBtn;
+    
+    @FXML
+    private Button deleteVehicleBtn;
 
     // Primitives (Shapes)
 
@@ -528,6 +537,18 @@ public class ResidentManagementGUI {
         addVehicleBtn.setOnAction(newEvent -> {
         	addVehicle(apto);
         });
+        
+        deleteResidentBtn.setOnAction(newEvent -> {
+        	deleteResident(apto);
+        });
+        
+		deletePetBtn.setOnAction(newEvent -> {
+		    deletePet(apto);
+		});
+		
+		deleteVehicleBtn.setOnAction(newEvent -> {
+			deleteVehicle(apto);
+		});
     }
     
     
@@ -557,6 +578,16 @@ public class ResidentManagementGUI {
          residentsList.setItems(newR);
     }
     
+    public void deleteResident(Apartament apto) {
+    	Resident r = residentsList.getSelectionModel().getSelectedItem();
+    	if (r != null) {
+    		residentManagement.deleteResident(apto, r.getId());
+    	}
+    	
+    	ObservableList<Resident> residents = FXCollections.observableArrayList(apto.getResidents());
+    	residentsList.setItems(residents);
+    }
+    
     public void addPet(Apartament apto) {
    	 Dialog<String> dialog = new Dialog<>();
         dialog.setHeaderText("Add pet");
@@ -578,6 +609,17 @@ public class ResidentManagementGUI {
         petsList.setItems(newP);
    }
     
+    public void deletePet(Apartament apto) {
+    	Pet p = petsList.getSelectionModel().getSelectedItem();
+    	if (p != null) {
+    		residentManagement.deletePet(apto, p.getName(), p.getType() + "");
+    	}
+    	
+    	ObservableList<Pet> pets = FXCollections.observableArrayList(apto.getPets());
+    	petsList.setItems(pets);
+    	
+    }
+    
     public void addVehicle(Apartament apto) {
     	Dialog<String> dialog = new Dialog<>();
         dialog.setHeaderText("Add pet");
@@ -598,6 +640,21 @@ public class ResidentManagementGUI {
         ObservableList<Vehicle> newP = FXCollections.observableArrayList(apto.getCars());
         vehiclesList.setItems(newP);
    }
+    
+    public void deleteVehicle(Apartament apto) {
+    	Vehicle v = vehiclesList.getSelectionModel().getSelectedItem();
+    	if (v != null) {
+    		residentManagement.deleteVehicle(apto, v.getLicensePlate());
+    	}
+    	
+    	ObservableList<Vehicle> vehicles = FXCollections.observableArrayList(apto.getCars());
+    	vehiclesList.setItems(vehicles);
+    }
+    
+    @FXML
+    public void deleteResident() {
+    	
+    }
 
     @SuppressWarnings("unchecked")
     @FXML
