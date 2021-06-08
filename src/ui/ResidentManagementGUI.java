@@ -18,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -25,6 +26,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
@@ -49,6 +51,32 @@ import model.TypePet;
 public class ResidentManagementGUI {
 
     private ResidenceManagement residentManagement;
+    
+    // Apartament
+    
+    @FXML
+    private Label apartamentId;
+    
+    @FXML
+    private TextField apartamentOwner;
+    
+    @FXML
+    private TextField apartamentPassword;
+    
+    @FXML
+    private TextField apartamentUsername;
+    
+    @FXML
+    private ListView<Resident> residentsList;
+    
+    @FXML
+    private ListView<Pet> petsList;
+    
+    @FXML
+    private ListView<Vehicle> vehiclesList;
+    
+    @FXML
+    private Label apartamentTotalDebt;
     
 
     // Primitives (Shapes)
@@ -200,7 +228,8 @@ public class ResidentManagementGUI {
         mainPane.getChildren().addAll(pane);
     }
 
-    @FXML
+    @SuppressWarnings("unchecked")
+	@FXML
     public void debtApartament(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Debt.fxml"));
         fxmlLoader.setController(this);
@@ -404,7 +433,45 @@ public class ResidentManagementGUI {
         numberCol.setCellValueFactory(new PropertyValueFactory<Apartament, String>("number"));
         debtCol.setCellValueFactory(new PropertyValueFactory<Apartament, Double>("totalDebt"));
         ownerCol.setCellValueFactory(new PropertyValueFactory<Apartament, String>("owner"));
-
+        
+        table.setOnMouseClicked(otherEvent -> {
+        	if (otherEvent.getClickCount() == 2 && otherEvent.getButton().equals(MouseButton.PRIMARY)) {
+        		// Cagar nuevo FXML con los datos elegidos
+        		Apartament apt = table.getSelectionModel().getSelectedItem();
+        		loadApartament(apt);
+        	}
+        });
+        
+    }
+    
+    public void loadApartament(Apartament apto) {
+    	System.out.println(apto);
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Apartament.fxml"));
+    	fxmlLoader.setController(this);
+    	
+    	try {
+			Parent apartament = fxmlLoader.load();
+			paneAdministration.getChildren().clear();
+			paneAdministration.getChildren().addAll(apartament);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	apartamentId.setText(apto.getNumber() + "_" + apto.getTower());
+    	if (apto.getOwner() != null) {    		
+    		apartamentOwner.setText(apto.getOwner().toStringJavaFX());
+    	} else {
+    		apartamentOwner.setText("None");
+    	}
+    	apartamentUsername.setText(apto.getUsername());
+    	apartamentPassword.setText(apto.getPassword());
+    	apartamentTotalDebt.setText(apto.getTotalDebt() + "");
+    	ObservableList<Resident> residents = FXCollections.observableArrayList(apto.getResidents());
+    	ObservableList<Pet> pets = FXCollections.observableArrayList(apto.getPets());
+    	ObservableList<Vehicle> vehicles = FXCollections.observableArrayList(apto.getCars());
+    	
+    	residentsList.setItems(residents);
+    	petsList.setItems(pets);
+    	vehiclesList.setItems(vehicles);
     }
 
     @SuppressWarnings("unchecked")
@@ -491,7 +558,20 @@ public class ResidentManagementGUI {
         nameCol.setCellValueFactory(new PropertyValueFactory<Pet, String>("firstName"));
         typeCol.setCellValueFactory(new PropertyValueFactory<Pet, TypePet>("lastName"));
 
+       /* table.setOnMouseClicked(otherEvent -> {
+        	if (otherEvent.getClickCount() == 2 && otherEvent.getButton().equals(MouseButton.PRIMARY)) {
+        		// Cagar nuevo FXML con los datos elegidos
+        		Pet pet = table.getSelectionModel().getSelectedItem();
+        		loadPet(pet);
+        	}
+        });*/
     }
+    
+    /*public void loadPet(Pet pet) {
+    	if (pet != null) {    		
+    		System.out.println(pet.toString());
+    	}
+    }*/
 
     @SuppressWarnings("unchecked")
     @FXML

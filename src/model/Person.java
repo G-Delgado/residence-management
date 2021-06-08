@@ -66,6 +66,11 @@ public abstract class Person {
             ", id='" + getId() + "'" +
             "}";
     }
+    
+    
+    public String toStringJavaFX() {
+    	return getFirstName() + " " + getLastName(); 
+    }
 
 
 }
