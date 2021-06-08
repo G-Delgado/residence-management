@@ -11,7 +11,7 @@ public class Filler {
 	
 	public void fill() {
 		if (w < max) {
-			w += 0.14;
+			w += 0.145;
 		}
 	}
 	
