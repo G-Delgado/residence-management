@@ -53,5 +53,17 @@ public class Claim {
     }
 
 
+    @Override
+    public String toString() {
+        return "{" +
+            " subject='" + getSubject() + "'" +
+            ", description='" + getDescription() + "'" +
+            ", sender='" + getSender() + "'" +
+            ", next='" + getNext() + "'" +
+            "}";
+    }
+
+
+
     
 }

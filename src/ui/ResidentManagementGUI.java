@@ -40,6 +40,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Duration;
 import model.Apartament;
+import model.Claim;
 import model.CommonZones;
 import model.Debt;
 import model.Vehicle;
@@ -177,6 +178,16 @@ public class ResidentManagementGUI {
     @FXML
     private ListView<String> listReservations;
 
+    // Claims
+    @FXML
+    private TextArea textClaim;
+
+    //Notifications
+
+    
+    @FXML
+    private ListView<String> notifications;
+
     public ResidentManagementGUI(ResidenceManagement residentManagement) {
         this.residentManagement = residentManagement;
         Timeline count = new Timeline(new KeyFrame(Duration.seconds(3), action -> {
@@ -219,6 +230,20 @@ public class ResidentManagementGUI {
         Parent pane = fxmlLoader.load();
         mainPane.getChildren().clear();
         mainPane.getChildren().addAll(pane);
+
+        try {
+
+            //residentManagement.toStringReservation();
+            Claim r = residentManagement.getRootClaim();
+            notifications.getItems().add(r.toString());
+            while (r.getNext() != null) {
+                r = r.getNext();
+                notifications.getItems().add(r.toString());
+            }
+
+        } catch (Exception e) {
+            alert("No hay notificaiones");
+        }
     }
 
     @FXML
@@ -767,4 +792,56 @@ public class ResidentManagementGUI {
 
     }
 
+    @FXML
+    public void claims(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Claim.fxml"));
+        fxmlLoader.setController(this);
+        Parent pane = fxmlLoader.load();
+        paneApartament.getChildren().clear();
+        paneApartament.getChildren().addAll(pane);
+
+    }
+
+    @FXML
+    public void generateClaim(ActionEvent event) {
+
+        try {
+
+            String subject = "Reclamo";
+            Apartament sender = getLoginApartament();
+
+            residentManagement.addClaim(subject, textClaim.getText(), sender);
+            alert("Se envio el reclamo");
+        } catch (Exception e) {
+            alert("Error");
+        }
+
+    }
+
+
+    @FXML
+    public void notificatiosScreen(ActionEvent event) throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Notifications.fxml"));
+        fxmlLoader.setController(this);
+        Parent pane = fxmlLoader.load();
+        paneAdministration.getChildren().clear();
+        paneAdministration.getChildren().addAll(pane);
+
+
+        try {
+
+            //residentManagement.toStringReservation();
+            Claim r = residentManagement.getRootClaim();
+            notifications.getItems().add(r.toString());
+            while (r.getNext() != null) {
+                r = r.getNext();
+                notifications.getItems().add(r.toString());
+            }
+
+        } catch (Exception e) {
+            alert("No hay notificaiones");
+        }
+
+
+    }
 }
