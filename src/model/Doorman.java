@@ -3,7 +3,7 @@ package model;
 import java.io.Serializable;
 
 public class Doorman extends Person implements Serializable, Comparable<Doorman>{
-
+// Doorman still extends from Person
     /**
 	 * 
 	 */

@@ -97,7 +97,7 @@ public class ResidenceManagementTest {
 		String password = "1234";
 		Apartament apto = new Apartament(rm.getTowers() + "", number, username, password);
 		
-		int index = rm.binarySearchApartament(rm.getApartaments(), apto);
+		int index = rm.binarySearchApartament(apto);
 		
 		
 		assertEquals(rm.getApartaments().get(index).getNumber(), apto.getNumber());

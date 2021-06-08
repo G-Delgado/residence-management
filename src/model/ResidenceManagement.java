@@ -311,6 +311,181 @@ public class ResidenceManagement {
 	public void setRootClaim(Claim rootClaim) {
 		this.rootClaim = rootClaim;
 	}
+	
+	// Add, Edit and Delete objects --------------------------------
+	
+	public void addAdmin(String fn, String ln, int pn, String id) {
+		admin = new Admin(fn, ln, pn, id);
+	}
+	
+	public void editAdmin(String fn, String ln, int pn, String id) {
+		if (!fn.equals(admin.getFirstName())) {
+			admin.setFirstName(fn);
+		}
+		if (!ln.equals(admin.getLastName())) {
+			admin.setLastName(ln);
+		}
+		if (pn != admin.getPhoneNumber()) {
+			admin.setPhoneNumber(pn);
+		}
+		if (!id.equals(admin.getId())) {
+			admin.setId(id);
+		}
+	}
+	
+	public void deleteAdmin() {
+		admin = null;
+	}
+	
+	public void addServiceStaff(String fn, String ln, int pn, String id, int type) {
+		if (type == 1) {
+			ServiceStaff ss = new ServiceStaff(fn,ln,pn,id);
+			serviceStaff.add(ss);
+			
+		} else {
+			Doorman d = new Doorman(fn,ln,pn,id);
+			doormen.add(d);
+		}
+	}
+	
+	public boolean deleteServiceStaff(String id) {
+		boolean deleted = false;
+		for (int i = 0; i < serviceStaff.size() && !false; i++) {
+			if (serviceStaff.get(i).getId().equals(id)) {
+				serviceStaff.remove(i);
+				deleted = true;
+			}
+		}
+		return deleted;
+	}
+
+	public boolean deleteDoorman(String id) {
+		boolean deleted = false;
+		for (int i = 0; i < doormen.size() && !false; i++) {
+			if (doormen.get(i).getId().equals(id)) {
+				doormen.remove(i);
+				deleted = true;
+			}
+		}
+		return deleted;
+	}
+	
+	public void addResident(Apartament apto, String fn, String ln, int pn, String id) {
+		Resident r = new Resident(fn,ln,pn,id);
+		residents.add(r);
+		apto.getResidents().add(r);
+	}
+	
+	public void deleteResident(Apartament apto, String id) {
+		boolean deleted = false;
+		for (int i = 0; i < residents.size() && !deleted; i++) {
+			if (residents.get(i).getId().equals(id)) {
+				residents.remove(i);
+				deleted = true;
+			}
+		}
+		
+		deleted = false;
+		
+		for (int i = 0; i < apto.getResidents().size() && !deleted; i++) {
+			if (apto.getResidents().get(i).getId().equals(id)) {
+				apto.getResidents().remove(i);
+				deleted = false;
+			}
+		}
+	}
+	
+	public void addPet(Apartament apto, String name, String type) {
+		Pet p = new Pet(name, type);
+		pets.add(p);
+		apto.getPets().add(p);
+	}
+	
+	public void deletePet(Apartament apto, String name, String type) {
+		TypePet ty = TypePet.valueOf(type);
+		boolean deleted = false;
+		for (int i = 0; i < pets.size() && !deleted; i++) {
+			if (pets.get(i).getName().equals(name) && pets.get(i).getType().equals(ty)) {
+				pets.remove(i);
+				deleted = true;
+			}
+		}
+		
+		deleted = false;
+		
+		for (int i = 0; i < apto.getPets().size() && !deleted; i++) {
+			if (apto.getPets().get(i).getName().equals(name) && apto.getPets().get(i).getType().equals(ty)) {
+				apto.getPets().remove(i);
+				deleted = true;
+			}
+		}
+	}
+	
+	public void addVehicle(Apartament apto, String licensePlate, int type) {
+		if (type == 1) {
+			Car c = new Car(licensePlate);
+			vehicles.add(c);
+			apto.getCars().add(c);
+		} else {
+			Motorcycle mc = new Motorcycle(licensePlate);
+			vehicles.add(mc);
+			apto.getCars().add(mc);
+		}
+	}
+	
+	public void deleteVehicle(Apartament apto, String licensePlate) {
+		boolean deleted = false;
+		for (int i = 0; i < vehicles.size() && !deleted; i++) {
+			if (vehicles.get(i).getLicensePlate().equals(licensePlate)) {
+				vehicles.remove(i);
+				deleted = true;
+			}
+		}
+		
+		deleted = false;
+		
+		for (int i = 0; i < apto.getCars().size() && !deleted; i++) {
+			if (apto.getCars().get(i).getLicensePlate().equals(licensePlate)) {
+				apto.getCars().remove(i);
+				deleted = true;
+			}
+		}
+	}
+	
+	public void addOwner(Apartament apto, String fn, String ln, int pn, String id, String email) {
+		Owner on = new Owner(fn,ln,pn,id,email);
+		owners.add(on);
+		apto.setOwner(on);
+	}
+	
+	public void editOwner(Apartament apto, String fn, String ln, int pn, String id, String email) {
+		boolean edited = false;
+		Owner on = new Owner(fn,ln,pn,id,email);
+		for (int i = 0; i < owners.size() && !edited; i++) {
+			if (owners.get(i).getId().equals(id)) {
+				owners.set(i, on);
+				edited = true;
+			}
+		}
+		
+		apto.setOwner(on);
+	}
+	
+	public void deleteOwner(Apartament apto, String id) {
+		boolean deleted = false;
+		for (int i = 0; i < owners.size() && !deleted; i++) {
+			if (owners.get(i).getId().equals(id)) {
+				owners.remove(i);
+				deleted = true;
+			}
+		}
+		
+		apto.setOwner(null);
+		
+		
+	}
+	
+	////////////////////////////////////////////////////////////////////////
 
 
 	// IMPORT AND EXPORT RESIDENT-CARS
