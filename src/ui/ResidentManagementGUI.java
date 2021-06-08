@@ -17,6 +17,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
@@ -25,10 +27,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
@@ -77,6 +82,9 @@ public class ResidentManagementGUI {
     
     @FXML
     private Label apartamentTotalDebt;
+    
+    @FXML
+    private Button addResidentBtn;
     
 
     // Primitives (Shapes)
@@ -472,6 +480,30 @@ public class ResidentManagementGUI {
     	residentsList.setItems(residents);
     	petsList.setItems(pets);
     	vehiclesList.setItems(vehicles);
+    	
+    	addResidentBtn.setOnAction(newEvent -> {
+    		/*TextInputDialog ti = new TextInputDialog();
+    		ti.setTitle("Add resident");
+    		ti.getDialogPane().setContentText("First name: ");
+    		
+    		Optional<String> result = ti.showAndWait();
+    		TextField input = ti.getEditor();
+    		
+    		System.out.println(input.getText().toString());*/
+    		Dialog<String> dialog = new Dialog<>();
+    		dialog.setHeaderText("Add resident");
+    		dialog.setContentText("Fill the parameters");
+    		DialogPane dialogPane = dialog.getDialogPane();
+    		dialogPane.getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+    		TextField tf = new TextField("Name");
+    		TextField tf2 = new TextField("LastName");
+    		TextField tf3 = new TextField("Phone number");
+    		TextField tf4 = new TextField("Id");
+    		
+    		dialogPane.setContent(new VBox(8, tf, tf2, tf3, tf4));
+    		
+    		dialog.showAndWait();
+    	});
     }
 
     @SuppressWarnings("unchecked")

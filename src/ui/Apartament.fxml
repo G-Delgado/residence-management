@@ -76,7 +76,7 @@
       <ListView fx:id="residentsList" layoutX="41.0" layoutY="204.0" prefHeight="200.0" prefWidth="200.0" />
       <ListView fx:id="petsList" layoutX="301.0" layoutY="204.0" prefHeight="200.0" prefWidth="200.0" />
       <ListView fx:id="vehiclesList" layoutX="548.0" layoutY="204.0" prefHeight="200.0" prefWidth="200.0" />
-      <Button layoutX="41.0" layoutY="415.0" mnemonicParsing="false" onAction="#addResident" styleClass="button4" stylesheets="@../css/fullpackstyling.css" text="Add new" textFill="WHITE">
+      <Button fx:id="addResidentBtn" layoutX="41.0" layoutY="415.0" mnemonicParsing="false" styleClass="button4" stylesheets="@../css/fullpackstyling.css" text="Add new" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>

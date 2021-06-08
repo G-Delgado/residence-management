@@ -32,7 +32,7 @@
                   </ImageView>
                   <Rectangle fx:id="rectangleContainer" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="52.0" layoutX="415.0" layoutY="283.0" stroke="BLACK" strokeType="INSIDE" width="280.0" />
                   <Rectangle fx:id="rectangleFill" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="52.0" layoutX="415.0" layoutY="283.0" stroke="BLACK" strokeType="INSIDE" width="5.0" />
-                  <Line fx:id="line" endX="-34.0" layoutX="810.0" layoutY="309.0" startX="-100.0" />
+                  <Line fx:id="line" endX="-34.0" layoutX="810.0" layoutY="309.0" startX="-100.0" strokeWidth="2.5" />
                </children>
             </Pane>
          </children></AnchorPane>
