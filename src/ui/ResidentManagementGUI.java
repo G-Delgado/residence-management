@@ -33,6 +33,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Duration;
 import model.Apartament;
+import model.Debt;
 import model.Vehicle;
 import threads.DateThread;
 import threads.TimeThread;
@@ -78,6 +79,9 @@ public class ResidentManagementGUI {
     private Pane paneAdministration;
 
     @FXML
+    private Pane paneApartament;
+
+    @FXML
     private AnchorPane mainPane;
 
     // Login
@@ -105,6 +109,11 @@ public class ResidentManagementGUI {
 
     @FXML
     private Pane paneTables;
+
+    //Debt
+
+    @FXML
+    private Pane paneDebts;
 
     // Invoices
 
@@ -189,6 +198,53 @@ public class ResidentManagementGUI {
         Parent pane = fxmlLoader.load();
         mainPane.getChildren().clear();
         mainPane.getChildren().addAll(pane);
+    }
+
+    @FXML
+    public void debtApartament(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Debt.fxml"));
+        fxmlLoader.setController(this);
+        Parent pane = fxmlLoader.load();
+        paneApartament.getChildren().clear();
+        paneApartament.getChildren().addAll(pane);
+
+        
+        
+        TableView<Debt> table = new TableView<Debt>();
+
+        TableColumn<Debt, String> descriptionCol = new TableColumn<Debt, String>("Description");
+        TableColumn<Debt, Double> priceCol = new TableColumn<Debt, Double>("Price");
+        TableColumn<Debt, String> dateCol = new TableColumn<Debt, String>("Date");
+
+
+        table.getColumns().addAll(descriptionCol, priceCol, dateCol);
+
+
+        table.setPrefSize(751,368);
+        table.getStylesheets().setAll("/css/fullpackstyling.css");
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        paneDebts.getChildren().clear();
+        paneDebts.getChildren().addAll(table);
+
+        String apto=labelApto.getText();
+        
+        String number = apto.split("_")[0];
+		String tower = apto.split("_")[1];
+		Apartament apartament = new Apartament(tower, number, apto, "");
+		int index = residentManagement.binarySearchApartament(apartament);
+
+        apartament=residentManagement.getApartaments().get(index);
+
+        ObservableList<Debt> observableList;
+        observableList = FXCollections.observableArrayList(apartament.getDebt());
+        table.setItems(observableList);
+
+        descriptionCol.setCellValueFactory(new PropertyValueFactory<Debt, String>("description"));
+        priceCol.setCellValueFactory(new PropertyValueFactory<Debt ,Double>("price"));
+        dateCol.setCellValueFactory(new PropertyValueFactory<Debt ,String>("date"));
+        
+
     }
 
     @FXML
@@ -520,7 +576,7 @@ public class ResidentManagementGUI {
 		Apartament apartament = new Apartament(tower, number, apto, "");
 		int index = residentManagement.binarySearchApartament(apartament);
 
-		apartament = residentManagement.getApartaments().get(index);
+		 apartament = residentManagement.getApartaments().get(index);
 
 
         String description=invoiceDescription.getText();
@@ -531,6 +587,16 @@ public class ResidentManagementGUI {
 
     }
 
+    private Apartament getLoginApartament(){
+        String apto=labelApto.getText();
+        
+        String number = apto.split("_")[0];
+		String tower = apto.split("_")[1];
+		Apartament apartament = new Apartament(tower, number, apto, "");
+		int index = residentManagement.binarySearchApartament(apartament);
+        return residentManagement.getApartaments().get(index);
+    }
+
     @FXML
     public void generateInvoicesForAll(ActionEvent event) {
         String description=invoiceDescription.getText();
@@ -539,6 +605,13 @@ public class ResidentManagementGUI {
         residentManagement.generateInvoiceForAll(LocalDate.now(), description, price);
         alert("Se genero el nuevo pago de "+description);
 
+    }
+
+
+    @FXML
+    public void generateReport(ActionEvent event) {
+        Apartament apartament = getLoginApartament();
+        residentManagement.GenerateReport(apartament);
     }
 
 }

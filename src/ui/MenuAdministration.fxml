@@ -7,7 +7,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
@@ -15,17 +14,6 @@
    <children>
       <AnchorPane prefHeight="519.0" prefWidth="262.0" style="-fx-background-color: #3C3744;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox layoutY="160.0" prefHeight="69.0" prefWidth="262.0" AnchorPane.bottomAnchor="420.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="160.0">
-               <children>
-                  <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="263.0" styleClass="button1" stylesheets="@../css/fullpackstyling.css" text="Ben Affleck" textFill="WHITE">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                     <padding>
-                        <Insets left="40.0" />
-                     </padding></Button>
-               </children>
-            </VBox>
             <Pane layoutY="86.0" prefHeight="59.0" prefWidth="262.0" style="-fx-background-color: #3D52D5; -fx-background-radius: 5;">
                <children>
                   <Label fx:id="labelAdmin" layoutX="25.0" layoutY="17.0" text="Administrador" textFill="WHITE">
@@ -50,7 +38,7 @@
                   <Insets right="80.0" />
                </padding>
             </Button>
-            <Pane layoutX="13.0" layoutY="263.0" prefHeight="346.0" prefWidth="236.0" style="-fx-background-color: #524A7B; -fx-background-radius: 30;">
+            <Pane layoutX="13.0" layoutY="164.0" prefHeight="445.0" prefWidth="236.0" style="-fx-background-color: #524A7B; -fx-background-radius: 30;">
                <children>
                   <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="18.0" prefWidth="206.0" style="-fx-border-color: #3C3744; -fx-border-width: 0 0 2 0;" text="Notificaciones" textFill="WHITE">
                      <font>

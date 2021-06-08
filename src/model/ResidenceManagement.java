@@ -311,6 +311,61 @@ public class ResidenceManagement {
 	public void setRootClaim(Claim rootClaim) {
 		this.rootClaim = rootClaim;
 	}
+
+	public void importDataDoorman(String directory) throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(directory));
+		br.readLine();
+		String line = br.readLine();
+
+		while (line != null) {
+			String[] parts = line.split(SEPARATE);
+			String firstName = parts[0];
+			String lastName = parts[1];
+			int phone = Integer.parseInt(parts[2]);
+			String id = parts[3];
+
+			doormen.add(new Doorman(firstName, lastName, phone, id));
+			line = br.readLine();
+		}
+		br.close();
+	}
+
+	public void importDataserviceStaff(String directory) throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(directory));
+		br.readLine();
+		String line = br.readLine();
+
+		while (line != null) {
+			String[] parts = line.split(SEPARATE);
+			String firstName = parts[0];
+			String lastName = parts[1];
+			int phone = Integer.parseInt(parts[2]);
+			String id = parts[3];
+
+			serviceStaff.add(new ServiceStaff(firstName, lastName, phone, id));
+			line = br.readLine();
+		}
+		br.close();
+	}
+
+	public void importDataOwners(String directory) throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(directory));
+		br.readLine();
+		String line = br.readLine();
+
+		while (line != null) {
+			String[] parts = line.split(SEPARATE);
+			String firstName = parts[0];
+			String lastName = parts[1];
+			int phone = Integer.parseInt(parts[2]);
+			String id = parts[3];
+
+			owners.add(new Owner(firstName, lastName, phone, id,"Prueba@gmail.com"));
+			line = br.readLine();
+		}
+		br.close();
+	}
+
 	
 	// Add, Edit and Delete objects --------------------------------
 	
@@ -780,46 +835,15 @@ public class ResidenceManagement {
 
 	}
 
-	//Delete person
-
-	public void deletePerson(Person person){
-
-	}
-
-
-
-	//Edit vehicle
-
-
-
-
-	//Delete vehicle
-
-
-
-	//Edit pet
-
-
-
-
-	//Delete pet
-
-
 
 	//Reports
 
-	public void testReport(){
+	public void GenerateReport(Apartament apartament){
 		try{
             JasperReport report = JasperCompileManager.compileReport("src/reports/test14.jrxml");
 
-			LocalDate date=LocalDate.now();
-			//Poner el date en la descripcion
-			generateAdministrationDebt(date);
-			generateAdministrationDebt(date);
 
-			//Verificar si no hay deuda
-
-            JasperPrint jprint = JasperFillManager.fillReport(report, null, new Invoice(apartaments.get(3)));
+            JasperPrint jprint = JasperFillManager.fillReport(report, null, new Invoice(apartament));
 
           
             JasperViewer view = new JasperViewer(jprint, false);

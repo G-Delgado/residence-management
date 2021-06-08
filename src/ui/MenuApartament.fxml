@@ -7,7 +7,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
@@ -15,32 +14,6 @@
    <children>
       <AnchorPane prefHeight="519.0" prefWidth="262.0" style="-fx-background-color: #3C3744;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox layoutY="160.0" prefHeight="212.0" prefWidth="262.0" AnchorPane.bottomAnchor="277.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="160.0">
-               <children>
-                  <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="262.0" styleClass="button1" stylesheets="@../css/fullpackstyling.css" text="Ben Affleck" textFill="WHITE">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                     <padding>
-                        <Insets left="40.0" />
-                     </padding></Button>
-                  <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="262.0" styleClass="button1" stylesheets="@../css/fullpackstyling.css" text="Jimmy Mason" textFill="WHITE">
-                     <padding>
-                        <Insets left="40.0" />
-                     </padding>
-                  </Button>
-                  <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="262.0" styleClass="button1" stylesheets="@../css/fullpackstyling.css" text="Alex Mainman" textFill="WHITE">
-                     <padding>
-                        <Insets left="40.0" />
-                     </padding>
-                  </Button>
-                  <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="262.0" styleClass="button1" stylesheets="@../css/fullpackstyling.css" text="Rob Damien" textFill="WHITE">
-                     <padding>
-                        <Insets left="40.0" />
-                     </padding>
-                  </Button>
-               </children>
-            </VBox>
             <Pane layoutY="86.0" prefHeight="61.0" prefWidth="262.0" style="-fx-background-color: #3D52D5; -fx-background-radius: 5;">
                <children>
                   <Label fx:id="labelApto" layoutX="25.0" layoutY="17.0" text="Apto" textFill="WHITE">
@@ -50,7 +23,7 @@
                   </Label>
                </children>
             </Pane>
-            <Pane layoutX="10.0" layoutY="372.0" prefHeight="265.0" prefWidth="242.0" style="-fx-background-color: #524A7B; -fx-background-radius: 30;">
+            <Pane layoutX="10.0" layoutY="166.0" prefHeight="471.0" prefWidth="242.0" style="-fx-background-color: #524A7B; -fx-background-radius: 30;">
                <children>
                   <Label alignment="CENTER" layoutX="18.0" layoutY="14.0" prefHeight="18.0" prefWidth="206.0" style="-fx-border-color: #3C3744; -fx-border-width: 0 0 2 0;" text="Notificaciones" textFill="WHITE">
                      <font>
@@ -88,11 +61,11 @@
                </padding>
             </Button>
          </children></AnchorPane>
-      <Pane layoutX="262.0" prefHeight="649.0" prefWidth="631.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="262.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="0.0">
+      <Pane fx:id="paneApartament" layoutX="262.0" prefHeight="649.0" prefWidth="829.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="262.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="0.0">
          <children>
             <Pane layoutX="76.0" layoutY="106.0">
                <children>
-                  <Button mnemonicParsing="false" opacity="0.7" prefHeight="190.0" prefWidth="168.0" styleClass="button2" stylesheets="@../css/fullpackstyling.css" />
+                  <Button mnemonicParsing="false" onAction="#debtApartament" opacity="0.7" prefHeight="190.0" prefWidth="168.0" styleClass="button2" stylesheets="@../css/fullpackstyling.css" />
                   <Circle fill="#3d52d5" layoutX="84.0" layoutY="87.0" radius="50.0" stroke="WHITE" strokeType="INSIDE" />
                   <ImageView fitHeight="49.0" fitWidth="37.0" layoutX="66.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -120,7 +93,7 @@
                      </font></Label>
                </children>
             </Pane>
-            <Pane layoutX="71.0" layoutY="354.0" prefHeight="202.0" prefWidth="179.0">
+            <Pane layoutX="174.0" layoutY="354.0" prefHeight="202.0" prefWidth="179.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#test" opacity="0.7" prefHeight="190.0" prefWidth="168.0" styleClass="button2" stylesheets="@../css/fullpackstyling.css" />
                   <Circle fill="#3d52d5" layoutX="84.0" layoutY="87.0" radius="50.0" stroke="WHITE" strokeType="INSIDE" />
@@ -135,7 +108,7 @@
                      </font></Label>
                </children>
             </Pane>
-            <Pane layoutX="316.0" layoutY="354.0" prefHeight="202.0" prefWidth="179.0">
+            <Pane layoutX="427.0" layoutY="354.0" prefHeight="202.0" prefWidth="179.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#test" opacity="0.7" prefHeight="190.0" prefWidth="168.0" styleClass="button2" stylesheets="@../css/fullpackstyling.css" />
                   <Circle fill="#3d52d5" layoutX="84.0" layoutY="87.0" radius="50.0" stroke="WHITE" strokeType="INSIDE" />
@@ -145,21 +118,6 @@
                      </image>
                   </ImageView>
                   <Label alignment="CENTER" layoutX="1.0" layoutY="146.0" prefHeight="17.0" prefWidth="168.0" text="Residentes" textFill="WHITE">
-                     <font>
-                        <Font name="Arial Bold" size="13.0" />
-                     </font></Label>
-               </children>
-            </Pane>
-            <Pane layoutX="559.0" layoutY="354.0" prefHeight="202.0" prefWidth="179.0">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#test" opacity="0.7" prefHeight="190.0" prefWidth="168.0" styleClass="button2" stylesheets="@../css/fullpackstyling.css" />
-                  <Circle fill="#3d52d5" layoutX="84.0" layoutY="87.0" radius="50.0" stroke="WHITE" strokeType="INSIDE" />
-                  <ImageView fitHeight="49.0" fitWidth="37.0" layoutX="66.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../resources/icons8_Broccoli_64px_2.png" />
-                     </image>
-                  </ImageView>
-                  <Label alignment="CENTER" layoutX="1.0" layoutY="146.0" prefHeight="17.0" prefWidth="168.0" text="Grocery" textFill="WHITE">
                      <font>
                         <Font name="Arial Bold" size="13.0" />
                      </font></Label>
