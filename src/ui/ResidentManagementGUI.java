@@ -711,9 +711,15 @@ public class ResidentManagementGUI {
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
         Button addBtn = new Button("Añadir");
+        addBtn.getStyleClass().add("button4");
+        addBtn.styleProperty().set("-fx-text-fill: #ffffff;");
         Button deleteBtn = new Button("Eliminar seleccionado");
+        deleteBtn.getStyleClass().add("button4");
+        deleteBtn.styleProperty().set("-fx-text-fill: #ffffff;");
+        
         
         HBox hb = new HBox(8, addBtn, deleteBtn);
+        hb.getStylesheets().setAll("/css/fullpackstyling.css");
 
         paneTables.getChildren().clear();
         //paneTables.getChildren().addAll(table);
@@ -827,9 +833,14 @@ public class ResidentManagementGUI {
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
         Button addBtn = new Button("Añadir");
+        addBtn.getStyleClass().add("button4");
+        addBtn.styleProperty().set("-fx-text-fill: #ffffff;");
         Button deleteBtn = new Button("Eliminar seleccionado");
+        deleteBtn.getStyleClass().add("button4");
+        deleteBtn.styleProperty().set("-fx-text-fill: #ffffff;");
         
         HBox hb = new HBox(8, addBtn, deleteBtn);
+        hb.getStylesheets().setAll("/css/fullpackstyling.css");
 
         paneTables.getChildren().clear();
         //paneTables.getChildren().addAll(table);
