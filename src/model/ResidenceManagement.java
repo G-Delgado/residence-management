@@ -857,6 +857,18 @@ public class ResidenceManagement {
 			r.setNext(claim);
 		}
 	}
+	
+	public double [] calculateTotalTowerDebt() {
+		double [] result = new double[towers];
+		int actualTower = 0;
+		for (int i = 0; i < apartaments.size(); i++) {
+			if (actualTower != Integer.parseInt(apartaments.get(i).getTower())) {
+				actualTower = Integer.parseInt(apartaments.get(i).getTower());
+			}
+			result[actualTower - 1] += apartaments.get(i).getTotalDebt();
+		}
+		return result;
+	}
 
 
 

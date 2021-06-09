@@ -3,6 +3,9 @@ package ui;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+
+import org.jfree.chart.axis.CategoryAxis;
+
 import exceptions.PasswordInvalidException;
 import exceptions.UsernameInvalidException;
 import javafx.animation.KeyFrame;
@@ -14,6 +17,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
@@ -61,6 +67,14 @@ import model.TypePet;
 public class ResidentManagementGUI {
 
     private ResidenceManagement residentManagement;
+    
+    // Reports / Charts
+    
+    @FXML
+    private Pane apartmentPane;
+    
+    @FXML
+    private BarChart<CategoryAxis, NumberAxis> apartmentChart;
 
     // Apartament
 
@@ -247,6 +261,38 @@ public class ResidentManagementGUI {
         Parent pane = fxmlLoader.load();
         mainPane.getChildren().clear();
         mainPane.getChildren().addAll(pane);
+    }
+    
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	@FXML
+    public void loadReports(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Reports.fxml"));
+        fxmlLoader.setController(this);
+        Parent pane = fxmlLoader.load();
+        paneAdministration.getChildren().clear();
+        paneAdministration.getChildren().addAll(pane);
+        
+       
+        apartmentChart.setTitle("Debt per Tower");
+                                
+        XYChart.Series series = new XYChart.Series();
+        series.setName("Towers 1 - " + residentManagement.getTowers());
+        
+        String [] towers = new String[residentManagement.getTowers()];
+        for (int i = 1; i <= towers.length; i++) {
+        	towers[i - 1] = "Tower " + i;
+        }
+        
+        double [] days = residentManagement.calculateTotalTowerDebt();
+		
+		for (int i = 0; i < towers.length; i++) {
+			series.getData().add(new XYChart.Data(towers[i], days[i]));
+		}
+        
+        
+        apartmentChart.getData().add(series);
+        
+        
     }
 
     @FXML
