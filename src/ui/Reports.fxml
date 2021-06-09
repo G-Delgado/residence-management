@@ -18,7 +18,7 @@
             </Label>
          </children>
       </Pane>
-      <Label layoutX="282.0" layoutY="87.0" prefHeight="41.0" prefWidth="263.0" text="Debt per Apartment">
+      <Label layoutX="314.0" layoutY="87.0" prefHeight="41.0" prefWidth="199.0" text="Debt per Tower">
          <font>
             <Font name="Arial Rounded MT Bold" size="26.0" />
          </font>
