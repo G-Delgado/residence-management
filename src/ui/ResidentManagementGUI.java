@@ -551,31 +551,45 @@ public class ResidentManagementGUI {
 		});
     }
     
-    
     public void addResident(Apartament apto) {
     	 Dialog<String> dialog = new Dialog<>();
          dialog.setHeaderText("Add resident");
          dialog.setContentText("Fill the parameters");
          DialogPane dialogPane = dialog.getDialogPane();
-         dialogPane.getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-         TextField tf = new TextField("Name");
-         TextField tf2 = new TextField("LastName");
-         TextField tf3 = new TextField("Phone number");
-         TextField tf4 = new TextField("Id");
+         dialogPane.getButtonTypes().addAll(ButtonType.OK);
+         TextField tf = new TextField();
+         Label lf = new Label("Name: ");
+         VBox hb = new VBox(4, lf, tf);
+         TextField tf2 = new TextField();
+         Label lf2 = new Label("Last name: ");
+         VBox hb2 = new VBox(4, lf2, tf2);
+         TextField tf3 = new TextField();
+         Label lf3 = new Label("Phone number: ");
+         VBox hb3 = new VBox(4, lf3, tf3);
+         TextField tf4 = new TextField();
+         Label lf4 = new Label("Id: ");
+         VBox hb4 = new VBox(4, lf4, tf4);
 
-         dialogPane.setContent(new VBox(8, tf, tf2, tf3, tf4));
+         dialogPane.setContent(new VBox(8, hb, hb2, hb3, hb4));
 
          dialog.showAndWait();
-         int pn = 0;
-         try {
-         	pn = Integer.parseInt(tf3.getText());
-         	
-         } catch (NumberFormatException e) {
-         	pn = 0;
+         if (!tf.getText().equals("") && !tf2.getText().equals("") && !tf4.getText().equals("")) { 	 
+        	 int pn = 0;
+        	 try {
+        		 pn = Integer.parseInt(tf3.getText());
+        		 
+        	 } catch (NumberFormatException e) {
+        		 pn = 0;
+        	 }
+        	 residentManagement.addResident(apto, tf.getText(), tf2.getText(), pn, tf4.getText());
+        	 ObservableList<Resident> newR = FXCollections.observableArrayList(apto.getResidents());
+        	 residentsList.setItems(newR);
+         } else {
+        	 Alert alert = new Alert(AlertType.ERROR);
+        	 alert.setHeaderText("There was an error adding the resident");
+        	 alert.setContentText("You must fill all the parameters");
+        	 alert.showAndWait();
          }
-         residentManagement.addResident(apto, tf.getText(), tf2.getText(), pn, tf4.getText());
-         ObservableList<Resident> newR = FXCollections.observableArrayList(apto.getResidents());
-         residentsList.setItems(newR);
     }
     
     public void deleteResident(Apartament apto) {
@@ -594,19 +608,31 @@ public class ResidentManagementGUI {
         dialog.setContentText("Fill the parameters");
         DialogPane dialogPane = dialog.getDialogPane();
         dialogPane.getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-        TextField tf = new TextField("Name");
+        TextField tf = new TextField();
+        Label lf = new Label("Name: ");
+        VBox hb = new VBox(4,lf,tf);
         ChoiceBox<String> tf2 = new ChoiceBox<String>();
         ObservableList<String> options = FXCollections.observableArrayList();
         options.add("CAT");
         options.add("DOG");
+        Label lf2 = new Label("Choose the type: ");
+        VBox hb2 = new VBox(4,lf2,tf2);
         tf2.setItems(options);
 
-        dialogPane.setContent(new VBox(8, tf, tf2));
+        dialogPane.setContent(new VBox(8, hb, hb2));
         dialog.showAndWait();
         
-        residentManagement.addPet(apto, tf.getText(), tf2.getSelectionModel().getSelectedItem());
-        ObservableList<Pet> newP = FXCollections.observableArrayList(apto.getPets());
-        petsList.setItems(newP);
+        if (!tf.getText().equals("") && tf2.getSelectionModel().getSelectedItem() != null) {        	
+        	residentManagement.addPet(apto, tf.getText(), tf2.getSelectionModel().getSelectedItem());
+        	ObservableList<Pet> newP = FXCollections.observableArrayList(apto.getPets());
+        	petsList.setItems(newP);
+        } else {
+         Alert alert = new Alert(AlertType.ERROR);
+       	 alert.setHeaderText("There was an error adding the pet");
+       	 alert.setContentText("You must fill all the parameters");
+       	 alert.showAndWait();
+        }
+        
    }
     
     public void deletePet(Apartament apto) {
@@ -626,19 +652,32 @@ public class ResidentManagementGUI {
         dialog.setContentText("Fill the parameters");
         DialogPane dialogPane = dialog.getDialogPane();
         dialogPane.getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-        TextField tf = new TextField("License Plate");
+        TextField tf = new TextField();
+        Label lf = new Label("License Plate: ");
+        VBox hb = new VBox(4, lf,tf);
         ChoiceBox<String> tf2 = new ChoiceBox<String>();
+        Label lf2 = new Label("Choose the type: ");
+        VBox hb2 = new VBox(4,lf2,tf2);
         ObservableList<String> options = FXCollections.observableArrayList();
         options.add("MOTORCYCLE");
         options.add("CAR");
         tf2.setItems(options);
 
-        dialogPane.setContent(new VBox(8, tf, tf2));
+        dialogPane.setContent(new VBox(8, hb, hb2));
         dialog.showAndWait();
         
-        residentManagement.addVehicle(apto, tf.getText(), tf2.getSelectionModel().getSelectedItem());
-        ObservableList<Vehicle> newP = FXCollections.observableArrayList(apto.getCars());
-        vehiclesList.setItems(newP);
+        System.out.println(tf2.getSelectionModel().getSelectedItem());
+        if (!tf.getText().equals("") && tf2.getSelectionModel().getSelectedItem() != null) {
+        	residentManagement.addVehicle(apto, tf.getText(), tf2.getSelectionModel().getSelectedItem());
+        	ObservableList<Vehicle> newP = FXCollections.observableArrayList(apto.getCars());
+        	vehiclesList.setItems(newP);        	
+        } else {
+        	Alert alert = new Alert(AlertType.ERROR);
+          	alert.setHeaderText("There was an error adding the vehicle");
+          	alert.setContentText("You must fill all the parameters");
+          	alert.showAndWait();
+        }
+        
    }
     
     public void deleteVehicle(Apartament apto) {
@@ -650,11 +689,7 @@ public class ResidentManagementGUI {
     	ObservableList<Vehicle> vehicles = FXCollections.observableArrayList(apto.getCars());
     	vehiclesList.setItems(vehicles);
     }
-    
-    @FXML
-    public void deleteResident() {
-    	
-    }
+
 
     @SuppressWarnings("unchecked")
     @FXML
