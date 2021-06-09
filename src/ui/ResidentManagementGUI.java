@@ -105,6 +105,15 @@ public class ResidentManagementGUI {
     
     @FXML
     private Button deleteVehicleBtn;
+    
+    @FXML
+    private Button changeOwnerBtn;
+    
+    @FXML
+    private Button editOwnerBtn;
+    
+    @FXML
+    private Button deleteOwnerBtn;
 
     // Primitives (Shapes)
 
@@ -553,6 +562,18 @@ public class ResidentManagementGUI {
 		deleteVehicleBtn.setOnAction(newEvent -> {
 			deleteVehicle(apto);
 		});
+		
+		changeOwnerBtn.setOnAction(newEvent -> {
+			changeOwner(apto);
+		});
+		
+		editOwnerBtn.setOnAction(newEvent -> {
+			editOwner(apto);
+		});
+		
+		deleteOwnerBtn.setOnAction(newEvent -> {
+			deleteOwner(apto);
+		});
     }
     
     public void addResident(Apartament apto) {
@@ -694,6 +715,57 @@ public class ResidentManagementGUI {
     	vehiclesList.setItems(vehicles);
     }
 
+    public void changeOwner(Apartament apto) {
+    	Dialog<String> dialog = new Dialog<>();
+        dialog.setHeaderText("Add resident");
+        dialog.setContentText("Fill the parameters");
+        DialogPane dialogPane = dialog.getDialogPane();
+        dialogPane.getButtonTypes().addAll(ButtonType.OK);
+        TextField tf = new TextField();
+        Label lf = new Label("Name: ");
+        VBox hb = new VBox(4, lf, tf);
+        TextField tf2 = new TextField();
+        Label lf2 = new Label("Last name: ");
+        VBox hb2 = new VBox(4, lf2, tf2);
+        TextField tf3 = new TextField();
+        Label lf3 = new Label("Phone number: ");
+        VBox hb3 = new VBox(4, lf3, tf3);
+        TextField tf4 = new TextField();
+        Label lf4 = new Label("Id: ");
+        VBox hb4 = new VBox(4, lf4, tf4);
+        TextField tf5 = new TextField();
+        Label lf5 = new Label("Email: ");
+        VBox hb5 = new VBox(4, lf5, tf5);
+
+        dialogPane.setContent(new VBox(8, hb, hb2, hb3, hb4, hb5));
+
+        dialog.showAndWait();
+        if (!tf.getText().equals("") && !tf2.getText().equals("") && !tf4.getText().equals("") && !tf5.getText().equals("")) { 	 
+       	 int pn = 0;
+       	 try {
+       		 pn = Integer.parseInt(tf3.getText());
+       		 
+       	 } catch (NumberFormatException e) {
+       		 pn = 0;
+       	 }
+       	 residentManagement.addOwner(apto, tf.getText(), tf2.getText(), pn, tf4.getText(), tf5.getText());
+       	 apartamentOwner.setText(tf.getText() + " " + tf2.getText());
+        } else {
+       	 Alert alert = new Alert(AlertType.ERROR);
+       	 alert.setHeaderText("There was an error updating the owner");
+       	 alert.setContentText("You must fill all the parameters");
+       	 alert.showAndWait();
+        }
+    }
+    
+    public void editOwner(Apartament apto) {
+    	
+    }
+    
+    public void deleteOwner(Apartament apto) {
+    	
+    }
+    
     @SuppressWarnings("unchecked")
     @FXML
     public void tableDoormen(ActionEvent event) throws IOException {
