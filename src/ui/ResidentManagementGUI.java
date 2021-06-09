@@ -32,6 +32,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
@@ -161,7 +163,7 @@ public class ResidentManagementGUI {
     // Tables
 
     @FXML
-    private Pane paneTables;
+    private BorderPane paneTables;
 
     // Debt
 
@@ -257,7 +259,7 @@ public class ResidentManagementGUI {
             }
 
         } catch (Exception e) {
-            alert("No hay notificaiones");
+            alert("No hay notificaciones");
         }
     }
 
@@ -445,7 +447,8 @@ public class ResidentManagementGUI {
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         paneTables.getChildren().clear();
-        paneTables.getChildren().addAll(table);
+        //paneTables.getChildren().addAll(table);
+        paneTables.setCenter(table);
 
         ObservableList<Resident> observableList;
         observableList = FXCollections.observableArrayList(residentManagement.getResidents());
@@ -475,7 +478,8 @@ public class ResidentManagementGUI {
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         paneTables.getChildren().clear();
-        paneTables.getChildren().addAll(table);
+        // paneTables.getChildren().addAll(table);
+        paneTables.setCenter(table);
 
         ObservableList<Apartament> observableList;
         observableList = FXCollections.observableArrayList(residentManagement.getApartaments());
@@ -690,7 +694,6 @@ public class ResidentManagementGUI {
     	vehiclesList.setItems(vehicles);
     }
 
-
     @SuppressWarnings("unchecked")
     @FXML
     public void tableDoormen(ActionEvent event) throws IOException {
@@ -706,9 +709,24 @@ public class ResidentManagementGUI {
         table.setPrefSize(paneTables.getWidth(), paneTables.getHeight());
         table.getStylesheets().setAll("/css/fullpackstyling.css");
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        
+        Button addBtn = new Button("Añadir");
+        Button deleteBtn = new Button("Eliminar seleccionado");
+        
+        HBox hb = new HBox(8, addBtn, deleteBtn);
 
         paneTables.getChildren().clear();
-        paneTables.getChildren().addAll(table);
+        //paneTables.getChildren().addAll(table);
+        paneTables.setCenter(table);
+        paneTables.setTop(hb);
+        
+        addBtn.setOnAction(action -> {
+        	addStaff(table, "DOORMAN");
+        });
+        
+        deleteBtn.setOnAction(action -> {
+        	System.out.println("Seems fine! x2");
+        });
 
         ObservableList<Doorman> observableList;
         observableList = FXCollections.observableArrayList(residentManagement.getDoormen());
@@ -719,6 +737,56 @@ public class ResidentManagementGUI {
         phoneNumberCol.setCellValueFactory(new PropertyValueFactory<Doorman, Integer>("phoneNumber"));
         idCol.setCellValueFactory(new PropertyValueFactory<Doorman, String>("id"));
 
+    }
+    
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	public void addStaff(TableView table, String type) {
+    	Dialog<String> dialog = new Dialog<>();
+        dialog.setHeaderText("Add " + type);
+        dialog.setContentText("Fill the parameters");
+        DialogPane dialogPane = dialog.getDialogPane();
+        dialogPane.getButtonTypes().addAll(ButtonType.OK);
+        TextField tf = new TextField();
+        Label lf = new Label("Name: ");
+        VBox hb = new VBox(4, lf, tf);
+        TextField tf2 = new TextField();
+        Label lf2 = new Label("Last name: ");
+        VBox hb2 = new VBox(4, lf2, tf2);
+        TextField tf3 = new TextField();
+        Label lf3 = new Label("Phone number: ");
+        VBox hb3 = new VBox(4, lf3, tf3);
+        TextField tf4 = new TextField();
+        Label lf4 = new Label("Id: ");
+        VBox hb4 = new VBox(4, lf4, tf4);
+
+        dialogPane.setContent(new VBox(8, hb, hb2, hb3, hb4));
+
+        dialog.showAndWait();
+        
+        if (!tf.getText().equals("") && !tf2.getText().equals("") && !tf4.getText().equals("")) { 	 
+       	 int pn = 0;
+       	 try {
+       		 pn = Integer.parseInt(tf3.getText());
+       		 
+       	 } catch (NumberFormatException e) {
+       		 pn = 0;
+       	 }
+       	 
+       	 residentManagement.addServiceStaff(tf.getText(), tf2.getText(), pn, tf4.getText(), type);
+       	 ObservableList list;
+       	 if (type.equals("DOORMAN")) {
+       		 list = FXCollections.observableArrayList(residentManagement.getDoormen());
+       	 } else {
+       		list = FXCollections.observableArrayList(residentManagement.getServiceStaff());
+       	 }
+       	 table.setItems(list);
+       	 
+        } else {
+       	 Alert alert = new Alert(AlertType.ERROR);
+       	 alert.setHeaderText("There was an error adding the doorman");
+       	 alert.setContentText("You must fill all the parameters");
+       	 alert.showAndWait();
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -736,9 +804,24 @@ public class ResidentManagementGUI {
         table.setPrefSize(paneTables.getWidth(), paneTables.getHeight());
         table.getStylesheets().setAll("/css/fullpackstyling.css");
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        
+        Button addBtn = new Button("Añadir");
+        Button deleteBtn = new Button("Eliminar seleccionado");
+        
+        HBox hb = new HBox(8, addBtn, deleteBtn);
 
         paneTables.getChildren().clear();
-        paneTables.getChildren().addAll(table);
+        //paneTables.getChildren().addAll(table);
+        paneTables.setCenter(table);
+        paneTables.setTop(hb);
+        
+        addBtn.setOnAction(action -> {
+        	addStaff(table, "SERVICE STAFF");
+        });
+        
+        deleteBtn.setOnAction(action -> {
+        	System.out.println("Seems fine! x2");
+        });
 
         ObservableList<ServiceStaff> observableList;
         observableList = FXCollections.observableArrayList(residentManagement.getServiceStaff());
@@ -766,7 +849,8 @@ public class ResidentManagementGUI {
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         paneTables.getChildren().clear();
-        paneTables.getChildren().addAll(table);
+        //paneTables.getChildren().addAll(table);
+        paneTables.setCenter(table);
 
         ObservableList<Pet> observableList;
         observableList = FXCollections.observableArrayList(residentManagement.getPets());
@@ -783,11 +867,6 @@ public class ResidentManagementGUI {
          */
     }
 
-    /*
-     * public void loadPet(Pet pet) { if (pet != null) {
-     * System.out.println(pet.toString()); } }
-     */
-
     @SuppressWarnings("unchecked")
     @FXML
     public void tableCars(ActionEvent event) throws IOException {
@@ -803,7 +882,8 @@ public class ResidentManagementGUI {
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         paneTables.getChildren().clear();
-        paneTables.getChildren().addAll(table);
+        //paneTables.getChildren().addAll(table);
+        paneTables.setCenter(table);
 
         ObservableList<Vehicle> observableList;
         observableList = FXCollections.observableArrayList(residentManagement.getVehicles());
