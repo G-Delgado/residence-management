@@ -889,8 +889,8 @@ public class ResidentManagementGUI {
         observableList = FXCollections.observableArrayList(residentManagement.getPets());
         table.setItems(observableList);
 
-        nameCol.setCellValueFactory(new PropertyValueFactory<Pet, String>("firstName"));
-        typeCol.setCellValueFactory(new PropertyValueFactory<Pet, TypePet>("lastName"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<Pet, String>("name"));
+        typeCol.setCellValueFactory(new PropertyValueFactory<Pet, TypePet>("type"));
 
         /*
          * table.setOnMouseClicked(otherEvent -> { if (otherEvent.getClickCount() == 2
