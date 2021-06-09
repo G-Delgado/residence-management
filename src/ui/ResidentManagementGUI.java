@@ -725,7 +725,8 @@ public class ResidentManagementGUI {
         });
         
         deleteBtn.setOnAction(action -> {
-        	System.out.println("Seems fine! x2");
+        	Doorman d = table.getSelectionModel().getSelectedItem();
+        	deleteDoorman(table, d);
         });
 
         ObservableList<Doorman> observableList;
@@ -789,6 +790,26 @@ public class ResidentManagementGUI {
         }
     }
 
+    public void deleteDoorman(TableView<Doorman> table, Doorman d) {
+    	if (d != null) {
+    		residentManagement.deleteDoorman(d.getId());
+    		ObservableList<Doorman> doormen = FXCollections.observableArrayList(residentManagement.getDoormen());
+    		table.setItems(doormen);
+    	} else {
+    		alert("No estás seleccionando ningún empleado");
+    	}
+    }
+    
+    public void deleteServiceStaff(TableView<ServiceStaff> table, ServiceStaff s) {
+    	if (s != null) {
+    		residentManagement.deleteServiceStaff(s.getId());
+    		ObservableList<ServiceStaff> serviceStaff = FXCollections.observableArrayList(residentManagement.getServiceStaff());
+    		table.setItems(serviceStaff);
+    	} else {
+    		alert("No estás seleccionando ningún empleado");
+    	}
+    }
+    
     @SuppressWarnings("unchecked")
     @FXML
     public void tableServiceStaff(ActionEvent event) throws IOException {
@@ -820,7 +841,8 @@ public class ResidentManagementGUI {
         });
         
         deleteBtn.setOnAction(action -> {
-        	System.out.println("Seems fine! x2");
+        	ServiceStaff s = table.getSelectionModel().getSelectedItem();
+        	deleteServiceStaff(table, s);
         });
 
         ObservableList<ServiceStaff> observableList;
