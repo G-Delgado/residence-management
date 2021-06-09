@@ -759,11 +759,65 @@ public class ResidentManagementGUI {
     }
     
     public void editOwner(Apartament apto) {
-    	
+    	if (apto.getOwner() != null) {    		
+    		Dialog<String> dialog = new Dialog<>();
+    		dialog.setHeaderText("Edit resident");
+    		dialog.setContentText("Fill the parameters");
+    		DialogPane dialogPane = dialog.getDialogPane();
+    		dialogPane.getButtonTypes().addAll(ButtonType.OK);
+    		TextField tf = new TextField();
+    		Label lf = new Label("Name: ");
+    		VBox hb = new VBox(4, lf, tf);
+    		tf.setText(apto.getOwner().getFirstName());
+    		TextField tf2 = new TextField();
+    		Label lf2 = new Label("Last name: ");
+    		VBox hb2 = new VBox(4, lf2, tf2);
+    		tf2.setText(apto.getOwner().getLastName());
+    		TextField tf3 = new TextField();
+    		Label lf3 = new Label("Phone number: ");
+    		VBox hb3 = new VBox(4, lf3, tf3);
+    		tf3.setText(apto.getOwner().getPhoneNumber() + "");
+    		TextField tf4 = new TextField();
+    		Label lf4 = new Label("Id: ");
+    		VBox hb4 = new VBox(4, lf4, tf4);
+    		tf4.setText(apto.getOwner().getId());
+    		tf4.setDisable(true);
+    		TextField tf5 = new TextField();
+    		Label lf5 = new Label("Email: ");
+    		VBox hb5 = new VBox(4, lf5, tf5);
+    		tf5.setText(apto.getOwner().getMail());
+    		
+    		dialogPane.setContent(new VBox(8, hb, hb2, hb3, hb4, hb5));
+    		
+    		dialog.showAndWait();
+    		if (!tf.getText().equals("") && !tf2.getText().equals("") && !tf4.getText().equals("") && !tf5.getText().equals("")) { 	 
+    			int pn = 0;
+    			try {
+    				pn = Integer.parseInt(tf3.getText());
+    				
+    			} catch (NumberFormatException e) {
+    				pn = 0;
+    			}
+    			residentManagement.editOwner(apto, tf.getText(), tf2.getText(), pn, tf4.getText(), tf5.getText());
+    			apartamentOwner.setText(tf.getText() + " " + tf2.getText());
+    		} else {
+    			Alert alert = new Alert(AlertType.ERROR);
+    			alert.setHeaderText("There was an error updating the owner");
+    			alert.setContentText("You must fill all the parameters");
+    			alert.showAndWait();
+    		}
+    	} else {
+    		alert("No hay un dueño aún!");
+    	}
     }
     
     public void deleteOwner(Apartament apto) {
-    	
+    	residentManagement.deleteOwner(apto, apto.getOwner().getId());
+    	if (apto.getOwner() != null) {
+    		apartamentOwner.setText(apto.getOwner().toStringJavaFX());
+    	} else {    		
+    		apartamentOwner.setText("None");
+    	}
     }
     
     @SuppressWarnings("unchecked")
