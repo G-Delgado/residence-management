@@ -817,7 +817,13 @@ public class ResidenceManagement {
 
 	}
 
-	public void addReservation(CommonZones place, LocalDate init) {
+	public void addReservation(CommonZones place, LocalDate init) throws ReservationsInvalidException {
+
+
+
+		if (init.isBefore(LocalDate.now())){
+			throw new ReservationsInvalidException();
+		}
 		Reservation reservation = new Reservation(place, init);
 
 		if (rootReservation == null) {

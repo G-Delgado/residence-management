@@ -853,7 +853,7 @@ public class ResidentManagementGUI {
     			alert.showAndWait();
     		}
     	} else {
-    		alert("No hay un dueño aún!");
+    		alert("No hay un dueï¿½o aï¿½n!");
     	}
     }
     
@@ -882,7 +882,7 @@ public class ResidentManagementGUI {
         table.getStylesheets().setAll("/css/fullpackstyling.css");
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
-        Button addBtn = new Button("Añadir");
+        Button addBtn = new Button("Aï¿½adir");
         addBtn.getStyleClass().add("button4");
         addBtn.styleProperty().set("-fx-text-fill: #ffffff;");
         Button deleteBtn = new Button("Eliminar seleccionado");
@@ -974,7 +974,7 @@ public class ResidentManagementGUI {
     		ObservableList<Doorman> doormen = FXCollections.observableArrayList(residentManagement.getDoormen());
     		table.setItems(doormen);
     	} else {
-    		alert("No estás seleccionando ningún empleado");
+    		alert("No estï¿½s seleccionando ningï¿½n empleado");
     	}
     }
     
@@ -984,7 +984,7 @@ public class ResidentManagementGUI {
     		ObservableList<ServiceStaff> serviceStaff = FXCollections.observableArrayList(residentManagement.getServiceStaff());
     		table.setItems(serviceStaff);
     	} else {
-    		alert("No estás seleccionando ningún empleado");
+    		alert("No estï¿½s seleccionando ningï¿½n empleado");
     	}
     }
     
@@ -1004,7 +1004,7 @@ public class ResidentManagementGUI {
         table.getStylesheets().setAll("/css/fullpackstyling.css");
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
-        Button addBtn = new Button("Añadir");
+        Button addBtn = new Button("Aï¿½adir");
         addBtn.getStyleClass().add("button4");
         addBtn.styleProperty().set("-fx-text-fill: #ffffff;");
         Button deleteBtn = new Button("Eliminar seleccionado");
