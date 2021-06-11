@@ -2,7 +2,13 @@ package model;
 
 public class Resident extends Person implements Comparable<Resident>{
 
-    public Resident(String firstName, String lastName, int phoneNumber, String id) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
+	public Resident(String firstName, String lastName, int phoneNumber, String id) {
         super( firstName, lastName, phoneNumber, id);
         
     }

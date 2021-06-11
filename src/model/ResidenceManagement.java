@@ -132,7 +132,7 @@ public class ResidenceManagement {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
+	/*@SuppressWarnings("unchecked")
 	public void loadD() throws FileNotFoundException, IOException, ClassNotFoundException {
 		ObjectInputStream ois = null;
 		File f = new File(DOORMAN_FILE);
@@ -145,7 +145,7 @@ public class ResidenceManagement {
 			ois.close();
 		}
 
-	}
+	}*/
 	
 	@SuppressWarnings("unchecked")
 	public void loadData() throws FileNotFoundException, IOException, ClassNotFoundException {
@@ -504,6 +504,7 @@ public class ResidenceManagement {
 		residents.add(r);
 		apto.getResidents().add(r);
 		try {
+			exportResident();
 			saveApartments();
 			// No estamos actualizando residentes en la Lista GENERAL
 		} catch (IOException e) {
@@ -531,6 +532,7 @@ public class ResidenceManagement {
 		
 		try {
 			saveApartments();
+			exportResident();
 			// No estamos actualizando residentes en la Lista GENERAL
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -541,6 +543,14 @@ public class ResidenceManagement {
 		Pet p = new Pet(name, type);
 		pets.add(p);
 		apto.getPets().add(p);
+		try {
+			savePets();
+			saveApartments();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void deletePet(Apartament apto, String name, String type) {
@@ -561,6 +571,17 @@ public class ResidenceManagement {
 				deleted = true;
 			}
 		}
+		
+		try {
+			savePets();
+			saveApartments();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void addVehicle(Apartament apto, String licensePlate, String type) {
@@ -573,6 +594,16 @@ public class ResidenceManagement {
 			vehicles.add(mc);
 			apto.getCars().add(mc);
 		}
+		
+		try {
+			saveApartments();
+			exportCars();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void deleteVehicle(Apartament apto, String licensePlate) {

@@ -1,8 +1,14 @@
 package model;
 
-public abstract class Vehicle {
+import java.io.Serializable;
 
-    private String licensePlate;
+public abstract class Vehicle implements Serializable{
+
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String licensePlate;
     private String type;
 
 

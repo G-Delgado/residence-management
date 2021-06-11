@@ -2,7 +2,12 @@ package model;
 
 public class Motorcycle extends Vehicle {
 
-    public Motorcycle(String licensePlate) {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public Motorcycle(String licensePlate) {
         super(licensePlate,"MOTORCYCLE");
     }
     

@@ -25,7 +25,7 @@ public class Main extends Application {
         residentManagement = new ResidenceManagement(4,10,4,150.000);
         residentManagementGUI = new ResidentManagementGUI(residentManagement);
 		try {
-			residentManagement.loadD();
+			residentManagement.loadData();
 			System.out.println("I charged!");
 		} catch (FileNotFoundException e) {
 			System.out.println("not that file!");
