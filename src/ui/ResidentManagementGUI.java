@@ -348,6 +348,7 @@ public class ResidentManagementGUI {
     		Apartament found = residentManagement.searchApartmentByDebt(debt);
     		if (found != null) {    			
     			apartmentFound.setText(found.getNumber() + "_" + found.getTower());
+    			alert("Apartamento encontrado!");
     		} else {
     			alert("Esa deuda no está asociada a un apartamento");
     		}
@@ -906,7 +907,7 @@ public class ResidentManagementGUI {
         table.getStylesheets().setAll("/css/fullpackstyling.css");
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
-        Button addBtn = new Button("Aï¿½adir");
+        Button addBtn = new Button("Añadir");
         addBtn.getStyleClass().add("button4");
         addBtn.styleProperty().set("-fx-text-fill: #ffffff;");
         Button deleteBtn = new Button("Eliminar seleccionado");
@@ -1030,14 +1031,19 @@ public class ResidentManagementGUI {
         table.getStylesheets().setAll("/css/fullpackstyling.css");
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
-        Button addBtn = new Button("Aï¿½adir");
+        Button addBtn = new Button("Añadir");
         addBtn.getStyleClass().add("button4");
         addBtn.styleProperty().set("-fx-text-fill: #ffffff;");
         Button deleteBtn = new Button("Eliminar seleccionado");
         deleteBtn.getStyleClass().add("button4");
         deleteBtn.styleProperty().set("-fx-text-fill: #ffffff;");
+        TextField id = new TextField();
+        Button searchBtn = new Button("Buscar por id");
+        searchBtn.getStyleClass().add("button4");
+        searchBtn.styleProperty().set("-fx-text-fill: #ffffff;");
+        Label result = new Label("None");
         
-        HBox hb = new HBox(8, addBtn, deleteBtn);
+        HBox hb = new HBox(8, addBtn, deleteBtn, id, searchBtn, result);
         hb.getStylesheets().setAll("/css/fullpackstyling.css");
 
         paneTables.getChildren().clear();
@@ -1052,6 +1058,19 @@ public class ResidentManagementGUI {
         deleteBtn.setOnAction(action -> {
         	ServiceStaff s = table.getSelectionModel().getSelectedItem();
         	deleteServiceStaff(table, s);
+        });
+        
+        searchBtn.setOnAction(action -> {
+        	if (!id.getText().equals("")) {
+        		ServiceStaff ss = residentManagement.searchServiceStaffById(id.getText());
+        		if (ss != null) {
+        			result.setText(ss.toStringJavaFX());
+        		} else {
+        			alert("No hay personal de servicio con ese id");
+        		}
+        	} else {
+        		alert("Ingresa un ID!");
+        	}
         });
 
         residentManagement.selectionSortServiceStaff();

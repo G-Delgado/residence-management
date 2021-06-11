@@ -54,6 +54,7 @@ public class ResidenceManagement {
 	private Claim rootClaim;
 	private Reservation rootReservation;
 	ApartmentDebts apartmentPerDebt;
+	StaffById serviceById;
 
 	public ResidenceManagement(int towers, int floors, int apartamentsPerFloor, double administrationFee) {
 		this.residents = new ArrayList<Resident>();
@@ -71,6 +72,7 @@ public class ResidenceManagement {
 		createApartaments(towers, floors, apartamentsPerFloor);
 		this.administrationFee = administrationFee;
 		apartmentPerDebt = new ApartmentDebts();
+		serviceById = new StaffById();
 		try {
 			importDataResidents();
 			importDataCars();
@@ -446,6 +448,7 @@ public class ResidenceManagement {
 		if (type.equals("SERVICE STAFF")) {
 			ServiceStaff ss = new ServiceStaff(fn,ln,pn,id);
 			serviceStaff.add(ss);
+			serviceById.addServiceStaff(ss);
 			
 			try {
 				saveServiceStaff();
@@ -463,6 +466,10 @@ public class ResidenceManagement {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public ServiceStaff searchServiceStaffById(String id) {
+		return serviceById.searchStaffById(id);
 	}
 	
 	public boolean deleteServiceStaff(String id) {
@@ -897,7 +904,9 @@ public class ResidenceManagement {
 	public void generateDebt(String description, LocalDate date, double price, Apartament apartament) {
 		apartament.getDebt().add(new Debt(description, price, date));
 		apartament.calculateTotalDebt();
-		apartmentPerDebt.addApartament(apartament);
+		if (price != administrationFee) {			
+			apartmentPerDebt.addApartament(apartament);
+		}
 	}
 
 	public void exportResidentsPerApartaments(String apto, File file) throws FileNotFoundException {
