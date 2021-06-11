@@ -27,25 +27,25 @@ import javax.swing.WindowConstants;
 
 public class ResidenceManagement {
 
-	public final static String APARTMENT_FILE = "./data/apartments.rm";
-	public final static String PET_FILE = "./data/pets.rm";
-	public final static String DOORMAN_FILE = "./data/doormans.rm";
-	public final static String OWNER_FILE = "./data/owners.rm";
-	public final static String ADMIN_FILE = "./data/admins.rm";
-	public final static String SERVICESTAFF_FILE = "./data/servicestaff.rm";
+	public final static String APARTMENT_FILE = "./data/apartments.rem";
+	public final static String PET_FILE = "./data/pets.rem";
+	public final static String DOORMAN_FILE = "./data/doormans.rem";
+	public final static String OWNER_FILE = "./data/owners.rem";
+	public final static String ADMIN_FILE = "./data/admins.rem";
+	public final static String SERVICESTAFF_FILE = "./data/servicestaff.rem";
 	public final static String RESIDENTS_FILE = "data/residents.csv";
 	public final static String CARS_FILE = "data/vehicles.csv";
 
 	private final static String SEPARATE = ",";
 
-	private List<Resident> residents;
-	private List<Pet> pets;
-	private List<Doorman> doormen;
-	private List<ServiceStaff> serviceStaff;
-	private List<Owner> owners;
-	private List<Apartament> apartaments;
-	private List<Vehicle> vehicles;
-	private List<CommonZones> commonZones;
+	private ArrayList<Resident> residents;
+	private ArrayList<Pet> pets;
+	private ArrayList<Doorman> doormen;
+	private ArrayList<ServiceStaff> serviceStaff;
+	private ArrayList<Owner> owners;
+	private ArrayList<Apartament> apartaments;
+	private ArrayList<Vehicle> vehicles;
+	private ArrayList<CommonZones> commonZones;
 	private Admin admin;
 	private int towers;
 	private int floors;
@@ -78,12 +78,12 @@ public class ResidenceManagement {
 
 	}
 
-	private List<CommonZones> setupCommonZones() {
+	private ArrayList<CommonZones> setupCommonZones() {
 		CommonZones littlePool=new Pool("Pool for childrens", 10);
 		CommonZones bigPool=new Pool("Pool", 20);
 		CommonZones kiosk=new Kiosk("Main Kiosk", 30);
 		CommonZones park=new Park("Park", 15);
-		List<CommonZones> list=new ArrayList<>();
+		ArrayList<CommonZones> list=new ArrayList<>();
 		list.add(littlePool);
 		list.add(bigPool);
 		list.add(kiosk);
@@ -132,6 +132,21 @@ public class ResidenceManagement {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	public void loadD() throws FileNotFoundException, IOException, ClassNotFoundException {
+		ObjectInputStream ois = null;
+		File f = new File(DOORMAN_FILE);
+		if (f.exists()) {
+			ois = new ObjectInputStream(new FileInputStream(f));
+			doormen = (ArrayList<Doorman>) ois.readObject();
+			System.out.println(doormen);
+			System.out.println(doormen.size());
+			System.out.println(doormen.get(0));
+			ois.close();
+		}
+
+	}
+	
 	@SuppressWarnings("unchecked")
 	public void loadData() throws FileNotFoundException, IOException, ClassNotFoundException {
 		ObjectInputStream ois = null;
@@ -194,6 +209,8 @@ public class ResidenceManagement {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DOORMAN_FILE));
 		oos.writeObject(doormen);
 		oos.close();
+		
+		System.out.println("Saved!");
 	}
 
 	public void saveOwners() throws FileNotFoundException, IOException {
@@ -218,7 +235,7 @@ public class ResidenceManagement {
 		return residents;
 	}
 
-	public void setResidents(List<Resident> residents) {
+	public void setResidents(ArrayList<Resident> residents) {
 		this.residents = residents;
 	}
 
@@ -226,15 +243,15 @@ public class ResidenceManagement {
 		return pets;
 	}
 
-	public void setPets(List<Pet> pets) {
+	public void setPets(ArrayList<Pet> pets) {
 		this.pets = pets;
 	}
 
-	public List<Doorman> getDoormen() {
+	public ArrayList<Doorman> getDoormen() {
 		return doormen;
 	}
 
-	public void setDoormen(List<Doorman> doormen) {
+	public void setDoormen(ArrayList<Doorman> doormen) {
 		this.doormen = doormen;
 	}
 
@@ -246,27 +263,27 @@ public class ResidenceManagement {
 		return administrationFee;
 	}
 
-	public List<ServiceStaff> getServiceStaff() {
+	public ArrayList<ServiceStaff> getServiceStaff() {
 		return serviceStaff;
 	}
 
-	public void setServiceStaff(List<ServiceStaff> serviceStaff) {
+	public void setServiceStaff(ArrayList<ServiceStaff> serviceStaff) {
 		this.serviceStaff = serviceStaff;
 	}
 
-	public List<Owner> getOwners() {
+	public ArrayList<Owner> getOwners() {
 		return owners;
 	}
 
-	public void setOwners(List<Owner> owners) {
+	public void setOwners(ArrayList<Owner> owners) {
 		this.owners = owners;
 	}
 
-	public List<Apartament> getApartaments() {
+	public ArrayList<Apartament> getApartaments() {
 		return apartaments;
 	}
 
-	public void setApartaments(List<Apartament> apartaments) {
+	public void setApartaments(ArrayList<Apartament> apartaments) {
 		this.apartaments = apartaments;
 	}
 
@@ -302,11 +319,11 @@ public class ResidenceManagement {
 		this.apartamentsPerFloor = apartamentsPerFloor;
 	}
 
-	public List<Vehicle> getVehicles() {
+	public ArrayList<Vehicle> getVehicles() {
 		return this.vehicles;
 	}
 
-	public void setVehicles(List<Vehicle> vehicles) {
+	public void setVehicles(ArrayList<Vehicle> vehicles) {
 		this.vehicles = vehicles;
 	}
 
@@ -328,11 +345,11 @@ public class ResidenceManagement {
 	}
 
 
-	public List<CommonZones> getCommonZones() {
+	public ArrayList<CommonZones> getCommonZones() {
 		return this.commonZones;
 	}
 
-	public void setCommonZones(List<CommonZones> commonZones) {
+	public void setCommonZones(ArrayList<CommonZones> commonZones) {
 		this.commonZones = commonZones;
 	}
 
@@ -411,6 +428,12 @@ public class ResidenceManagement {
 		if (!id.equals(admin.getId())) {
 			admin.setId(id);
 		}
+		
+		try {
+			saveAdmins();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void deleteAdmin() {
@@ -422,9 +445,21 @@ public class ResidenceManagement {
 			ServiceStaff ss = new ServiceStaff(fn,ln,pn,id);
 			serviceStaff.add(ss);
 			
+			try {
+				saveServiceStaff();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
 		} else {
 			Doorman d = new Doorman(fn,ln,pn,id);
 			doormen.add(d);
+			
+			try {
+				saveDoormans();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -436,6 +471,13 @@ public class ResidenceManagement {
 				deleted = true;
 			}
 		}
+		
+		try {
+			saveServiceStaff();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		return deleted;
 	}
 
@@ -447,6 +489,13 @@ public class ResidenceManagement {
 				deleted = true;
 			}
 		}
+		
+		try {
+			saveDoormans();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		return deleted;
 	}
 	
@@ -454,6 +503,12 @@ public class ResidenceManagement {
 		Resident r = new Resident(fn,ln,pn,id);
 		residents.add(r);
 		apto.getResidents().add(r);
+		try {
+			saveApartments();
+			// No estamos actualizando residentes en la Lista GENERAL
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void deleteResident(Apartament apto, String id) {
@@ -472,6 +527,13 @@ public class ResidenceManagement {
 				apto.getResidents().remove(i);
 				deleted = false;
 			}
+		}
+		
+		try {
+			saveApartments();
+			// No estamos actualizando residentes en la Lista GENERAL
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -536,6 +598,13 @@ public class ResidenceManagement {
 		Owner on = new Owner(fn,ln,pn,id,email);
 		owners.add(on);
 		apto.setOwner(on);
+		
+		try {
+			saveApartments();
+			saveOwners();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void editOwner(Apartament apto, String fn, String ln, int pn, String id, String email) {
@@ -549,6 +618,13 @@ public class ResidenceManagement {
 		}
 		
 		apto.setOwner(on);
+		
+		try {
+			saveApartments();
+			saveOwners();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void deleteOwner(Apartament apto, String id) {
@@ -561,6 +637,13 @@ public class ResidenceManagement {
 		}
 		
 		apto.setOwner(null);
+		
+		try {
+			saveApartments();
+			saveOwners();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		
 	}
@@ -719,7 +802,7 @@ public class ResidenceManagement {
 		// Sort Doormen!
 		for (int i = 0; i < doormen.size(); i++) {
 			for (int j = 0; j < doormen.size(); j++) {
-				if (doormen.get(i).compareTo(doormen.get(j)) < 0) {
+				if (doormen.get(i).compareTo(doormen.get(j)) > 0) {
 					Doorman alt = doormen.get(i);
 					doormen.set(i, doormen.get(j));
 					doormen.set(j, alt);
@@ -733,7 +816,7 @@ public class ResidenceManagement {
 		for (int i = 1; i < n; ++i) {
 			Resident key = residents.get(i);
 			int j = i - 1;
-			while (j >= 0 && residents.get(j).compareTo(key) < 0) {
+			while (j >= 0 && residents.get(j).compareTo(key) > 0) {
 				residents.set(j + 1, residents.get(j));
 				j = j - 1;
 			}

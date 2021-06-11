@@ -1,5 +1,8 @@
 package ui;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,6 +24,25 @@ public class Main extends Application {
     public Main(){
         residentManagement = new ResidenceManagement(4,10,4,150.000);
         residentManagementGUI = new ResidentManagementGUI(residentManagement);
+		try {
+			residentManagement.loadD();
+			System.out.println("I charged!");
+		} catch (FileNotFoundException e) {
+			System.out.println("not that file!");
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			System.out.println("not that class!");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("IDK!");
+			e.printStackTrace();
+		}
+		
+        /*try {
+			residentManagement.loadData();
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}*/
         
     }
 

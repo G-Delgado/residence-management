@@ -504,6 +504,8 @@ public class ResidentManagementGUI {
         paneTables.getChildren().clear();
         //paneTables.getChildren().addAll(table);
         paneTables.setCenter(table);
+        
+        residentManagement.insertionSortResidents();
 
         ObservableList<Resident> observableList;
         observableList = FXCollections.observableArrayList(residentManagement.getResidents());
@@ -836,7 +838,7 @@ public class ResidentManagementGUI {
     		dialogPane.setContent(new VBox(8, hb, hb2, hb3, hb4, hb5));
     		
     		dialog.showAndWait();
-    		if (!tf.getText().equals("") && !tf2.getText().equals("") && !tf4.getText().equals("") && !tf5.getText().equals("")) { 	 
+    		if (!tf.getText().equals("") && !tf2.getText().equals("") && !tf3.getText().equals("") && !tf5.getText().equals("")) { 	 
     			int pn = 0;
     			try {
     				pn = Integer.parseInt(tf3.getText());
@@ -906,6 +908,8 @@ public class ResidentManagementGUI {
         	Doorman d = table.getSelectionModel().getSelectedItem();
         	deleteDoorman(table, d);
         });
+        
+        residentManagement.bubbleSortDoormen();
 
         ObservableList<Doorman> observableList;
         observableList = FXCollections.observableArrayList(residentManagement.getDoormen());
@@ -1028,6 +1032,8 @@ public class ResidentManagementGUI {
         	deleteServiceStaff(table, s);
         });
 
+        residentManagement.selectionSortServiceStaff();
+        
         ObservableList<ServiceStaff> observableList;
         observableList = FXCollections.observableArrayList(residentManagement.getServiceStaff());
         table.setItems(observableList);

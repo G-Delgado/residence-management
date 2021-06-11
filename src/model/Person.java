@@ -1,8 +1,14 @@
 package model;
 
-public abstract class Person {
+import java.io.Serializable;
 
-    private String firstName;
+public abstract class Person implements Serializable{
+
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String firstName;
     private String lastName;
     private int phoneNumber;
     private String id;
