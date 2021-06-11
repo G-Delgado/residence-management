@@ -53,6 +53,7 @@ public class ResidenceManagement {
 	private double administrationFee;
 	private Claim rootClaim;
 	private Reservation rootReservation;
+	ApartmentDebts apartmentPerDebt;
 
 	public ResidenceManagement(int towers, int floors, int apartamentsPerFloor, double administrationFee) {
 		this.residents = new ArrayList<Resident>();
@@ -69,6 +70,7 @@ public class ResidenceManagement {
 		this.apartamentsPerFloor = apartamentsPerFloor;
 		createApartaments(towers, floors, apartamentsPerFloor);
 		this.administrationFee = administrationFee;
+		apartmentPerDebt = new ApartmentDebts();
 		try {
 			importDataResidents();
 			importDataCars();
@@ -825,9 +827,13 @@ public class ResidenceManagement {
 		}
 
 	}
+	
+	public Apartament searchApartmentByDebt(double debt) {
+		return apartmentPerDebt.searchApartamentByDebt(debt);
+	}
 
 
-	// Sorts
+	// Sort
 
 	public void bubbleSortDoormen() {
 		// Sort Doormen!
@@ -891,6 +897,7 @@ public class ResidenceManagement {
 	public void generateDebt(String description, LocalDate date, double price, Apartament apartament) {
 		apartament.getDebt().add(new Debt(description, price, date));
 		apartament.calculateTotalDebt();
+		apartmentPerDebt.addApartament(apartament);
 	}
 
 	public void exportResidentsPerApartaments(String apto, File file) throws FileNotFoundException {

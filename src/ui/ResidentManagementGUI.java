@@ -194,6 +194,12 @@ public class ResidentManagementGUI {
     private Pane paneDebts;
 
     // Invoices
+    
+    @FXML
+    private TextField apartmentDebtIn;
+    
+    @FXML
+    private Label apartmentFound;
 
     @FXML
     private Label administrationFee;
@@ -332,6 +338,22 @@ public class ResidentManagementGUI {
 
             choiceBoxApartaments.getItems().add(apartament.getUsername());
         }
+    }
+    
+    @FXML
+    public void searchApartmentByDebt(ActionEvent event) {
+    	String find = apartmentDebtIn.getText();
+    	if (!find.equals("")) {
+    		double debt = Double.parseDouble(find);
+    		Apartament found = residentManagement.searchApartmentByDebt(debt);
+    		if (found != null) {    			
+    			apartmentFound.setText(found.getNumber() + "_" + found.getTower());
+    		} else {
+    			alert("Esa deuda no está asociada a un apartamento");
+    		}
+    	} else {
+    		alert("Ingrese una cantidad");
+    	}
     }
 
     @FXML
