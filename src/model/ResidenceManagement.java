@@ -883,12 +883,12 @@ public class ResidenceManagement {
 		}
 	}
 
-	public void binarySearchPets(String petName) {
+	public Pet binarySearchPets(String petName) {
 		Pet found = null;
 		int i = 0;
-		int j = pets.size();
+		int j = pets.size() - 1;
 		int m = 0;
-		while (i <= j) {
+		while (i <= j && found == null) {
 			m = (j + i) / 2;
 			if (pets.get(m).getName().equals(petName)) {
 				found = pets.get(m);
@@ -898,7 +898,7 @@ public class ResidenceManagement {
 				i = m + 1;
 			}
 		}
-		System.out.println(found);
+		return found;
 	}
 
 	public void generateDebt(String description, LocalDate date, double price, Apartament apartament) {

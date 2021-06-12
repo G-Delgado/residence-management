@@ -3,6 +3,7 @@ package ui;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Collections;
 
 import org.jfree.chart.axis.CategoryAxis;
 
@@ -1099,10 +1100,38 @@ public class ResidentManagementGUI {
         table.setPrefSize(paneTables.getWidth(), paneTables.getHeight());
         table.getStylesheets().setAll("/css/fullpackstyling.css");
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        
+        
+        TextField name = new TextField();
+        Button searchBtn = new Button("Buscar por nombre");
+        searchBtn.getStyleClass().add("button4");
+        searchBtn.styleProperty().set("-fx-text-fill: #ffffff;");
+        Label result = new Label("None");
 
+        HBox hb = new HBox(8, name, searchBtn, result);
+        hb.getStylesheets().setAll("/css/fullpackstyling.css");
+        
         paneTables.getChildren().clear();
         //paneTables.getChildren().addAll(table);
         paneTables.setCenter(table);
+        paneTables.setTop(hb);
+        
+        Collections.sort(residentManagement.getPets());
+        
+        searchBtn.setOnAction(action -> {
+        	if (!name.getText().equals("")) {
+        		String find = name.getText();
+        		Pet p = residentManagement.binarySearchPets(find);
+        		if (p != null) {
+        			result.setText(p.toString());
+        			alert("Encontrado el tipo de mascota");
+        		} else {
+        			alert("Esa mascota no existe! (Tenga en cuenta que si hay muy pocas mascotas, es probable que falle)");
+        		}
+        	} else {
+        		alert("Ingrese un nombre");
+        	}
+        });
 
         ObservableList<Pet> observableList;
         observableList = FXCollections.observableArrayList(residentManagement.getPets());

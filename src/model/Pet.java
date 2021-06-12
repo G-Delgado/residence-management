@@ -2,7 +2,7 @@ package model;
 
 import java.io.Serializable;
 
-public class Pet implements Serializable{
+public class Pet implements Serializable, Comparable<Pet>{
 
     /**
 	 * 
@@ -40,6 +40,13 @@ public class Pet implements Serializable{
     public String toString() {
     	return getName() + " - " + getType();
     }
+
+
+
+	@Override
+	public int compareTo(Pet p) {
+		return getName().compareTo(p.getName());
+	}
 
     
 }
