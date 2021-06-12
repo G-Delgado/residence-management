@@ -15,6 +15,12 @@ Residence Management is a desktop application for the management and administrat
 ### Assignments
 
   ### [Link to second assigment](https://github.com/G-Delgado/residence-management/blob/main/docs/Segunda%20entrega.pdf "PDF")
+  
+### Warnings
+- Remember that making Unit tests also create the .rem and .csv files with data later used on the program. Therefore, make sure to back it up first.
+- The administrator is at first (and for the first and actual version of the program) created with the username: "root" and the password: "1234"
+- Dont use the Login apartment button as it is used for experimental purposes. Instead, login with the apartment option with the number of the apartment, followed by a line and the number of the tower, eg.,  "201_1" and the password "1234"
+- The program is initialized with 4 towers.
 
 ## Made by
 + [Gabriel Delgado](https://github.com/G-Delgado "Gabriel Delgado")

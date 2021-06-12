@@ -172,7 +172,7 @@ public class ResidenceManagementTest {
 
 	@Test
 	public void testAddAdmin() {
-		scenaryFour();
+		scenaryOne();
 		String fn = "Juan";
 		String ln = "Garcia";
 		int pn = 3193445;
@@ -188,7 +188,7 @@ public class ResidenceManagementTest {
 	
 	@Test
 	public void testEditAdmin() {
-		testAddAdmin();
+		scenaryTwo();
 		String fn= "Juan";
 		String ln= "Garcia";
 		int pn=453322;
@@ -205,7 +205,7 @@ public class ResidenceManagementTest {
 	
 	@Test
 	public void testGenerateInvoicesForAll() {
-		scenaryFour();
+		scenaryThree();
 		LocalDate date = LocalDate.now();
 		String description = "Cuota";
 		double price = 55000;
