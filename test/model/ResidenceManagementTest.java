@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 import exceptions.PasswordInvalidException;
+import exceptions.ReservationsInvalidException;
 import exceptions.UsernameInvalidException;
 
 public class ResidenceManagementTest {
@@ -266,27 +267,90 @@ public class ResidenceManagementTest {
 	
 	@Test
 	public void testBinarySearchPets() {
+		scenaryFour();
+		String petName = "Kingy";
+		Pet p = rm.binarySearchPets(petName);
 		
+		assertEquals(petName, p.getName());
 	}
 	
 	@Test
-	public void testSearcgCommonZone() {
+	public void testSearchCommonZone() {
+		scenaryFour();
+		String name = "Pool";
+		CommonZones cz = rm.searchCommonZone(name);
 		
+		assertEquals(name, cz.getName());
 	}
 	
 	@Test
 	public void testAddReservation() {
+		scenaryFour();
+		CommonZones place = rm.getCommonZones().get(0);
+		LocalDate init = LocalDate.ofYearDay(2040,1);
 		
+		try {
+			rm.addReservation(place, init);
+		} catch (ReservationsInvalidException e) {
+			e.printStackTrace();
+		}
+		Reservation r = rm.getRootReservation();
+		boolean result = false;
+		if (r.getPlace().getName().equals(place.getName()) && r.getInit().equals(init)) {
+			result = true;
+		} else {
+			while (r.getNext() != null ) {
+				r = r.getNext();
+				if (r.getPlace().getName().equals(place.getName()) && r.getInit().equals(init)) {
+					result = true;
+				}
+			}
+		}
+		
+		assertTrue(result);
 	}
 	
 	@Test
 	public void testAddClaim() {
+		scenaryFour();
+		String subject = "Test";
+		String description = "Test";
+		Apartament sender = rm.getApartaments().get(0);
 		
+		rm.addClaim(subject, description, sender);
+		
+		boolean result = false;
+		Claim cr = rm.getRootClaim();
+		if (subject.equals(cr.getSubject()) && description.equals(cr.getDescription()) && (sender.getNumber() + "_" + sender.getTower()).equals(cr.getSender().getNumber() + "_" + cr.getSender().getTower())) {
+			result = true;
+		} else {
+			while (cr.getNext() != null) {
+				cr = cr.getNext();
+				if (subject.equals(cr.getSubject()) && description.equals(cr.getDescription()) && (sender.getNumber() + "_" + sender.getTower()).equals(cr.getSender().getNumber() + "_" + cr.getSender().getTower())) {
+					result = true;
+				}
+			}
+		}
+		
+		assertTrue(result);
 	}
 	
 	@Test
 	public void testCalculateTotalTowerDebt() {
+		scenaryFour();
+		rm.generateInvoiceForAll(LocalDate.now(), "Test", 200);
+		double total = 0;
+		for (int i = 0; i < rm.getApartaments().size(); i++) {
+			total += rm.getApartaments().get(i).getTotalDebt();
+		}
 		
+		double [] totalTwoArray = rm.calculateTotalTowerDebt();
+		double totalTwo = 0;
+		for (double element : totalTwoArray) {
+			totalTwo += element;
+		}
+		
+		assertEquals(total, totalTwo);
 	}
 	
 	@Test

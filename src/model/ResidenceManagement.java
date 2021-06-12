@@ -763,7 +763,7 @@ public class ResidenceManagement {
 	// Login
 	public boolean loginAdmin(String username, String password) {
 		Admin loginAdmin = new Admin(username, password);
-		if (loginAdmin.equals(admin))
+		if (loginAdmin.getUser().equals(admin.getUser()) && loginAdmin.getPassword().equals(admin.getPassword()))
 			return true;
 		else
 			return false;

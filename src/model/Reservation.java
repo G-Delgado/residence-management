@@ -31,6 +31,10 @@ public class Reservation {
     public void setNext(Reservation next) {
         this.next = next;
     }
+    
+    public LocalDate getInit() {
+    	return init;
+    }
 
 
 
