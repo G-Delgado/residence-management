@@ -7,11 +7,13 @@ public class ApartmentDebts {
 		root = null;
 	}
 	
-	public void addApartament(Apartament ap) {
-		if (root == null) {
-			root = ap;
-		} else {
-			addApartamentRecursive(root, ap);
+	public void addApartament(Apartament ap, int indicator) {
+		if (indicator == 1) {			
+			if (root == null) {
+				root = ap;
+			} else {
+				addApartamentRecursive(root, ap);
+			}
 		}
 	}
 	

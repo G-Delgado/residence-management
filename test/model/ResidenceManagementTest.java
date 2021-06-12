@@ -162,13 +162,133 @@ public class ResidenceManagementTest {
 		String desc = "Cuota de administracion";
 		double fee = rm.getAdministrationFee();
 		
-		rm.generateDebt(desc, date, fee, rm.getApartaments().get(2));
+		rm.generateDebt(desc, date, fee, rm.getApartaments().get(2), 1);
 		
 		double apFee = rm.getApartaments().get(2).getDebt().get(0).getPrice();
 		
 		assertEquals(fee, apFee);
 	}
 
+	@Test
+	public void testAddAdmin() {
+		scenaryFour();
+		String fn = "Juan";
+		String ln = "Garcia";
+		int pn = 3193445;
+		String id = "12343992";
+		
+		rm.addAdmin(fn, ln, pn, id);
+		
+		assertEquals(fn, rm.getAdmin().getFirstName());
+		assertEquals(ln, rm.getAdmin().getLastName());
+		assertEquals(pn, rm.getAdmin().getPhoneNumber());
+		assertEquals(id, rm.getAdmin().getId());
+	}
+	
+	@Test
+	public void testEditAdmin() {
+		testAddAdmin();
+		String fn= "Juan";
+		String ln= "Garcia";
+		int pn=453322;
+		String id="427652";
+
+		rm.editAdmin(fn, ln, pn, id);
+		
+		assertEquals(fn, rm.getAdmin().getFirstName());
+		assertEquals(ln, rm.getAdmin().getLastName());
+		assertEquals(pn, rm.getAdmin().getPhoneNumber());
+		assertEquals(id, rm.getAdmin().getId());
+		
+	}
+	
+	@Test
+	public void testGenerateInvoicesForAll() {
+		scenaryFour();
+		LocalDate date = LocalDate.now();
+		String description = "Cuota";
+		double price = 55000;
+		
+		rm.generateInvoiceForAll(date, description, price);
+		
+		boolean result = true;
+		for (int i = 0; i < rm.getApartaments().size(); i++) {
+			
+			if (price != rm.getApartaments().get(i).getTotalDebt()) {
+				result = false;
+			}
+		}
+		
+		assertTrue(result);
+	}
+	
+	@Test
+	public void testBubbleSortDoormen() {
+		scenaryFour();
+		rm.bubbleSortDoormen();
+		boolean result = true;
+		for (int i = 0; i < rm.getDoormen().size() - 1; i++) {
+			if (rm.getDoormen().get(i).compareTo(rm.getDoormen().get(i)) < 0) {
+				result = false;
+			}
+		}
+		
+		assertTrue(result);
+	}
+	
+	@Test
+	public void testInsertionSortResidents() {
+		scenaryFour();
+		rm.insertionSortResidents();
+		boolean result = true;
+		for (int i = 0; i < rm.getResidents().size() - 1; i++) {
+			if (rm.getResidents().get(i).compareTo(rm.getResidents().get(i)) < 0) {
+				result = false;
+			}
+		}
+		
+		assertTrue(result);
+	}
+	
+	@Test
+	public void testSelectionSortServiceStaff() {
+		scenaryFour();
+		rm.selectionSortServiceStaff();
+		boolean result = true;
+		for (int i = 0; i < rm.getServiceStaff().size() - 1; i++) {
+			if (rm.getServiceStaff().get(i).compareTo(rm.getServiceStaff().get(i)) < 0) {
+				result = false;
+			}
+		}
+		
+		assertTrue(result);
+	}
+	
+	@Test
+	public void testBinarySearchPets() {
+		
+	}
+	
+	@Test
+	public void testSearcgCommonZone() {
+		
+	}
+	
+	@Test
+	public void testAddReservation() {
+		
+	}
+	
+	@Test
+	public void testAddClaim() {
+		
+	}
+	
+	@Test
+	public void testCalculateTotalTowerDebt() {
+		
+	}
+	
 	@Test
 	public void testSetupCommonZones() {
 		scenaryFour();
@@ -281,7 +401,7 @@ public class ResidenceManagementTest {
 		assertTrue(sizeAp > rm.getApartaments().get(0).getPets().size());
 		assertTrue(sizeRm > rm.getPets().size());
 	}
-	
+
 	@Test
 	public void testAddVehicle() {
 		scenaryFour();
@@ -300,6 +420,18 @@ public class ResidenceManagementTest {
 	}
 
 	@Test
+	public void testDeleteVehicle() {
+		testAddVehicle();
+		Vehicle p = rm.getApartaments().get(0).getCars().get(0);
+		int sizeAp = rm.getApartaments().get(0).getCars().size();
+		int sizeRm = rm.getVehicles().size();
+		
+		rm.deleteVehicle(rm.getApartaments().get(0), p.getLicensePlate());
+		assertTrue(sizeAp > rm.getApartaments().get(0).getCars().size());
+		assertTrue(sizeRm > rm.getVehicles().size());
+	}
+	
+	@Test
 	public void testAddOwner() {
 		scenaryFour();
 		Owner o = new Owner("TestOne", "TestTwo", 54534, "1042342", "Sape@gmail.com");
@@ -317,4 +449,49 @@ public class ResidenceManagementTest {
 		assertTrue(result);
 	}
 
+	@Test
+	public void testEditOwner() {
+		scenaryFour();
+		Owner on = rm.getApartaments().get(0).getOwner();
+		
+		rm.editOwner(rm.getApartaments().get(0), on.getFirstName(), on.getLastName(), 345343, "10043343", "NewEmail@gmail.com");
+		
+		Owner on2 = rm.getApartaments().get(0).getOwner();
+		assertEquals(on.getFirstName(), on2.getFirstName());
+		assertEquals(on.getLastName(), on2.getLastName());
+		assertTrue(!on.getMail().equals(on2.getMail()));
+	
+	}
+
+	@Test 
+	public void testDeleteOwner() {
+		scenaryFour();
+		Owner on = rm.getApartaments().get(0).getOwner();
+		int size = rm.getOwners().size();
+		assertTrue(on != null);
+		rm.deleteOwner(rm.getApartaments().get(0), on.getId());
+		assertTrue(size > rm.getOwners().size());
+		assertTrue(rm.getApartaments().get(0).getOwner() == null);
+	}
+
+	@Test
+	public void testEditPerson() {
+		scenaryFour();
+		Resident r = rm.getResidents().get(0);
+		String firstName = "Hey";
+		String lastName = "There";
+		String id = "42342523";
+		int phoneNumber = 434342;
+		
+		assertTrue(!r.getFirstName().equals(firstName));
+		assertTrue(!r.getLastName().equals(lastName));
+		assertTrue(!r.getId().equals(id));
+		assertTrue(r.getPhoneNumber() != phoneNumber);
+		
+		rm.editPerson(r, firstName, lastName, phoneNumber, id);
+		assertEquals(r.getFirstName(), firstName);
+		assertEquals(r.getLastName(), lastName);
+		assertEquals(r.getPhoneNumber(), phoneNumber);
+		assertEquals(r.getId(), id);
+	}
 }

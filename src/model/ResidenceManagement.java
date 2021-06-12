@@ -822,7 +822,7 @@ public class ResidenceManagement {
 		String description = "Cuota de administracion";
 
 		for (Apartament apartament : apartaments) {
-			generateDebt(description, date, administrationFee, apartament);
+			generateDebt(description, date, administrationFee, apartament, 0);
 		}
 
 	}
@@ -830,7 +830,7 @@ public class ResidenceManagement {
 	public void generateInvoiceForAll(LocalDate date,String description,double price) {
 
 		for (Apartament apartament : apartaments) {
-			generateDebt(description, date, price, apartament);
+			generateDebt(description, date, price, apartament, 0);
 		}
 
 	}
@@ -901,11 +901,11 @@ public class ResidenceManagement {
 		return found;
 	}
 
-	public void generateDebt(String description, LocalDate date, double price, Apartament apartament) {
+	public void generateDebt(String description, LocalDate date, double price, Apartament apartament, int indicator) {
 		apartament.getDebt().add(new Debt(description, price, date));
 		apartament.calculateTotalDebt();
 		if (price != administrationFee) {			
-			apartmentPerDebt.addApartament(apartament);
+			apartmentPerDebt.addApartament(apartament, indicator);
 		}
 	}
 

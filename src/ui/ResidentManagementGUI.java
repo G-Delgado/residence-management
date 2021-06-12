@@ -1233,7 +1233,7 @@ public class ResidentManagementGUI {
         String description = invoiceDescription.getText();
         double price = Double.parseDouble(invoiceTotal.getText());
 
-        residentManagement.generateDebt(description, LocalDate.now(), price, apartament);
+        residentManagement.generateDebt(description, LocalDate.now(), price, apartament, 1);
         alert("Se genero el nuevo pago de " + description);
 
     }
