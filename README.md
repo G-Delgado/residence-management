@@ -6,6 +6,10 @@
 
 Residence Management is a desktop application for the management and administration of residential complexes, it has modules for the management, communication and administration of properties, it has tools for generating reports, statistics, sending invoices, receiving claims and space reservations.
 
+### Video
+
+### [Link to video](https://youtu.be/XMbs8jV5K9Y)
+
 #### Technologies and Software Used
 - Java
 - Windows 10
