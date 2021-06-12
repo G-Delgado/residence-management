@@ -82,7 +82,7 @@ public class ResidenceManagement {
 
 	}
 
-	private ArrayList<CommonZones> setupCommonZones() {
+	public ArrayList<CommonZones> setupCommonZones() {
 		CommonZones littlePool=new Pool("Pool for childrens", 10);
 		CommonZones bigPool=new Pool("Pool", 20);
 		CommonZones kiosk=new Kiosk("Main Kiosk", 30);

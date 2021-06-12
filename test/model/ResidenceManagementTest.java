@@ -3,6 +3,8 @@ package model;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
 
 import exceptions.PasswordInvalidException;
@@ -25,6 +27,34 @@ public class ResidenceManagementTest {
 		// Generates 1 tower with 3 floors and 2 apartments per floor
 		rm = new ResidenceManagement(1, 3, 2, 450);
 		
+	}
+	
+	public void scenaryFour() {
+		rm = new ResidenceManagement(1,2,2,450);
+		rm.addServiceStaff("Juan", "García", 46346345, "1016567561", "Doorman");
+		rm.addServiceStaff("Gabriel", "Delgado", 46346345, "101345563461", "Doorman");
+		rm.addServiceStaff("Carlos", "Ramirez", 54645645, "101345345341", "Doorman");
+		rm.addServiceStaff("Valentina", "García", 645646, "101456451", "Doorman");
+		
+		rm.addServiceStaff("Juan", "García", 46346345, "1016567561", "SERVICE STAFF");
+		rm.addServiceStaff("Gabriel", "Delgado", 46346345, "1016567561", "SERVICE STAFF");
+		rm.addServiceStaff("Carlos", "Ramirez", 46346345, "1016567561", "SERVICE STAFF");
+		rm.addServiceStaff("Valentina", "García", 46346345, "1016567561", "SERVICE STAFF");
+		
+		rm.addResident(rm.getApartaments().get(0), "Juan", "García", 46346345, "1016567561");
+		rm.addResident(rm.getApartaments().get(1), "Gabriel", "Delgado", 46346345, "101345563461");
+		rm.addResident(rm.getApartaments().get(2), "Carlos", "Ramirez", 54645645, "101345345341");
+		rm.addResident(rm.getApartaments().get(3), "Valentina", "García", 645646, "101456451");
+		
+		rm.addPet(rm.getApartaments().get(0), "Milán", "DOG");
+		rm.addPet(rm.getApartaments().get(1), "Kingy", "CAT");
+		rm.addPet(rm.getApartaments().get(2), "Nala", "DOG");
+		rm.addPet(rm.getApartaments().get(3), "Mia", "CAT");
+		
+		rm.addOwner(rm.getApartaments().get(0), "Juan", "García", 46346345, "1016567561", "sape1@gmail.com");
+		rm.addOwner(rm.getApartaments().get(1), "Gabriel", "Delgado", 46346345, "101345563461", "sape2@gmail.com");
+		rm.addOwner(rm.getApartaments().get(2), "Carlos", "Ramirez", 54645645, "101345345341", "sape3@gmail.com");
+		rm.addOwner(rm.getApartaments().get(3), "Valentina", "García", 645646, "101456451", "sape4@gmail.com");
 	}
 
 	@Test
@@ -138,4 +168,153 @@ public class ResidenceManagementTest {
 		
 		assertEquals(fee, apFee);
 	}
+
+	@Test
+	public void testSetupCommonZones() {
+		scenaryFour();
+		ArrayList<CommonZones> arrCz = rm.setupCommonZones();
+		boolean result = true;
+		for (int i = 0; i < arrCz.size(); i++) {
+			if (!arrCz.get(i).getName().equals(rm.getCommonZones().get(i).getName()) || arrCz.get(i).getCapacity() != (rm.getCommonZones().get(i).getCapacity())) {
+				result = false;
+			}
+		}
+		assertTrue(result);
+	}
+
+	@Test
+	public void testAddServiceStaff() {
+		scenaryFour();
+		ServiceStaff ss = new ServiceStaff("Miguel", "Sape", 316781452, "1006542");
+		int size = rm.getServiceStaff().size();
+		rm.addServiceStaff("Miguel", "Sape", 316781452, "1006542", "SERVICE STAFF");
+		
+		assertTrue(rm.getServiceStaff().size() == size + 1);
+		assertEquals(ss.getFirstName() + " " + ss.getLastName(),rm.getServiceStaff().get(size).getFirstName() + " " + rm.getServiceStaff().get(size).getLastName());
+		
+		Doorman dm = new Doorman("Jun", "Sape", 316781452, "1006542");
+		size = rm.getDoormen().size();
+		rm.addServiceStaff("Jun", "Sape", 316781452, "1006542", "Doorman");
+		
+		assertTrue(rm.getDoormen().size() == size + 1);
+		assertEquals(dm.getFirstName() + " " +dm.getLastName(),rm.getDoormen().get(size).getFirstName() + " " + rm.getDoormen().get(size).getLastName());
+	}
+
+	@Test
+	public void testDeleteServiceStaff() {
+		scenaryFour();
+		ServiceStaff ss = rm.getServiceStaff().get(0);
+		int size = rm.getServiceStaff().size();
+		rm.deleteServiceStaff(ss.getId());
+		
+		assertTrue(size > rm.getServiceStaff().size());
+	}
+	
+	@Test
+	public void testDeleteDoorman() {
+		scenaryFour();
+		Doorman dm = rm.getDoormen().get(0);
+		int size = rm.getDoormen().size();
+		rm.deleteDoorman(dm.getId());
+		
+		assertTrue(size > rm.getDoormen().size());
+	}
+	
+	@Test
+	public void testAddResident() {
+		scenaryFour();
+		Resident r = new Resident("TestOne", "TestTwo", 54534, "1042342");
+		int sizeRm = rm.getResidents().size();
+		int sizeAp = rm.getApartaments().get(0).getResidents().size();
+		rm.addResident(rm.getApartaments().get(0), "TestOne", "TestTwo", 54534, "1042342");
+		
+		assertTrue(rm.getResidents().size() > sizeRm);
+		assertTrue(rm.getApartaments().get(0).getResidents().size() > sizeAp);
+		
+		boolean result = false;
+		Resident apR = rm.getApartaments().get(0).getResidents().get(sizeAp);
+		if ((r.getFirstName() + " " + r.getLastName()).equals(apR.getFirstName() + " " + apR.getLastName())) {
+			result = true;
+		}
+		
+		assertTrue(result);
+	}
+
+	@Test
+	public void testDeleteResident() {
+		scenaryFour();
+		Resident r = rm.getApartaments().get(0).getResidents().get(0);
+		int sizeAp = rm.getApartaments().get(0).getResidents().size();
+		int sizeRm = rm.getResidents().size();
+		
+		rm.deleteResident(rm.getApartaments().get(0), r.getId());
+		
+		assertTrue(sizeAp > rm.getApartaments().get(0).getResidents().size());
+		assertTrue(sizeRm > rm.getResidents().size());
+	}
+	
+	@Test
+	public void testAddPet() {
+		scenaryFour();
+		Pet p = new Pet("Mickey", "CAT");
+		int sizeRm = rm.getPets().size();
+		int sizeAp = rm.getApartaments().get(0).getPets().size();
+		rm.addPet(rm.getApartaments().get(0), "Mickey", "CAT");
+		
+		assertTrue(rm.getApartaments().get(0).getPets().size() > sizeAp);
+		assertTrue(rm.getPets().size() > sizeRm);
+		
+		boolean result = false;
+		Pet apP = rm.getApartaments().get(0).getPets().get(sizeAp);
+		if (p.getName().equals(apP.getName()) && p.getType().equals(apP.getType())) result = true;
+		assertTrue(result);
+	}
+
+	@Test
+	public void testDeletePet() {
+		scenaryFour();
+		Pet p = rm.getApartaments().get(0).getPets().get(0);
+		int sizeAp = rm.getApartaments().get(0).getPets().size();
+		int sizeRm = rm.getPets().size();
+		
+		rm.deletePet(rm.getApartaments().get(0), p.getName(), p.getType() + "");
+		assertTrue(sizeAp > rm.getApartaments().get(0).getPets().size());
+		assertTrue(sizeRm > rm.getPets().size());
+	}
+	
+	@Test
+	public void testAddVehicle() {
+		scenaryFour();
+		Vehicle v = new Car("Ayo123");
+		int sizeRm = rm.getVehicles().size();
+		int sizeAp = rm.getApartaments().get(0).getCars().size();
+		rm.addVehicle(rm.getApartaments().get(0), "Ayo123", "CAR");
+		
+		assertTrue(rm.getApartaments().get(0).getCars().size() > sizeAp);
+		assertTrue(rm.getVehicles().size() > sizeRm);
+		
+		boolean result = false;
+		Vehicle apV = rm.getApartaments().get(0).getCars().get(sizeAp);
+		if (v.getLicensePlate().equals(apV.getLicensePlate()) && v.getType().equals(apV.getType())) result = true;
+		assertTrue(result);
+	}
+
+	@Test
+	public void testAddOwner() {
+		scenaryFour();
+		Owner o = new Owner("TestOne", "TestTwo", 54534, "1042342", "Sape@gmail.com");
+		int sizeRm = rm.getOwners().size();
+		rm.addOwner(rm.getApartaments().get(0), "TestOne", "TestTwo", 54534, "1042342", "Sape@gmail.com");
+		
+		assertTrue(rm.getResidents().size() > sizeRm);
+		
+		boolean result = false;
+		Owner apO = rm.getApartaments().get(0).getOwner();
+		if ((o.getFirstName() + " " + o.getLastName()).equals(apO.getFirstName() + " " + apO.getLastName())) {
+			result = true;
+		}
+		
+		assertTrue(result);
+	}
+
 }
